@@ -131,6 +131,7 @@ entities. It has a two fields:
 - `tag` holding the [ISO 639-1 language code][iso639-1] alpha-2 code (lowercase), optionally 
         followed by an underscore and a [ISO 3166-1][iso3166-1] alpha-2 code (uppercase), as 
         `String` (`[a-z]{2}(?:-[A-Z]{2})?` (this is a subset of the [IETF language tags][ietfLang]).
+        Examples are `de` for standard german and `de-AT` for austrian german.
 
 Since `Language`s are value object, they should always be embedded into other entities, and never 
 referenced only by their `name` or `tag` when passed over the boundary.
