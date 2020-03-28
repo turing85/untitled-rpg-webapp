@@ -14,7 +14,7 @@ Each entity in the domain should be identifiable by a
 [version 4 random `UUID`s][randomUuid]. The `UUID` of an entity should be unique for an entity of a
 given type, but entities of different types may have the same `UUID`.
 
-### Global identification
+#### Global identification
 
 Each entity and value object has to define a global identification attribute. It must be assured 
 that this identification, together with the type of the entity, uniquely identifies an instance of
