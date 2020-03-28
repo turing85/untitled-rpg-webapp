@@ -8,18 +8,31 @@ objects, rather than destructuring the data into two tables, the "owning" side s
 "owned" side and store all information in a single table. The id of a value object should never be
 exposed beyond the persistence layer.
 
-#### `UUID` as technical identifier
-Each entity in the domain should be identifiable by a 
-[Universally unique identifier (`UUID`)][uuid], specifically 
+#### 64-bit integral as technical identifier
+Each entity and value object in the domain should be identifiable by a 64-bit integral value to
+
+- improve database performance and
+- conserve database storage.
+
+The corresponding attribute should be called `id`. If PostgreSQL is used, each table should have its
+own sequence to generate its primary key. 
+
+#### `UUID` for offline compatibility
+
+If an entity is designed to be offline editable, it should include an
+[Universally unique identifier (`UUID`)][uuid], specifically a
 [version 4 random `UUID`s][randomUuid]. The `UUID` of an entity should be unique for an entity of a
-given type, but entities of different types may have the same `UUID`.
+given type, but entities of different types may have the same `UUID`. The corresponding attribute
+should be called `id`. The client should not generate the `UUID` offline and then commit the entity
+when coming back online. Rather, the client transmit the entity without a `UUID`, let the backend
+generate a `UUID` and store the generated `UUID` for offline usage.
 
 #### Global identification
 
 Each entity and value object has to define a global identification attribute. It must be assured 
 that this identification, together with the type of the entity, uniquely identifies an instance of
 that type. It should be a human-readable attribute (e.g. the name of a user) and should not be the
-technical identifier (the `UUID`). 
+technical identifier (the 64-bit integral). 
 
 When an entity or value object is fetch from outside its context or stored outside its context, it
 should always be fetched or stored through/by its global identifier.
@@ -51,7 +64,7 @@ examples are:
 Database operations should be, as far as possible, ANSI-SQL conform. Exceptions are:
 
 - indexes
-- `UUID` data type (tbd, [PostgreSQL has a dedicated data type for `UUID`s][postgresqlDataTypes], 
+- `UUID` data type ([PostgreSQL has a dedicated data type for `UUID`s][postgresqlDataTypes], 
    [MySQL stores `UUID`s as `BINARY(16)`][mysqlUuid], other database providers may store them as 
    `BINARY(16)`,
    [JPA can be instructed to use a `BINARY(16)` as target column for `UUID`s][jpaUuidBin16]).
@@ -66,13 +79,14 @@ written in singular, e.g. `user` instead of `users`.
 
 The column holding the primary key should be named `id`.
 
-Constraints and indexes should be named after the scheme 
+Constraints, indexes and (for PostgreSQL) sequences should be named after the scheme 
 `[table_name]_[constraint-type](_[column_name])+` with `containt-type` being one of:
 
 - `pk` for primary key constraints
 - `fk` for foreign key constraints
 - `unique` for unique constraint
 - `idx` for indices
+- `seq` for sequences
 
 For example, if on a table `my_table` the column-pair `attribute_one` and `attribute_two` should be 
 constraint to be unique, the corresponding constraint would be called:
