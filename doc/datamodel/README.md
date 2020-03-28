@@ -8,11 +8,21 @@ objects, rather than destructuring the data into two tables, the "owning" side s
 "owned" side and store all information in a single table. The id of a value object should never be
 exposed beyond the persistence layer.
 
-#### `UUID` for identification
+#### `UUID` as technical identifier
 Each entity in the domain should be identifiable by a 
-[Universally unique identifier (`UUID`)][uuid], specifically
-[version 4 random `UUID`s][[randomUuid]]. The `UUID` of an entity should be unique for a entity of a
-given type, but entities of different types can have the same `UUID`.
+[Universally unique identifier (`UUID`)][uuid], specifically 
+[version 4 random `UUID`s][randomUuid]. The `UUID` of an entity should be unique for an entity of a
+given type, but entities of different types may have the same `UUID`.
+
+### Global identification
+
+Each entity and value object has to define a global identification attribute. It must be assured 
+that this identification, together with the type of the entity, uniquely identifies an instance of
+that type. It should be a human-readable attribute (e.g. the name of a user) and should not be the
+technical identifier (the `UUID`). 
+
+When an entity or value object is fetch from outside its context or stored outside its context, it
+should always be fetched or stored through/by its global identifier.
 
 #### Timestamps and dates
 
@@ -35,7 +45,8 @@ examples are:
     2020-01-01
     1970-01-01
     1985-02-18
-#### Database rules
+
+#### Database conventions
 
 Database operations should be, as far as possible, ANSI-SQL conform. Exceptions are:
 
@@ -67,104 +78,99 @@ For example, if on a table `my_table` the column-pair `attribute_one` and `attri
 constraint to be unique, the corresponding constraint would be called:
 
     my_table_unique_attribute_one_attribute_two
-Colums holding foreign key constraints should always define indexes on the foreign key columns.
-
+When a column has a foreign key constraint, it should be indexed. Likewise, when a column holds a 
+global identifier attribute, it should be indexed.
 
 #### General constraints
 
-If not otherwise noted, all `String`s are limited to 255 characters. This is enforced database-wise.
+If not otherwise noted, all `String`s are limited to 255 characters. This is enforced by the
+database.
 
-Exact points in time are always stored in UTC time format and without timezone information (thus UTC
-is always assumed).
+Exact points in time are always stored in UTC and without timezone information (thus UTC is always
+assumed when retrieved).
 
 #### Documentation Resources
 
 The data model is shown in the [UML diagram][uml]. The corresponding database schema is shown in the
 [ERD diagram][erd].
 
-#### Base data model
+#### General Persistence data model
 
-Every entity should have an attribute `id` that is a version 4 random `UUID`. Once 
-assigned, the `id` is immutable. The `id` is for service-internal use only and should not be exposed
-to external actors. Other unique identifiers, like names, should be exposed to external actors.
+Every persisted object should have an attribute `id` that is a version 4 random `UUID`.
+Once  assigned, the `id` is immutable. The `id` is for service-internal use only and should not be 
+exposed to external actors. Other unique identifiers, like names, should be exposed to external
+actors.
 
----
-Open question:
+The `id` attribute does not cross the boundary into the business- or entity layer.
 
-Is a microservice in the same subsystem an "*external service*" or does it "*know*" of the `id`s
-of not-owned entities? 
----
+##### Base for all entities
 
-#### Base for all entities
+To avoid boilerplate code, we want to use an abstract class `PersistenceEntity` as base for all 
+persistence entities. This entity has only one field `id` of type `UUID`.
 
-To avoid boilerplate code, we want to use the class `BaseEntity` as base for all entities (including
-aggregates). This entity has two fields:
-- `id` of type `UUID`, and
-- `created` of type `Instant`. 
+##### Persistence classes
 
-The time in `created` is always stored as timestamp without timezone, and UTC timezone is assumed.
+Persistence classes are, by large, a copy of their domain classes, enhanced with JPA-specific 
+annotations for database mapping.
 
 #### User data model
 
-The information stored for a person using the application ( a *user*) is split into two classes:
+The information stored for a person using the application ( a *user*) is stored in a single class
+`User`.
 
-- A `User` class, that stores all required information, as well as a reference to
-- a `UserProfile` class, holding optional value of a `User`.
+Furthermore, the class `Language` belongs to the user data model. We follow the rationale that we
+want to provide languages that are used by the users. Thus, the users are the driving force of 
+adding new languages to the application.
 
-Since `UserProfile` is a value object and has a 1:1 relationship to `User`, the attributes of 
-`UserProfile` will be embedded into the corresponding `user`-table.
+##### `Language` class
+
+This class represents languages. It is a a value object and only used in the context of other 
+entities. It has a two fields
+- `name` holding the name of the language as `String`, and
+- `code` holding the [ISO 639-1 language code][iso639-1] (two letters, `[a-z]{2}`), as `String`.
+
+Since `Language`s are value object, they should always be embedded into other entities, and never 
+referenced only by their `name` or `code` when passed over the boundary.
+
+The primary method for fetching adn storing a `language` outside the user data model should be its 
+`code`.
 
 ##### `User` class
 
----
-Quick overview:<br>
-[Isolated UML][userUml]<br>
-[Isolated ERD][userErd]<br>
----
-
-A `User` is an entity and an aggregate object, holding the `id`s of other entities a `User` 
-possesses or takes part in(for example `Character`s or `Game`s).
+A `User` is an aggregate object, holding the `id`s of other entities a `User` possesses or takes 
+part in(for example `Character`s or `Game`s).
  
 To external actors, a `User` is identified by her or his unique `name`. Once set, the `name` cannot
 be changed. The `name` is a `String` and is constrained by the regular expression `[0-9a-zA-Z\-]+`.
-Furthermore, each `User` has a unique `email`, also represented by a `String`. 
+Furthermore, each `User` has a unique `email`, also represented by a `String`. Furthermore, the
+ application sets a field`created` of type `Instant` as the point in time when the user was created.
 
-The attributes discussed above are the only required attributes for a `User`. For login purposes,
-a `User` can use either her or his `name` or her or his `email`.
-
-##### UserProfile class
-
-The `UserProfile` holds mutable and optional attributes associated with a `User`. There is a 1:1 
-relation between `User`s and their `UserProfile`s. Furthermore, `UserProfile`s are value objects.
-
-Fields included in the `UserProfile` are:
+Mutable fields of a `User` are:
 - `displayName`: A `string` used in all social interaction that is not constrained. If not set,
   the application will use the `name` as implicit `displayName`.
 - `firstName`, `lastName`: the first and last name of a user, as `String`.
+- `preferredLanguage`: a reference on `Language`, see below. `User` has an each-to-one relationship 
+  to `Language`. If not set explicitly, it will be set to english.
 - `birthday`: the birthday of a user, represented as `LocalDate`.
 - `bio`: A free-text biography the user can fill out, stored as `String`.
 - `hoursPlayed`: An application-managed property, counting the hours a user has played in the 
    application. Stored as `int`.
 - `avatar`: an avatar image. Type is to be discussed.
 
+By external resources, a `User` should be referenced by her or his `name`.
+
 ---
 Open questions:
-- Do we want the `UserProfile`-class? It leads to problems with Lombok and mapstuct if we want to
-  flatten the object structure in the boundary. Nothing impossible, but annyoing since the mapping 
-  of each property in `UserProfile` must be explicitly mapped to a target property in the boundary-
-  builer.
-  - Pro:
-    Nicer (and possibly semnantically sounder) definition of `User`.
-  - Con:
-    Problem(s) with Lombok and mapstruct.
 - What type do we want to use for the `avatar`?
 - Do we want to store the avatars in the database?
   - Pros: 
     - If we store the images in the database, we do not need additional (shared) storage.
     - A backup of the database is sufficient for disaster recovery.
-    - We do not need aditional logic for mapping avatar-references in the database to files in the file system.
-  - Cons:<br>
-    Blobs in database =/
+    - We do not need additional logic for mapping avatar-references in the database to files in the
+      file system.
+  - Cons:
+    - Blobs in database =/
+---  
 
 [dddBlocks]: https://en.wikipedia.org/wiki/Domain-driven_design#Building_blocks
 [uuid]: https://en.wikipedia.org/wiki/Universally_unique_identifier
@@ -177,6 +183,5 @@ Open questions:
 [jpaUuidBin16]: https://phauer.com/2016/uuids-hibernate-mysql/
 [snakeCase]: https://en.wikipedia.org/wiki/Snake_case
 [uml]: UML.puml
-[erd]: ERD.
-[userUml]: userUML.puml
-[userErd]: userERD.puml
+[erd]: ERD.puml
+[iso639-1]: https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes

@@ -1,21 +1,43 @@
 @startuml
 
 entity user {
-    id: UUID (PostgreSQL) or BINARY(16) (MySQL) NOT NULL
+    id: UUID (PostgreSQL) or BINARY(16) (MySQL)
+    \tCONSTRAINT user_pk_id PRIMARY KEY
+    created_utc: TIMESTAMP NOT NULL
+    \tDEFAULT NOW()
+    ==
     name: VARCHAR(255) NOT NULL
+    \tCONSTRAINT user_unique_name UNIQUE
     email: VARCHAR(255) NOT NULL
-    created_utc: TIMESTAMP NOT NULL DEFAULT NOW()
+    \tCONSTRAINT user_unique_email UNIQUE
     displayName: VARCHAR(255)
     first_name: VARCHAR(255)
     last_name: VARCHAR(255)
+    preferredLanguage: UUID NOT NULL
+    \tCONSTRAINT user_fk_language
+    \t\tREFERENCES language(id)
+    \tDEFAULT (id of english)
     birthday: DATE
-    bio: VARCHAR(5000)
+    bio: TEXT
     hours_played: INT NOT NULL
-    avatar: BYTEA (PostgreSQL) | BLOB (MySQL)
+    avatar: BYTEA (PostgreSQL) or BLOB (MySQL)
     ---
-    CONSTRAINT user_pk_id PRIMARY KEY(id)
-    CONSTRAINT user_unique_name UNIQUE(name)
-    CONSTRAINT user_unique_email UNIQUE(email)
+    ---
+    INDEX user_index_language
+    \tON user USING BTREE(language)
 }
+
+entity language {
+    id: UUID (PostgreSQL) or BINARY(16) (MySQL)
+    \tCONSTRAINT language_pk_id PRIMARY KEY
+    created_utc: TIMESTAMP NOT NULL
+    \tDEFAULT NOW()
+    ==
+    name: VARCHAR(255) NOT NULL
+    \tCONSTRAINT language_unique_name UNIQUE
+    code: VARCHAR(2) NOT NULL
+}
+
+user }|--|| language
 
 @enduml

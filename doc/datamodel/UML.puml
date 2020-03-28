@@ -1,38 +1,76 @@
 @startuml
 
-class BaseEntity {
-    {field}- id: final UUID unmodifiable
-    {field}- created: Instant unmodifiable
-    ---
-    {method}+ getters
-    {method}+ equals(Object thatObject): boolean
+package domain {
+
+    class User {
+        {field} - name: String [0-9a-zA-z\-]+ unmodifiable <<ID>>
+        {field} - email: String
+        {field} - created: Instant unmodifiable
+        {field} - displayName: String nullable
+        {field} - firstName: String nullable
+        {field} - lastName: String nullable
+        {field} - preferredLanguage: Language
+        {field} - birthDay: LocalDate nullable
+        {field} - bio: String nullable
+        {field} - hoursPlayed: int not negative
+        {field} - avatar: tbd nullable
+        ---
+        {method}+ getters
+        {method}+ equals(...): boolean
+    }
+
+    class Language {
+        value type
+        ===
+        {field} - code: String [0-9a-zA-z\-]{2} unmodifiable <<ID>>
+        {field} - name: String [0-9a-zA-z\-]+ unmodifiable
+        ---
+        {method} + getters
+        {method} + equals(...): boolean
+    }
 }
 
-class User {
-    {field}- name: String [0-9a-zA-z\-]+ unmodifiable
-    {field}- email: String
-    {field}- profile: UserProfile
-    ---
-    {method}+ getters
+package persistence {
+
+    abstract class PersistenceEntity {
+        {field} - id: UUID unmodifiable
+        ---
+        {method} + getId(): UUID
+    }
+
+    class PersistenceUser {
+        {field} - name: String [0-9a-zA-z\-]+ unmodifiable
+        {field} - email: String
+        {field} - created: Instant unmodifiable
+        {field} - displayName: String nullable
+        {field} - firstName: String nullable
+        {field} - lastName: String nullable
+        {field} - preferredLanguage: Language
+        {field} - birthDay: LocalDate nullable
+        {field} - bio: String nullable
+        {field} - hoursPlayed: int not negative
+        {field} - avatar: tbd nullable
+        ---
+        {method}+ getters
+    }
+
+    class PersistenceLanguage {
+        {field} - code: String [0-9a-zA-z\-]{2} unmodifiable
+        {field} - name: String [0-9a-zA-z\-]+ unmodifiable
+        ---
+        {method} + getters
+    }
+
 }
 
-class UserProfile {
-    type: Value object
-    ---
-    {field}- displayName: String nullable
-    {field}- firstName: String nullable
-    {field}- lastName: String nullable
-    {field}- birthDay: LocalDate nullable
-    {field}- bio: String nullable
-    {field}- hoursPlayed: int not negative
-    {field}- avatar: tbd nullable
-    ---
-    {method}+ getters
+User "each" o-down- "one" Language:  has
 
-}
+PersistenceEntity <|-up- PersistenceUser
+PersistenceEntity <|-up- PersistenceLanguage
+PersistenceUser "each" o-- "one" PersistenceLanguage: has
 
-BaseEntity <|-- User: extends
 
-User "1" o-- "1" UserProfile: has a >
+PersistenceUser <-left-> User: maps to
+PersistenceLanguage <-left-> Language: maps to
 
 @enduml
