@@ -23,6 +23,8 @@ entity user {
     avatar: BYTEA (PostgreSQL) or BLOB (MySQL)
     ---
     ---
+    INDEX user_index_name
+    \tON user USING BTREE(name)
     INDEX user_index_language
     \tON user USING BTREE(language)
 }
@@ -31,9 +33,13 @@ entity language {
     id: UUID (PostgreSQL) or BINARY(16) (MySQL)
     \tCONSTRAINT language_pk_id PRIMARY KEY
     ==
+    tag: VARCHAR(5) NOT NULL
     name: VARCHAR(255) NOT NULL
     \tCONSTRAINT language_unique_name UNIQUE
-    tag: VARCHAR(5) NOT NULL
+    ---
+    ---
+    INDEX language_idx_tag
+    \tON language USING BTREE(tag)
 }
 
 user }|--|| language
