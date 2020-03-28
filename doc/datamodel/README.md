@@ -125,7 +125,8 @@ adding new languages to the application.
 ##### `Language` class
 
 This class represents languages. It is a a value object and only used in the context of other 
-entities. It has a two fields
+entities. It has a two fields:
+
 - `name` holding the name of the language as `String`, and
 - `code` holding the [ISO 639-1 language code][iso639-1] (two letters, `[a-z]{2}`), as `String`.
 
@@ -146,6 +147,7 @@ Furthermore, each `User` has a unique `email`, also represented by a `String`. F
  application sets a field`created` of type `Instant` as the point in time when the user was created.
 
 Mutable fields of a `User` are:
+
 - `displayName`: A `string` used in all social interaction that is not constrained. If not set,
   the application will use the `name` as implicit `displayName`.
 - `firstName`, `lastName`: the first and last name of a user, as `String`.
@@ -161,6 +163,7 @@ By external resources, a `User` should be referenced by her or his `name`.
 
 ---
 Open questions:
+
 - What type do we want to use for the `avatar`?
 - Do we want to store the avatars in the database?
   - Pros: 
