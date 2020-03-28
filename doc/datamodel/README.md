@@ -186,17 +186,10 @@ Mutable fields of a `User` are:
 By external resources, a `User` should be referenced by her or his `name`.
 
 ---
-Open questions:
+Open question:
 
-- What type do we want to use for the `avatar`?
-- Do we want to store the avatars in the database?
-  - Pros: 
-    - If we store the images in the database, we do not need additional (shared) storage.
-    - A backup of the database is sufficient for disaster recovery.
-    - We do not need additional logic for mapping avatar-references in the database to files in the
-      file system.
-  - Cons:
-    - Blobs in database =/
+What type do we want to use for the `avatar`?
+
 ---  
 
 [dddBlocks]: https://en.wikipedia.org/wiki/Domain-driven_design#Building_blocks
