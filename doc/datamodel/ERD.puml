@@ -1,0 +1,21 @@
+@startuml
+
+entity user {
+    id: UUID (PostgreSQL) or BINARY(16) (MySQL) NOT NULL
+    name: VARCHAR(255) NOT NULL
+    email: VARCHAR(255) NOT NULL
+    created_utc: TIMESTAMP NOT NULL DEFAULT NOW()
+    displayName: VARCHAR(255)
+    first_name: VARCHAR(255)
+    last_name: VARCHAR(255)
+    birthday: DATE
+    bio: VARCHAR(5000)
+    hours_played: INT NOT NULL
+    avatar: BYTEA (PostgreSQL) | BLOB (MySQL)
+    ---
+    CONSTRAINT user_pk_id PRIMARY KEY(id)
+    CONSTRAINT user_unique_name UNIQUE(name)
+    CONSTRAINT user_unique_email UNIQUE(email)
+}
+
+@enduml
