@@ -30,12 +30,10 @@ entity user {
 entity language {
     id: UUID (PostgreSQL) or BINARY(16) (MySQL)
     \tCONSTRAINT language_pk_id PRIMARY KEY
-    created_utc: TIMESTAMP NOT NULL
-    \tDEFAULT NOW()
     ==
     name: VARCHAR(255) NOT NULL
     \tCONSTRAINT language_unique_name UNIQUE
-    code: VARCHAR(2) NOT NULL
+    tag: VARCHAR(5) NOT NULL
 }
 
 user }|--|| language

@@ -128,13 +128,15 @@ This class represents languages. It is a a value object and only used in the con
 entities. It has a two fields:
 
 - `name` holding the name of the language as `String`, and
-- `code` holding the [ISO 639-1 language code][iso639-1] (two letters, `[a-z]{2}`), as `String`.
+- `tag` holding the [ISO 639-1 language code][iso639-1] alpha-2 code (lowercase), optionally 
+        followed by an underscore and a [ISO 3166-1][iso3166-1] alpha-2 code (uppercase), as 
+        `String` (`[a-z]{2}(?:-[A-Z]{2})?` (this is a subset of the [IETF language tags][ietfLang]).
 
 Since `Language`s are value object, they should always be embedded into other entities, and never 
-referenced only by their `name` or `code` when passed over the boundary.
+referenced only by their `name` or `tag` when passed over the boundary.
 
 The primary method for fetching adn storing a `language` outside the user data model should be its 
-`code`.
+`tag`.
 
 ##### `User` class
 
@@ -188,3 +190,5 @@ Open questions:
 [uml]: UML.puml
 [erd]: ERD.puml
 [iso639-1]: https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
+[iso3166-1]: https://en.wikipedia.org/wiki/ISO_3166-1
+[ietfLang]: https://en.wikipedia.org/wiki/IETF_language_tag

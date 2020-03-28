@@ -22,7 +22,7 @@ package domain {
     class Language {
         value type
         ===
-        {field} - code: String [0-9a-zA-z\-]{2} unmodifiable <<ID>>
+        {field} - tag: String [a-z]{2}(?:-[A-Z]{2})? unmodifiable <<ID>>
         {field} - name: String [0-9a-zA-z\-]+ unmodifiable
         ---
         {method} + getters
@@ -55,7 +55,7 @@ package persistence {
     }
 
     class PersistenceLanguage {
-        {field} - code: String [0-9a-zA-z\-]{2} unmodifiable
+        {field} - tag: String [a-z]{2}(?:-[A-Z]{2})? unmodifiable
         {field} - name: String [0-9a-zA-z\-]+ unmodifiable
         ---
         {method} + getters
