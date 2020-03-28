@@ -65,8 +65,8 @@ package persistence {
 
 User "each" o-down- "one" Language:  has
 
-PersistenceEntity <|-up- PersistenceUser
-PersistenceEntity <|-up- PersistenceLanguage
+PersistenceEntity <|-- PersistenceUser
+PersistenceEntity <|-- PersistenceLanguage
 PersistenceUser "each" o-- "one" PersistenceLanguage: has
 
 
