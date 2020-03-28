@@ -158,8 +158,7 @@ entities. It has a two fields:
 Since `Language`s are value object, they should always be embedded into other entities, and never 
 referenced only by their `name` or `tag` when passed over the boundary.
 
-The primary method for fetching adn storing a `language` outside the user data model should be its 
-`tag`.
+The primary method for fetching and storing a `Language` is the `tag` attribute.
 
 ##### `User` class
 
