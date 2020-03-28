@@ -3,13 +3,13 @@
 entity user {
     id: UUID (PostgreSQL) or BINARY(16) (MySQL)
     \tCONSTRAINT user_pk_id PRIMARY KEY
-    created_utc: TIMESTAMP NOT NULL
-    \tDEFAULT NOW()
-    ==
+    ===
     name: VARCHAR(255) NOT NULL
     \tCONSTRAINT user_unique_name UNIQUE
     email: VARCHAR(255) NOT NULL
     \tCONSTRAINT user_unique_email UNIQUE
+    created_utc: TIMESTAMP NOT NULL
+    \tDEFAULT NOW()
     displayName: VARCHAR(255)
     first_name: VARCHAR(255)
     last_name: VARCHAR(255)
