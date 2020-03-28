@@ -7,5 +7,5 @@ Thus, readers are advised to install a tool to render PlantUML diagrams.
 # [Documentation][documentation]
 
 [markdown]: https://www.markdownguide.org/getting-started/
-[olantUml]: https://plantuml.com/
+[plantUml]: https://plantuml.com/
 [documentation]: doc/README.md
