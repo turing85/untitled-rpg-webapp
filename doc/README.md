@@ -2,6 +2,7 @@
 
 The application is structured with a [Domain-driven design][ddd]. In particular, we want to use
 [bounded contexts][boundedContext], whereby:
+
 - Each microservice defines its own bounded context and ubiquitous language. 
 - Multiple microservices can create a common bounded context. Here, the least common denominator
   (i.e. the terms common to all microservices build the bounded context of that group). Similarly,
