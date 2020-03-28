@@ -22,7 +22,7 @@ entity user {
     preferredLanguage: VARCHAR(5) NOT NULL
     \tCONSTRAINT user_fk_language
     \t\tREFERENCES language(tag) NOT NULL
-    \tDEFAULT 'en_US'
+    \tDEFAULT 'en-US'
     --
     birthday: DATE
     --

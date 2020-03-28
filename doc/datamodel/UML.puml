@@ -14,17 +14,17 @@ package domain {
         {field} - bio: String nullable
         {field} - hoursPlayed: int not negative
         {field} - avatar: tbd nullable
-        ---
+        --
         {method}+ getters
         {method}+ equals(...): boolean
     }
 
     class Language {
-        value type
-        ===
+        value object
+        ==
         {field} - tag: String [a-z]{2}(?:-[A-Z]{2})?da unmodifiable <<ID>>
         {field} - name: String [0-9a-zA-z\-]+ unmodifiable
-        ---
+        --
         {method} + getters
         {method} + equals(...): boolean
     }
@@ -34,7 +34,7 @@ package persistence {
 
     abstract class PersistenceEntity {
         {field} - id: UUID unmodifiable
-        ---
+        --
         {method} + getId(): UUID
     }
 
@@ -50,14 +50,14 @@ package persistence {
         {field} - bio: String nullable
         {field} - hoursPlayed: int not negative
         {field} - avatar: tbd nullable
-        ---
+        --
         {method}+ getters
     }
 
     class PersistenceLanguage {
         {field} - tag: String [a-z]{2}(?:-[A-Z]{2})? unmodifiable
         {field} - name: String [0-9a-zA-z\-]+ unmodifiable
-        ---
+        --
         {method} + getters
     }
 
@@ -66,9 +66,7 @@ package persistence {
 User "each" o-down- "one" Language:  has
 
 PersistenceEntity <|-- PersistenceUser
-PersistenceEntity <|-- PersistenceLanguage
 PersistenceUser "each" o-- "one" PersistenceLanguage: has
-
 
 PersistenceUser <-left-> User: maps to
 PersistenceLanguage <-left-> Language: maps to

@@ -9,13 +9,16 @@ objects, rather than destructuring the data into two tables, the "owning" side s
 exposed beyond the persistence layer.
 
 #### 64-bit integral as technical identifier
-Each entity and value object in the domain should be identifiable by a 64-bit integral value to
+Each entity in the domain should be identifiable by a 64-bit integral value to
 
 - improve database performance and
 - conserve database storage.
 
 The corresponding attribute should be called `id`. If PostgreSQL is used, each table should have its
 own sequence to generate its primary key. 
+
+Value keys may define a technical key. However, if a unique natural key exists and if this key is 
+small, it may be used as primary key.
 
 #### `UUID` for offline compatibility
 
@@ -110,17 +113,20 @@ The data model is shown in the [UML diagram][uml]. The corresponding database sc
 
 #### General Persistence data model
 
-Every persisted object should have an attribute `id` that is a version 4 random `UUID`.
+Every persistence object should have an attribute `id` that is a version 4 random `UUID`.
 Once  assigned, the `id` is immutable. The `id` is for service-internal use only and should not be 
 exposed to external actors. Other unique identifiers, like names, should be exposed to external
 actors.
 
 The `id` attribute does not cross the boundary into the business- or entity layer.
 
+If a persistence value object uses a natural key as its primary kay, it does not need an `id`. 
+
 ##### Base for all entities
 
 To avoid boilerplate code, we want to use an abstract class `PersistenceEntity` as base for all 
-persistence entities. This entity has only one field `id` of type `UUID`.
+persistence entities. This entity has only one field `id` of type `UUID`. Value objects that use
+an `id` should also extend this class.
 
 ##### Persistence classes
 
@@ -141,11 +147,11 @@ adding new languages to the application.
 This class represents languages. It is a a value object and only used in the context of other 
 entities. It has a two fields:
 
-- `name` holding the name of the language as `String`, and
-- `tag` holding the [ISO 639-1 language code][iso639-1] alpha-2 code (lowercase), optionally 
-        followed by an underscore and a [ISO 3166-1][iso3166-1] alpha-2 code (uppercase), as 
-        `String` (`[a-z]{2}(?:-[A-Z]{2})?` (this is a subset of the [IETF language tags][ietfLang]).
-        Examples are `de` for standard german and `de-AT` for austrian german.
+- A `tag` holding the [ISO 639-1 language code][iso639-1] alpha-2 code (lowercase), optionally 
+  followed by an underscore and a [ISO 3166-1][iso3166-1] alpha-2 code (uppercase), as `String` 
+  (`[a-z]{2}(?:-[A-Z]{2})?` (this is a subset of the [IETF language tags][ietfLang]). Examples are
+  `de` for standard german and `de-AT` for austrian german.
+- `name` holding the name of the language as `String`.
 
 Since `Language`s are value object, they should always be embedded into other entities, and never 
 referenced only by their `name` or `tag` when passed over the boundary.
