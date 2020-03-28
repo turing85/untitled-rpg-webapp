@@ -6,7 +6,7 @@ This document serves as a guideline for implementing features for the applicatio
 
 ##### Code style
 
-tba.
+TBA.
 
 ##### Java 11 features
 We want to be nullsafe without much overhead. Thus, we want to return [`Optional`s][optionalApi]
