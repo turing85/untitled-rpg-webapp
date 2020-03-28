@@ -33,7 +33,7 @@ package domain {
 package persistence {
 
     abstract class PersistenceEntity {
-        {field} - id: UUID unmodifiable
+        {field} - id: Long unmodifiable
         --
         {method} + getId(): UUID
     }

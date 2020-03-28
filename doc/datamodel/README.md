@@ -125,8 +125,10 @@ If a persistence value object uses a natural key as its primary kay, it does not
 ##### Base for all entities
 
 To avoid boilerplate code, we want to use an abstract class `PersistenceEntity` as base for all 
-persistence entities. This entity has only one field `id` of type `UUID`. Value objects that use
-an `id` should also extend this class.
+persistence entities. This entity has only one field `id` of type `Long`. The wrapper-class is used
+to allow the persistence layer detection of detached entities through null check. 
+
+Value objects using an `id` should also extend this class.
 
 ##### Persistence classes
 
