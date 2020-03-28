@@ -22,7 +22,7 @@ package domain {
     class Language {
         value type
         ===
-        {field} - tag: String [a-z]{2}(?:-[A-Z]{2})? unmodifiable <<ID>>
+        {field} - tag: String [a-z]{2}(?:-[A-Z]{2})?da unmodifiable <<ID>>
         {field} - name: String [0-9a-zA-z\-]+ unmodifiable
         ---
         {method} + getters

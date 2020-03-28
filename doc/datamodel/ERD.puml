@@ -9,17 +9,16 @@ entity user {
     email: VARCHAR(255) NOT NULL
     \tCONSTRAINT user_unique_email UNIQUE
     created_utc: TIMESTAMP NOT NULL
-    \tDEFAULT NOW()
     displayName: VARCHAR(255)
     first_name: VARCHAR(255)
     last_name: VARCHAR(255)
     preferredLanguage: UUID NOT NULL
     \tCONSTRAINT user_fk_language
-    \t\tREFERENCES language(id)
-    \tDEFAULT (id of english)
+    \t\tREFERENCES language(id) NOT NULL
+    \tDEFAULT (id of en_US)
     birthday: DATE
     bio: TEXT
-    hours_played: INT NOT NULL
+    hours_played: INT NOT NULL DEFAULT 0
     avatar: BYTEA (PostgreSQL) or BLOB (MySQL)
     ---
     ---
