@@ -108,8 +108,16 @@ assumed when retrieved).
 
 #### Documentation Resources
 
-The data model is shown in the [UML diagram][uml]. The corresponding database schema is shown in the
-[ERD diagram][erd].
+The data model is generated from [figures/UML.puml][uml]. The corresponding 
+database schema generated from [figures/ERD.puml][erd].
+
+UML diagram:
+
+![UML][umlImg]
+
+ERD diagram:
+
+![ERD][erdImg]
 
 #### General Persistence data model
 
@@ -166,9 +174,10 @@ A `User` is an aggregate object, holding the `id`s of other entities a `User` po
 part in(for example `Character`s or `Game`s).
  
 To external actors, a `User` is identified by her or his unique `name`. Once set, the `name` cannot
-be changed. The `name` is a `String` and is constrained by the regular expression `[0-9a-zA-Z\-]+`.
-Furthermore, each `User` has a unique `email`, also represented by a `String`. Furthermore, the
- application sets a field`created` of type `Instant` as the point in time when the user was created.
+be changed. The `name` is a `String` and is constrained by the regular expression 
+`[0-9a-zA-Z\-]{3,16}`. Furthermore, each `User` has a unique `email`, also represented by a 
+`String`. Furthermore, the application sets a field`created` of type `Instant` as the point in time 
+when the user was created.
 
 Mutable fields of a `User` are:
 
@@ -202,8 +211,10 @@ What type do we want to use for the `avatar`?
 [uuid-ossp]: https://www.postgresql.org/docs/10/uuid-ossp.html
 [jpaUuidBin16]: https://phauer.com/2016/uuids-hibernate-mysql/
 [snakeCase]: https://en.wikipedia.org/wiki/Snake_case
-[uml]: UML.puml
-[erd]: ERD.puml
+[uml]: figures/UML.puml
+[erd]: figures/ERD.puml
+[erdImg]: figures/ERD.png
+[umlImg]: figures/UML.png
 [iso639-1]: https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 [iso3166-1]: https://en.wikipedia.org/wiki/ISO_3166-1
 [ietfLang]: https://en.wikipedia.org/wiki/IETF_language_tag

@@ -5,7 +5,7 @@ entity user {
     \tAUTOINCREMENT (only for MySQL)
     \tCONSTRAINT user_pk_id PRIMARY KEY
     --
-    name: VARCHAR(255) NOT NULL
+    name: VARCHAR(16) NOT NULL
     \tCONSTRAINT user_unique_name UNIQUE
     --
     email: VARCHAR(255) NOT NULL
