@@ -10,7 +10,7 @@ services:
     ports:
       - '15432:5432'
   keycloak:
-    image: jboss/keycloak:8.0.1@sha256:9a91f646de4becefbae9bd3e5e0cd8de21bf17a22055ccabff324798c2be68a0
+    image: jboss/keycloak:9.0.2@sha256:4d1013ff0a26d535140374a667a82da7a0271413d4efe283ff0bf1c6055d9ab9
     volumes:
       - ./test-realm.json:/tmp/test-realm.json
     environment:
