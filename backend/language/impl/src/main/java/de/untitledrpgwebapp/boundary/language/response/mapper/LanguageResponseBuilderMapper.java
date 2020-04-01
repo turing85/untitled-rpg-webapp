@@ -1,4 +1,4 @@
-package de.untitledrpgwebapp.de.untitledrpgwebapp.boundary.language.response.mapper;
+package de.untitledrpgwebapp.boundary.language.response.mapper;
 
 import de.untitledrpgwebapp.boundary.language.response.LanguageResponseBuilder;
 import de.untitledrpgwebapp.model.Language;
