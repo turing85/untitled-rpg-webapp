@@ -16,7 +16,4 @@ export class DashboardPageComponent implements OnInit {
     this.user$ = this.userService.getUserDetails();
   }
 
-  logout(){
-    this.userService.logout();
-  }
 }
