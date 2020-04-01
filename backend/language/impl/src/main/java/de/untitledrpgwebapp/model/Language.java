@@ -7,6 +7,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 public class Language {
+
   @NonNull
   private final String code;
 

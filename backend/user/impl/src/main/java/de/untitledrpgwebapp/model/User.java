@@ -12,6 +12,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder
 public class User extends BaseEntity<User> {
+
   @NonNull
   private final String name;
 

@@ -1,10 +1,10 @@
 package de.untitledrpgwebapp.domain.user.impl.config;
 
+import de.untitledrpgwebapp.boundary.language.response.mapper.LanguageResponseBuilderMapper;
 import de.untitledrpgwebapp.boundary.user.UserRepository;
 import de.untitledrpgwebapp.boundary.user.request.SaveUserRequest;
 import de.untitledrpgwebapp.boundary.user.request.mapper.CreateUserRequestMapper;
 import de.untitledrpgwebapp.boundary.user.request.mapper.SaveUserRequestMapper;
-import de.untitledrpgwebapp.boundary.language.response.mapper.LanguageResponseBuilderMapper;
 import de.untitledrpgwebapp.domain.language.FetchLanguageByCodeUseCase;
 import java.util.function.Supplier;
 import lombok.Getter;

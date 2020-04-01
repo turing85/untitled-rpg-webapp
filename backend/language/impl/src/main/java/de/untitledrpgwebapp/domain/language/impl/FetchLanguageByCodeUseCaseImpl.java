@@ -14,7 +14,6 @@ public class FetchLanguageByCodeUseCaseImpl implements FetchLanguageByCodeUseCas
     this.languageRepository = languageRepository;
   }
 
-
   @Override
   public Optional<LanguageResponseBuilder> execute(FetchLanguageByCodeRequest request) {
     return languageRepository.findByCode(request.getCode())

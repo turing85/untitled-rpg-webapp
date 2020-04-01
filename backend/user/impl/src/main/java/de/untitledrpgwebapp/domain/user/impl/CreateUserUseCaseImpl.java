@@ -1,5 +1,6 @@
 package de.untitledrpgwebapp.domain.user.impl;
 
+import de.untitledrpgwebapp.boundary.language.response.mapper.LanguageResponseBuilderMapper;
 import de.untitledrpgwebapp.boundary.user.UserRepository;
 import de.untitledrpgwebapp.boundary.user.request.CreateUserRequest;
 import de.untitledrpgwebapp.boundary.user.request.SaveUserRequest;
@@ -7,7 +8,6 @@ import de.untitledrpgwebapp.boundary.user.request.impl.FetchLanguageByCodeReques
 import de.untitledrpgwebapp.boundary.user.request.mapper.CreateUserRequestMapper;
 import de.untitledrpgwebapp.boundary.user.request.mapper.SaveUserRequestMapper;
 import de.untitledrpgwebapp.boundary.user.response.UserResponseBuilder;
-import de.untitledrpgwebapp.boundary.language.response.mapper.LanguageResponseBuilderMapper;
 import de.untitledrpgwebapp.domain.language.FetchLanguageByCodeUseCase;
 import de.untitledrpgwebapp.domain.user.CreateUserUseCase;
 import de.untitledrpgwebapp.domain.user.impl.config.CreateUserUseCaseImplConfig;

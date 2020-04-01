@@ -1,7 +1,7 @@
 package de.untitledrpgwebapp.boundary.user.response.mapper;
 
-import de.untitledrpgwebapp.boundary.user.response.UserResponseBuilder;
 import de.untitledrpgwebapp.boundary.language.response.mapper.LanguageResponseBuilderMapper;
+import de.untitledrpgwebapp.boundary.user.response.UserResponseBuilder;
 import de.untitledrpgwebapp.model.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
