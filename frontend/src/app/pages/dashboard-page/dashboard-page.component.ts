@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from 'src/app/shared/services/user.service';
+import { Observable } from 'rxjs';
+import { User } from 'src/app/model/user/user.keycloak.model';
 
 @Component({
   selector: 'rpg-dashboard-page',
@@ -6,10 +9,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashboard-page.component.sass']
 })
 export class DashboardPageComponent implements OnInit {
-
-  constructor() { }
+  user$: Observable<User>;
+  constructor(private userService: UserService) {}
 
   ngOnInit(): void {
+    this.user$ = this.userService.getUserDetails();
   }
 
+  logout(){
+    this.userService.logout();
+  }
 }

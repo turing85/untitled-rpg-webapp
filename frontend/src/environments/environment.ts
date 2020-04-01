@@ -7,8 +7,8 @@ import { KeycloakConfig } from 'keycloak-angular';
 // Add here your keycloak setup infos
 const keycloakConfig:KeycloakConfig= {
   url: 'http://localhost:8090/auth',
-  realm: 'cors',
-  clientId: 'cors',
+  realm: 'test',
+  clientId: 'test',
 
 };
 

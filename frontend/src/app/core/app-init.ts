@@ -5,8 +5,8 @@ export function initializer(keycloak: KeycloakService): () => Promise<any> {
     keycloak.init({
       config: {
         url: 'http://localhost:8090/auth',
-        realm: 'cors',
-        clientId: 'cors'
+        realm: 'test',
+        clientId: 'test'
       },
       initOptions: {
         onLoad: 'check-sso',
