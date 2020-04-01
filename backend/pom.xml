@@ -5,9 +5,9 @@
   <modelVersion>4.0.0</modelVersion>
   <packaging>pom</packaging>
   <modules>
-    <module>model</module>
-    <module>domain</module>
-    <module>boundary</module>
+    <module>common</module>
+    <module>language</module>
+    <module>user</module>
   </modules>
 
   <parent>
