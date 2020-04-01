@@ -4,21 +4,26 @@ import { LandingPageComponent } from './pages/landing-page/landing-page.componen
 import { AppAuthGuard } from './core/guards/app-auth-guard.guard';
 import { DashboardPageModule } from './pages/dashboard-page/dashboard-page.module';
 import { LandingPageModule } from './pages/landing-page/landing-page.module';
+import { ForbiddenPageModule } from './pages/forbidden-page/forbidden-page.module';
 
 const routes: Routes = [
   {
     path: 'public',
-    loadChildren: () => LandingPageModule,
+    loadChildren: () => LandingPageModule
   },
   {
     path: 'dashboard',
     loadChildren: () => DashboardPageModule,
     canActivate: [AppAuthGuard],
-    data: { roles: [ 'user'] }
+    data: { roles: ['user'] }
+  },
+  {
+    path: 'forbidden',
+    component: ForbiddenPageModule
   },
   {
     path: '**',
-    loadChildren: () => LandingPageModule,
+    loadChildren: () => LandingPageModule
   }
 ];
 
