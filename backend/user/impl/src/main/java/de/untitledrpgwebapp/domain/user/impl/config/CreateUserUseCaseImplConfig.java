@@ -1,11 +1,10 @@
 package de.untitledrpgwebapp.domain.user.impl.config;
 
-import de.untitledrpgwebapp.boundary.language.response.mapper.LanguageResponseBuilderMapper;
+import de.untitledrpgwebapp.boundary.auth.request.CreateAccountRequest;
 import de.untitledrpgwebapp.boundary.user.UserRepository;
-import de.untitledrpgwebapp.boundary.user.request.SaveUserRequest;
-import de.untitledrpgwebapp.boundary.user.request.mapper.CreateUserRequestMapper;
-import de.untitledrpgwebapp.boundary.user.request.mapper.SaveUserRequestMapper;
-import de.untitledrpgwebapp.domain.language.FetchLanguageByCodeUseCase;
+import de.untitledrpgwebapp.boundary.user.mapper.UserMapper;
+import de.untitledrpgwebapp.domain.auth.CreateAccountUseCase;
+import de.untitledrpgwebapp.domain.language.FindLanguageByCodeUseCase;
 import java.util.function.Supplier;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
@@ -14,10 +13,9 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class CreateUserUseCaseImplConfig {
 
-  private final CreateUserRequestMapper createUserRequestMapper;
-  private final SaveUserRequestMapper saveUserRequestMapper;
-  private final LanguageResponseBuilderMapper languageResponseBuilderMapper;
+  private final UserMapper userMapper;
   private final UserRepository userRepository;
-  private final FetchLanguageByCodeUseCase fetchLanguageByNameUseCase;
-  private Supplier<SaveUserRequest> saveUserRequestSupplier;
+  private final FindLanguageByCodeUseCase fetchLanguageByNameUseCase;
+  private CreateAccountUseCase createAccount;
+  private Supplier<CreateAccountRequest> createAccountRequestSupplier;
 }

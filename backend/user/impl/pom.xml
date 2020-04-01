@@ -2,20 +2,23 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
   <parent>
     <artifactId>user</artifactId>
     <groupId>de.nextrpgdevs</groupId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>user.model</artifactId>
+  <artifactId>user.impl</artifactId>
   <dependencies>
     <!-- Sibling projects -->
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
-      <artifactId>language.impl</artifactId>
-      <version>${project.version}</version>
+      <artifactId>user.api</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+      <scope>compile</scope>
     </dependency>
 
     <!-- Annotation processors -->
@@ -26,15 +29,23 @@
     </dependency>
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
-      <artifactId>common</artifactId>
+      <artifactId>auth.api</artifactId>
       <version>0.0.1-SNAPSHOT</version>
       <scope>compile</scope>
     </dependency>
+
+    <!-- Testing -->
     <dependency>
-      <groupId>de.nextrpgdevs</groupId>
-      <artifactId>user.api</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
-      <scope>compile</scope>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-junit-jupiter</artifactId>
     </dependency>
   </dependencies>
 

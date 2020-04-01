@@ -1,14 +1,21 @@
 package de.untitledrpgwebapp.domain;
 
-public interface UseCase<I, O> {
+import java.util.function.Function;
+
+public interface UseCase<R, S> extends Function<R, S> {
 
   /**
-   * Executes the specific input, on the given in- and output.
+   * Executes the specific request, on the given in- and output.
    *
-   * @param input
-   *     the input.
+   * @param request
+   *     the request.
    *
    * @return the output.
    */
-  O execute(I input);
+  S execute(R request);
+
+  @Override
+  default S apply(R response) {
+    return execute(response);
+  }
 }
