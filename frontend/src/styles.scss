@@ -1,6 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 @import 'styles/sidebar';
 @import 'styles/debug';
+@import 'styles/breadcrumb.scss';
+@import 'styles/content-header.scss';
 
 $grey-3: #3d3d3d;
 $text-color: #efefef;
@@ -21,12 +23,11 @@ p {
   padding-bottom: 16px;
 }
 
-.content {
-  margin: 10px;
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+.main-page {
   width: 100%;
-  //background-color: $sidebar-grey-2;
+  .content {
+    margin: 10px;
+    background-color: $sidebar-grey-2;
+  }
 }
+

@@ -5,8 +5,7 @@ import { User } from 'src/app/model/user/user.keycloak.model';
 
 @Component({
   selector: 'rpg-dashboard-page',
-  templateUrl: './dashboard-page.component.html',
-  styleUrls: ['./dashboard-page.component.sass']
+  templateUrl: './dashboard-page.component.html'
 })
 export class DashboardPageComponent implements OnInit {
   user$: Observable<User>;
