@@ -31,11 +31,9 @@ import org.junit.jupiter.api.Test;
 @DisplayName("Tests for CreateUserInDatabaseUseCase unit")
 class CreateUserInDatabaseUseCaseTest {
 
-  private UserMapper userMapper;
   private UserRepository userRepository;
   private FindLanguageByCodeUseCase findLanguageByCode;
   private CreateAccountUseCase createAccount;
-  private Supplier<CreateAccountRequest> createAccountRequestSupplier;
 
   private String preferredLanguageCode = "preferredLanguageCode";
   private UUID correlationId = UUID.randomUUID();
@@ -43,7 +41,6 @@ class CreateUserInDatabaseUseCaseTest {
   private CreateAccountRequest createAccountRequest;
   private UserResponseBuilder userResponseBuilder;
   private UserBuilder userBuilder;
-  private LanguageResponseBuilder languageResponseBuilder;
 
   private CreateUserInDatabaseUseCase sut;
 
@@ -56,7 +53,7 @@ class CreateUserInDatabaseUseCaseTest {
     when(createUserRequest.getPreferredLanguageCode()).thenReturn(preferredLanguageCode);
     when(createUserRequest.getUserResponseBuilder()).thenReturn(userResponseBuilder);
 
-    languageResponseBuilder = mock(LanguageResponseBuilder.class);
+    LanguageResponseBuilder languageResponseBuilder = mock(LanguageResponseBuilder.class);
     when(languageResponseBuilder.getCode()).thenReturn(preferredLanguageCode);
     findLanguageByCode = mock(FindLanguageByCodeUseCase.class);
     when(findLanguageByCode.execute(any(FindLanguageByCodeRequest.class)))
@@ -66,12 +63,12 @@ class CreateUserInDatabaseUseCaseTest {
 
     createAccountRequest = mock(CreateAccountRequest.class);
     when(createAccountRequest.setCorrelationId(any(UUID.class))).thenReturn(createAccountRequest);
-    userMapper = mock(UserMapper.class);
+    UserMapper userMapper = mock(UserMapper.class);
     when(userMapper.requestToRequest(
         any(CreateUserRequest.class),
         any(CreateAccountRequest.class))
     ).thenReturn(createAccountRequest);
-    createAccountRequestSupplier = (Supplier<CreateAccountRequest>) mock(Supplier.class);
+    Supplier<CreateAccountRequest> createAccountRequestSupplier = mock(Supplier.class);
     when(createAccountRequestSupplier.get()).thenReturn(createAccountRequest);
     createAccount = mock(CreateAccountUseCase.class);
 
@@ -118,7 +115,6 @@ class CreateUserInDatabaseUseCaseTest {
   @DisplayName("Should throw a LanguageNotFoundException if the language is not found")
   void shouldThrowLanguageNotFoundExceptionWhenLanguageIsNotFound() {
     // GIVEN
-    UserResponseBuilder expected = userResponseBuilder;
     when(findLanguageByCode.execute(any(FindLanguageByCodeRequest.class)))
         .thenReturn(Optional.empty());
 

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>backend</artifactId>
+        <groupId>de.nextrpgdevs</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>testaggregation</artifactId>
+    <packaging>pom</packaging>
+
+    <dependencies>
+        <!-- auth -->
+        <dependency>
+            <groupId>de.nextrpgdevs</groupId>
+            <artifactId>auth.api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.nextrpgdevs</groupId>
+            <artifactId>auth.common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.nextrpgdevs</groupId>
+            <artifactId>auth.impl</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.nextrpgdevs</groupId>
+            <artifactId>auth.spi</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- common -->
+        <dependency>
+            <groupId>de.nextrpgdevs</groupId>
+            <artifactId>common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- language -->
+        <dependency>
+            <groupId>de.nextrpgdevs</groupId>
+            <artifactId>language.api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.nextrpgdevs</groupId>
+            <artifactId>language.common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.nextrpgdevs</groupId>
+            <artifactId>language.impl</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.nextrpgdevs</groupId>
+            <artifactId>language.spi</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- user -->
+        <dependency>
+            <groupId>de.nextrpgdevs</groupId>
+            <artifactId>user.api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.nextrpgdevs</groupId>
+            <artifactId>user.common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.nextrpgdevs</groupId>
+            <artifactId>user.impl</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.nextrpgdevs</groupId>
+            <artifactId>user.spi</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+    </dependencies>
+
+    <profiles>
+        <profile>
+            <id>unit-test-coverage</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>aggregate-reports-ut</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>report-aggregate</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${project.reporting.outputDirectory}/jacoco-aggregate-ut
+                                    </outputDirectory>
+                                    <dataFileExcludes>
+                                        <dataFileExclude>**/target/jacoco-it.exec</dataFileExclude>
+                                    </dataFileExcludes>
+                                    <excludes>${jacoco.exclusions}</excludes>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>
