@@ -1,8 +1,16 @@
 <main>
   <rpg-sidebar></rpg-sidebar>
-  <div class="content">
+
+  <div class="main-page">
+    <div class="content-header">
+      <rpg-breadcrumb class="breadcrumb" [path]="[{ name: 'Dashboard' }]"></rpg-breadcrumb>
+      <div class="spacer"></div>
+      <rpg-searchfield class="searchfield"></rpg-searchfield>
+    </div>
+    <div class="content">
     <h1>Dashboard</h1>
     <p>dashboard-page works!</p>
     {{ user$ | async | json }}
+  </div>
   </div>
 </main>
