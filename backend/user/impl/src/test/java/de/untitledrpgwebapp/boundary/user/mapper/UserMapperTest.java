@@ -5,6 +5,7 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyCollection;
+import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.same;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -16,6 +17,7 @@ import de.untitledrpgwebapp.boundary.user.response.UserResponseBuilder;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -50,8 +52,8 @@ class UserMapperTest {
     assertThat(actual, hasSize(2));
     assertThat(actual, containsInAnyOrder(expected.toArray()));
 
-    verify(sut).requestToRequest(same(userBuilderOne), any());
-    verify(sut).requestToRequest(same(userBuilderTwo), any());
+    verify(sut).requestToRequest(same(userBuilderOne), argThat(Objects::nonNull));
+    verify(sut).requestToRequest(same(userBuilderTwo), argThat(Objects::nonNull));
 
 
   }

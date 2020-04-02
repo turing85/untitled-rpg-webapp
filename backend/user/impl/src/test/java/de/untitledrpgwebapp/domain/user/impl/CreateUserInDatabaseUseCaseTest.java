@@ -10,16 +10,15 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import de.untitledrpgwebapp.boundary.auth.request.CreateAccountRequest;
-import de.untitledrpgwebapp.boundary.language.request.FindLanguageByCodeRequest;
 import de.untitledrpgwebapp.boundary.language.response.LanguageResponseBuilder;
+import de.untitledrpgwebapp.boundary.oauth2.request.CreateAccountRequest;
 import de.untitledrpgwebapp.boundary.user.UserRepository;
 import de.untitledrpgwebapp.boundary.user.mapper.UserMapper;
 import de.untitledrpgwebapp.boundary.user.request.CreateUserRequest;
 import de.untitledrpgwebapp.boundary.user.response.UserBuilder;
 import de.untitledrpgwebapp.boundary.user.response.UserResponseBuilder;
-import de.untitledrpgwebapp.domain.auth.CreateAccountUseCase;
 import de.untitledrpgwebapp.domain.language.FindLanguageByCodeUseCase;
+import de.untitledrpgwebapp.domain.oauth2.CreateAccountUseCase;
 import de.untitledrpgwebapp.exception.LanguageNotFoundException;
 import java.util.Optional;
 import java.util.UUID;
@@ -56,29 +55,25 @@ class CreateUserInDatabaseUseCaseTest {
     LanguageResponseBuilder languageResponseBuilder = mock(LanguageResponseBuilder.class);
     when(languageResponseBuilder.getCode()).thenReturn(preferredLanguageCode);
     findLanguageByCode = mock(FindLanguageByCodeUseCase.class);
-    when(findLanguageByCode.execute(any(FindLanguageByCodeRequest.class)))
+    when(findLanguageByCode.execute(any()))
         .thenReturn(Optional.of(new TestLanguageResponseBuilder()));
-    when(findLanguageByCode.execute(any(FindLanguageByCodeRequest.class)))
-        .thenReturn(Optional.of(languageResponseBuilder));
+    when(findLanguageByCode.execute(any())).thenReturn(Optional.of(languageResponseBuilder));
 
     createAccountRequest = mock(CreateAccountRequest.class);
-    when(createAccountRequest.setCorrelationId(any(UUID.class))).thenReturn(createAccountRequest);
+    when(createAccountRequest.setCorrelationId(any())).thenReturn(createAccountRequest);
     UserMapper userMapper = mock(UserMapper.class);
-    when(userMapper.requestToRequest(
-        any(CreateUserRequest.class),
-        any(CreateAccountRequest.class))
-    ).thenReturn(createAccountRequest);
+    when(userMapper.requestToRequest(any(CreateUserRequest.class), any()))
+        .thenReturn(createAccountRequest);
     Supplier<CreateAccountRequest> createAccountRequestSupplier = mock(Supplier.class);
     when(createAccountRequestSupplier.get()).thenReturn(createAccountRequest);
     createAccount = mock(CreateAccountUseCase.class);
 
-    when(userMapper.requestToRequest(any(UserBuilder.class), any(UserResponseBuilder.class)))
+    when(userMapper.requestToRequest(any(UserBuilder.class), any()))
         .thenReturn(userResponseBuilder);
     userBuilder = mock(UserBuilder.class);
-    when(userBuilder.setCorrelationId(any(UUID.class))).thenReturn(userBuilder);
+    when(userBuilder.setCorrelationId(any())).thenReturn(userBuilder);
     userRepository = mock(UserRepository.class);
-    when(userRepository.save(any(CreateUserRequest.class)))
-        .thenReturn(Optional.of(userBuilder));
+    when(userRepository.save(any())).thenReturn(Optional.of(userBuilder));
 
     sut = new CreateUserInDatabaseUseCase(
         userMapper,
@@ -115,19 +110,18 @@ class CreateUserInDatabaseUseCaseTest {
   @DisplayName("Should throw a LanguageNotFoundException if the language is not found")
   void shouldThrowLanguageNotFoundExceptionWhenLanguageIsNotFound() {
     // GIVEN
-    when(findLanguageByCode.execute(any(FindLanguageByCodeRequest.class)))
-        .thenReturn(Optional.empty());
+    when(findLanguageByCode.execute(any())).thenReturn(Optional.empty());
 
     String expectedMessage =
         String.format(LanguageNotFoundException.MESSAGE_FORMAT, preferredLanguageCode);
     // WHEN
-    LanguageNotFoundException e = assertThrows(
+    LanguageNotFoundException exception = assertThrows(
         LanguageNotFoundException.class,
         () -> sut.execute(createUserRequest));
 
     // THEN
-    assertEquals(expectedMessage, e.getMessage());
-    assertEquals(correlationId, e.getCorrelationId());
+    assertEquals(expectedMessage, exception.getMessage());
+    assertEquals(correlationId, exception.getCorrelationId());
   }
 
   private static class TestLanguageResponseBuilder implements LanguageResponseBuilder {

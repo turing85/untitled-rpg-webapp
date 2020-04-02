@@ -35,7 +35,7 @@ class FindAllUsersFromDatabaseUseCaseTest {
 
     List<UserBuilder> foundUsers = Collections.emptyList();
     UserRepository userRepository = mock(UserRepository.class);
-    when(userRepository.findAll(any(FindAllUsersRequest.class))).thenReturn(foundUsers);
+    when(userRepository.findAll(any())).thenReturn(foundUsers);
     List<UserResponseBuilder> expected = Collections.emptyList();
     UserMapper userMapper = mock(UserMapper.class);
     when(userMapper.requestsToRequests(anyCollection(), any())).thenReturn(expected);

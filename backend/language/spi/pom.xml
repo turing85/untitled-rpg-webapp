@@ -14,8 +14,8 @@
   <artifactId>language.spi</artifactId>
 
   <dependencies>
+    <!-- Sibling modules -->
     <dependency>
-      <!-- Sibling modules -->
       <groupId>de.nextrpgdevs</groupId>
       <artifactId>language.common</artifactId>
       <version>${project.version}</version>

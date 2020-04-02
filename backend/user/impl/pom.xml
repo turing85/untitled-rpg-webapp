@@ -13,43 +13,17 @@
 
   <artifactId>user.impl</artifactId>
   <dependencies>
-    <!-- Sibling projects -->
+    <!-- Sibling modules -->
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
       <artifactId>user.api</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
-      <scope>compile</scope>
-    </dependency>
-
-    <!-- Annotation processors -->
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
+      <version>${project.version}</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
-      <artifactId>auth.api</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
-      <scope>compile</scope>
-    </dependency>
-
-    <!-- Testing -->
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-core</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-junit-jupiter</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.hamcrest</groupId>
-      <artifactId>hamcrest-all</artifactId>
+      <artifactId>oauth2.api</artifactId>
+      <version>${project.version}</version>
     </dependency>
   </dependencies>
 

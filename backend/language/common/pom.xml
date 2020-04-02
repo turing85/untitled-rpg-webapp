@@ -14,8 +14,8 @@
   <artifactId>language.common</artifactId>
 
   <dependencies>
+    <!-- Sibling modules -->
     <dependency>
-      <!-- Sibling modules -->
       <groupId>de.nextrpgdevs</groupId>
       <artifactId>common</artifactId>
       <version>${project.version}</version>

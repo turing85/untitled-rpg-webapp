@@ -1,15 +1,15 @@
 package de.untitledrpgwebapp.domain.user.impl;
 
-import de.untitledrpgwebapp.boundary.auth.request.CreateAccountRequest;
 import de.untitledrpgwebapp.boundary.language.request.impl.FindLanguageByCodeRequestImpl;
 import de.untitledrpgwebapp.boundary.language.response.LanguageResponseBuilder;
+import de.untitledrpgwebapp.boundary.oauth2.request.CreateAccountRequest;
 import de.untitledrpgwebapp.boundary.user.UserRepository;
 import de.untitledrpgwebapp.boundary.user.mapper.UserMapper;
 import de.untitledrpgwebapp.boundary.user.request.CreateUserRequest;
 import de.untitledrpgwebapp.boundary.user.response.UserBuilder;
 import de.untitledrpgwebapp.boundary.user.response.UserResponseBuilder;
-import de.untitledrpgwebapp.domain.auth.CreateAccountUseCase;
 import de.untitledrpgwebapp.domain.language.FindLanguageByCodeUseCase;
+import de.untitledrpgwebapp.domain.oauth2.CreateAccountUseCase;
 import de.untitledrpgwebapp.domain.user.CreateUserUseCase;
 import de.untitledrpgwebapp.exception.LanguageNotFoundException;
 import java.util.Optional;

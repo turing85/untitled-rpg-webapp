@@ -14,8 +14,8 @@
   <artifactId>language.impl</artifactId>
 
   <dependencies>
+    <!-- Sibling modules -->
     <dependency>
-      <!-- Sibling modules -->
       <groupId>de.nextrpgdevs</groupId>
       <artifactId>language.api</artifactId>
       <version>${project.version}</version>

@@ -10,6 +10,11 @@ public abstract class BusinessException extends RuntimeException {
     this.correlationId = correlationId;
   }
 
+  public BusinessException(String message, Throwable cause, UUID correlationId) {
+    super(message, cause);
+    this.correlationId = correlationId;
+  }
+
   public UUID getCorrelationId() {
     return correlationId;
   }

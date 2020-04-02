@@ -1,6 +1,6 @@
 package de.untitledrpgwebapp.boundary.user.mapper;
 
-import de.untitledrpgwebapp.boundary.auth.request.CreateAccountRequest;
+import de.untitledrpgwebapp.boundary.oauth2.request.CreateAccountRequest;
 import de.untitledrpgwebapp.boundary.user.request.CreateUserRequest;
 import de.untitledrpgwebapp.boundary.user.response.UserBuilder;
 import de.untitledrpgwebapp.boundary.user.response.UserResponseBuilder;

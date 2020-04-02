@@ -34,7 +34,7 @@ class FindUserByNameFromDatabaseUseCaseTest {
     when(request.getUserResponseBuilder()).thenReturn(userResponseBuilder);
 
     UserBuilder found = mock(UserBuilder.class);
-    when(found.setCorrelationId(any(UUID.class))).thenReturn(found);
+    when(found.setCorrelationId(any())).thenReturn(found);
     UserRepository userRepository = mock(UserRepository.class);
     when(userRepository.findByName(any())).thenReturn(Optional.of(found));
 

@@ -17,9 +17,9 @@
   <modules>
     <module>common</module>
     <module>language</module>
+    <module>oauth2</module>
     <module>user</module>
-    <module>auth</module>
-      <module>testaggregation</module>
+    <module>testaggregation</module>
   </modules>
 
   <properties>
@@ -48,7 +48,6 @@
     <jacoco.exclusions>
       **/mapper/*MapperImpl.class
     </jacoco.exclusions>
-
   </properties>
 
   <dependencyManagement>
@@ -89,7 +88,7 @@
         <scope>test</scope>
       </dependency>
 
-      <!-- hamcrest -->
+      <!-- Hamcrest -->
       <dependency>
         <groupId>org.hamcrest</groupId>
         <artifactId>hamcrest-all</artifactId>
@@ -98,6 +97,42 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
+
+  <dependencies>
+    <!-- Annotation processors -->
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mapstruct</groupId>
+      <artifactId>mapstruct</artifactId>
+      <version>${org.mapstruct.version}</version>
+      <scope>compile</scope>
+    </dependency>
+
+    <!-- Testing -->
+    <!-- Junit -->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+    </dependency>
+    <!-- Mockito -->
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-junit-jupiter</artifactId>
+    </dependency>
+    <!-- Hamcrest -->
+    <dependency>
+      <groupId>org.hamcrest</groupId>
+      <artifactId>hamcrest-all</artifactId>
+    </dependency>
+  </dependencies>
 
   <build>
     <plugins>
