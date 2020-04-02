@@ -50,7 +50,6 @@
       **/mapper/*MapperImpl.class
     </jacoco.exclusions>
 
-
   </properties>
 
   <dependencyManagement>
