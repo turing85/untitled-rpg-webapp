@@ -106,6 +106,7 @@
                   <goal>report-aggregate</goal>
                 </goals>
                 <configuration>
+                  <skip>${skipTests}</skip>
                   <outputDirectory>
                     ${project.reporting.outputDirectory}/jacoco-aggregate-ut
                   </outputDirectory>

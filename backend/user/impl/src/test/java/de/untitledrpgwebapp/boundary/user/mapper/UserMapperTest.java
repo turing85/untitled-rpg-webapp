@@ -11,7 +11,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-
 import de.untitledrpgwebapp.boundary.user.response.UserBuilder;
 import de.untitledrpgwebapp.boundary.user.response.UserResponseBuilder;
 import java.util.Collection;

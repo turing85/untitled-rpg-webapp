@@ -23,8 +23,8 @@ public interface UserMapper {
       @MappingTarget UserResponseBuilder userResponseBuilder);
 
   /**
-   * Given a {@link Collection} of {@link UserBuilder}s and a {@link Supplier} for
-   * {@link UserResponseBuilder}s, this method maps each {@link UserBuilder} on a {@link
+   * Given a {@link Collection} of {@link UserBuilder}s and a {@link Supplier} for {@link
+   * UserResponseBuilder}s, this method maps each {@link UserBuilder} on a {@link
    * UserResponseBuilder}.
    *
    * @param requests

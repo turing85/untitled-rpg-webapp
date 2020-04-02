@@ -9,7 +9,7 @@ public class KeycloakException extends BusinessException {
     super(message, correlationId);
   }
 
-  public KeycloakException(String message, Throwable cause,  UUID correlationId) {
+  public KeycloakException(String message, Throwable cause, UUID correlationId) {
     super(message, cause, correlationId);
   }
 }
