@@ -14,9 +14,15 @@
   <artifactId>user.impls.localstore.impl</artifactId>
 
   <dependencies>
+    <!-- Sibling modules -->
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
       <artifactId>user.impls.localstore.spi</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>de.nextrpgdevs</groupId>
+      <artifactId>language.api</artifactId>
       <version>${project.version}</version>
     </dependency>
   </dependencies>

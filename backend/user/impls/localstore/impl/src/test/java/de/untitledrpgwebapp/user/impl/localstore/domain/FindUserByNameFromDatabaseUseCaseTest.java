@@ -1,20 +1,17 @@
-package de.untitledrpgwebapp.user.impl.localstore.domain.impl;
+package de.untitledrpgwebapp.user.impl.localstore.domain;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.same;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import de.untitledrpgwebapp.user.impl.localstore.boundary.UserRepository;
+import de.untitledrpgwebapp.user.boundary.UserRepository;
+import de.untitledrpgwebapp.user.boundary.request.FindUserByNameRequest;
+import de.untitledrpgwebapp.user.boundary.response.UserEntity;
+import de.untitledrpgwebapp.user.boundary.response.UserResponse;
 import de.untitledrpgwebapp.user.impl.localstore.boundary.mapper.UserMapper;
-import de.untitledrpgwebapp.user.impl.localstore.boundary.request.FindUserByNameRequest;
-import de.untitledrpgwebapp.user.impl.localstore.boundary.response.UserEntity;
-import de.untitledrpgwebapp.user.impl.localstore.boundary.response.UserResponse;
 import java.util.Optional;
 import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
@@ -24,7 +21,8 @@ import org.junit.jupiter.api.Test;
 class FindUserByNameFromDatabaseUseCaseTest {
 
   @Test
-  @DisplayName("Should call the repository and the mapper with the expected parameters")
+  @DisplayName("Should call the repository and the mapper with the expected parameters and return"
+      + " the expected response when everything is ok.")
   void shouldCallRepositoryAndMapperWithExpectedParameters() {
     // GIVEN:
     UUID correlationId = UUID.randomUUID();
@@ -36,12 +34,10 @@ class FindUserByNameFromDatabaseUseCaseTest {
     UserRepository repository = mock(UserRepository.class);
     when(repository.findByName(any())).thenReturn(Optional.of(entity));
 
-    UserResponse response = UserResponse.builder()
-        .correlationId(correlationId)
-        .build();
+    UserResponse response = UserResponse.builder().build();
 
     UserMapper mapper = mock(UserMapper.class);
-    when(mapper.entityToRequest(any())).thenReturn(response);
+    when(mapper.entityToResponse(any())).thenReturn(response);
 
     // WHEN
     Optional<UserResponse> result =
@@ -49,10 +45,9 @@ class FindUserByNameFromDatabaseUseCaseTest {
 
     // THEN
     assertTrue(result.isPresent());
-    UserResponse actual = result.get();
-    assertEquals(correlationId, actual.getCorrelationId());
+    assertEquals(correlationId, result.get().getCorrelationId());
 
-    verify(repository).findByName(same(request));
-    verify(mapper).entityToRequest(same(entity));
+    verify(repository).findByName(request);
+    verify(mapper).entityToResponse(entity);
   }
 }

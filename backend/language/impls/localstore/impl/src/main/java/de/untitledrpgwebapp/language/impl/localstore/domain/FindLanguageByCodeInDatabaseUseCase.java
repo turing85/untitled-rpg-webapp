@@ -5,14 +5,12 @@ import de.untitledrpgwebapp.language.boundary.response.LanguageResponse;
 import de.untitledrpgwebapp.language.domain.FindLanguageByCodeUseCase;
 import de.untitledrpgwebapp.language.impl.localstore.boundary.LanguageRepository;
 import java.util.Optional;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 public class FindLanguageByCodeInDatabaseUseCase implements FindLanguageByCodeUseCase {
 
   private final LanguageRepository repository;
-
-  public FindLanguageByCodeInDatabaseUseCase(LanguageRepository repository) {
-    this.repository = repository;
-  }
 
   @Override
   public Optional<LanguageResponse> execute(FindLanguageByCodeRequest request) {

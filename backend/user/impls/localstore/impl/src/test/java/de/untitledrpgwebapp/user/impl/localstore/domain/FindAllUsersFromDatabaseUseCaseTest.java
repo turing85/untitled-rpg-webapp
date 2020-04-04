@@ -1,11 +1,9 @@
-package de.untitledrpgwebapp.user.impl.localstore.domain.impl;
+package de.untitledrpgwebapp.user.impl.localstore.domain;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyCollection;
 import static org.mockito.ArgumentMatchers.same;
@@ -13,11 +11,11 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import de.untitledrpgwebapp.user.impl.localstore.boundary.UserRepository;
+import de.untitledrpgwebapp.user.boundary.UserRepository;
+import de.untitledrpgwebapp.user.boundary.request.FindAllUsersRequest;
+import de.untitledrpgwebapp.user.boundary.response.UserEntity;
+import de.untitledrpgwebapp.user.boundary.response.UserResponse;
 import de.untitledrpgwebapp.user.impl.localstore.boundary.mapper.UserMapper;
-import de.untitledrpgwebapp.user.impl.localstore.boundary.request.FindAllUsersRequest;
-import de.untitledrpgwebapp.user.impl.localstore.boundary.response.UserEntity;
-import de.untitledrpgwebapp.user.impl.localstore.boundary.response.UserResponse;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -29,11 +27,11 @@ import org.junit.jupiter.api.Test;
 class FindAllUsersFromDatabaseUseCaseTest {
 
   @Test
-  @DisplayName("Should call the repository and the mapper with the expected parameters")
+  @DisplayName("Should call the repository and the mapper with the expected parameters and return"
+      + " the expected response when everything is ok.")
   void shouldCallRepositoryAndMapperWithExpectedParameters() {
     // GIVEN
     UUID correlationId = UUID.randomUUID();
-    UserResponse response = UserResponse.builder().build();
     FindAllUsersRequest request =
         FindAllUsersRequest.builder().correlationId(correlationId).build();
 
@@ -52,11 +50,11 @@ class FindAllUsersFromDatabaseUseCaseTest {
 
     // THEN
     assertThat(actual, hasSize(responses.size()));
-    for (UserResponse actualResponse : actual) {
-      assertEquals(correlationId, actualResponse.getCorrelationId());
+    for(UserResponse response : actual) {
+      assertEquals(correlationId, response.getCorrelationId());
     }
 
-    verify(repository).findAll(same(request));
-    verify(mapper).entitiesToRequests(same(foundUsers));
+    verify(repository).findAll(request);
+    verify(mapper).entitiesToRequests(foundUsers);
   }
 }

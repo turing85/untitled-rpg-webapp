@@ -72,11 +72,6 @@
     </dependency>
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
-      <artifactId>user.common</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>de.nextrpgdevs</groupId>
       <artifactId>user.impls.localstore.impl</artifactId>
       <version>${project.version}</version>
     </dependency>

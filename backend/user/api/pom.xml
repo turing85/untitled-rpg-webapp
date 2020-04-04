@@ -17,13 +17,7 @@
     <!-- Sibling modules -->
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
-      <artifactId>user.common</artifactId>
-      <version>${project.version}</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>de.nextrpgdevs</groupId>
-      <artifactId>language.api</artifactId>
+      <artifactId>common</artifactId>
       <version>${project.version}</version>
       <scope>compile</scope>
     </dependency>

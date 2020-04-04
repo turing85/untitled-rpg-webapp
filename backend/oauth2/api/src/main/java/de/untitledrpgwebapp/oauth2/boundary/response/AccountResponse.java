@@ -1,17 +1,15 @@
 package de.untitledrpgwebapp.oauth2.boundary.response;
 
 import de.untitledrpgwebapp.boundary.Correlated;
+import java.util.UUID;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 
 @Getter
 @SuperBuilder
-public class AccountResponse extends Correlated<AccountResponse> {
+public class AccountResponse implements Correlated {
+
   final String name;
   final String email;
-
-  protected AccountResponse self() {
-    return this;
-  }
-
+  final UUID correlationId;
 }

@@ -1,8 +1,7 @@
-package de.untitledrpgwebapp.user.impl.localstore.domain.impl;
+package de.untitledrpgwebapp.user.impl.localstore.domain;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.argThat;
@@ -15,14 +14,13 @@ import de.untitledrpgwebapp.language.domain.FindLanguageByCodeUseCase;
 import de.untitledrpgwebapp.language.exception.LanguageNotFoundException;
 import de.untitledrpgwebapp.oauth2.boundary.request.CreateAccountRequest;
 import de.untitledrpgwebapp.oauth2.domain.CreateAccountUseCase;
-import de.untitledrpgwebapp.user.impl.localstore.boundary.UserRepository;
+import de.untitledrpgwebapp.user.boundary.UserRepository;
+import de.untitledrpgwebapp.user.boundary.request.CreateUserRequest;
+import de.untitledrpgwebapp.user.boundary.response.UserEntity;
+import de.untitledrpgwebapp.user.boundary.response.UserResponse;
 import de.untitledrpgwebapp.user.impl.localstore.boundary.mapper.UserMapper;
-import de.untitledrpgwebapp.user.impl.localstore.boundary.request.CreateUserRequest;
-import de.untitledrpgwebapp.user.impl.localstore.boundary.response.UserEntity;
-import de.untitledrpgwebapp.user.impl.localstore.boundary.response.UserResponse;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.function.Supplier;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -39,6 +37,8 @@ class CreateUserInDatabaseUseCaseTest {
 
   private UserRepository repository;
   private FindLanguageByCodeUseCase findLanguageByCode;
+
+  CreateAccountRequest createAccountRequest;
   private CreateAccountUseCase createAccount;
 
   private CreateUserInDatabaseUseCase sut;
@@ -54,26 +54,27 @@ class CreateUserInDatabaseUseCaseTest {
     when(findLanguageByCode.execute(any()))
         .thenReturn(Optional.of(LanguageResponse.builder().code(code).build()));
 
-    CreateAccountRequest createAccountRequest = CreateAccountRequest.builder()
-        .name(name)
-        .email(email)
-        .password(password)
-        .build();
+    createAccountRequest = CreateAccountRequest.builder().build();
     UserMapper mapper = mock(UserMapper.class);
     when(mapper.requestToRequest(any())).thenReturn(createAccountRequest);
     createAccount = mock(CreateAccountUseCase.class);
 
-    UserResponse response = UserResponse.builder().build();
-    when(mapper.entityToRequest(any())).thenReturn(response);
+    UserResponse response = UserResponse.builder()
+        .name(name)
+        .email(email)
+        .preferredLanguageCode(code)
+        .build();
+    when(mapper.entityToResponse(any())).thenReturn(response);
     UserEntity entity = UserEntity.builder().build();
     repository = mock(UserRepository.class);
-    when(repository.save(any())).thenReturn(Optional.of(entity));
+    when(repository.save(any())).thenReturn(entity);
 
     sut = new CreateUserInDatabaseUseCase(mapper, repository, findLanguageByCode, createAccount);
   }
 
   @Test
-  @DisplayName("Should call all dependencies with the expected parameters when everything is okay")
+  @DisplayName("Should call all dependencies with the expected parameters and return the expected"
+      + "response when everything is ok.")
   void shouldCallDependenciesWithExpectedParametersWhenEverythingIsOkay() {
     // GIVEN: defaults
 
@@ -82,31 +83,33 @@ class CreateUserInDatabaseUseCaseTest {
 
     // THEN
     assertNotNull(actual);
+    assertEquals(name, actual.getName());
+    assertEquals(email, actual.getEmail());
+    assertEquals(code, actual.getPreferredLanguageCode());
     assertEquals(correlationId, actual.getCorrelationId());
 
+    verifyFindLanguageByCalledWascalledwithExpectedParameters();
+    verify(createAccount).execute(createAccountRequest);
+    verify(repository).save(request);
+  }
+
+  private void verifyFindLanguageByCalledWascalledwithExpectedParameters() {
     verify(findLanguageByCode).execute(argThat(request -> {
       assertEquals(correlationId, request.getCorrelationId());
       assertEquals(code, request.getCode());
       return true;
     }));
-    verify(createAccount).execute(argThat(accountRequest -> {
-      assertEquals(name, accountRequest.getName());
-      assertEquals(email, accountRequest.getEmail());
-      assertEquals(password, accountRequest.getPassword());
-      assertEquals(correlationId, accountRequest.getCorrelationId());
-      return true;
-    }));
-    verify(repository).save(request);
   }
 
   @Test
-  @DisplayName("Should throw a LanguageNotFoundException if the language is not found")
+  @DisplayName("Should throw a LanguageNotFoundException if the preferred language is not found")
   void shouldThrowLanguageNotFoundExceptionWhenLanguageIsNotFound() {
     // GIVEN
     when(findLanguageByCode.execute(any())).thenReturn(Optional.empty());
 
     String expectedMessage =
         String.format(LanguageNotFoundException.MESSAGE_FORMAT, code);
+
     // WHEN
     LanguageNotFoundException exception = assertThrows(
         LanguageNotFoundException.class,
@@ -116,5 +119,4 @@ class CreateUserInDatabaseUseCaseTest {
     assertEquals(expectedMessage, exception.getMessage());
     assertEquals(correlationId, exception.getCorrelationId());
   }
-
 }

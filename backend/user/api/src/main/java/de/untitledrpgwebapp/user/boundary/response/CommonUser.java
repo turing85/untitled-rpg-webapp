@@ -1,14 +1,13 @@
-package de.untitledrpgwebapp.user.impl.localstore.boundary.response;
+package de.untitledrpgwebapp.user.boundary.response;
 
-import de.untitledrpgwebapp.boundary.Correlated;
 import java.io.InputStream;
 import java.time.LocalDate;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 
 @Getter
-@SuperBuilder
-public abstract class CommonUser<T extends CommonUser<T>> extends Correlated<T> {
+@SuperBuilder(toBuilder = true)
+public abstract class CommonUser {
 
   final String name;
   final String email;

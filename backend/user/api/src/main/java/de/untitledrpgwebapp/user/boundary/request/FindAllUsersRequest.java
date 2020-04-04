@@ -1,4 +1,4 @@
-package de.untitledrpgwebapp.language.boundary.request;
+package de.untitledrpgwebapp.user.boundary.request;
 
 import de.untitledrpgwebapp.boundary.Correlated;
 import java.util.UUID;
@@ -7,8 +7,7 @@ import lombok.experimental.SuperBuilder;
 
 @Getter
 @SuperBuilder
-public class FindLanguageByCodeRequest implements Correlated {
+public class FindAllUsersRequest implements Correlated {
 
-  final String code;
   final UUID correlationId;
 }

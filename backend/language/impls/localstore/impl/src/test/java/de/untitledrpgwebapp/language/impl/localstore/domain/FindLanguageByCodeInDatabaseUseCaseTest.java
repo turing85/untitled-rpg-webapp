@@ -24,18 +24,15 @@ class FindLanguageByCodeInDatabaseUseCaseTest {
   void shouldCallRepositoryWithExpectedParametersWhenEverythingIsOk() {
     // GIVEN
     String code = "code";
-    String name = "name";
-    UUID correlationId = UUID.randomUUID();
+    final UUID correlationId = UUID.randomUUID();
     FindLanguageByCodeRequest request = FindLanguageByCodeRequest.builder()
         .code(code)
         .correlationId(correlationId)
         .build();
-    LanguageResponse fromDatabase = LanguageResponse.builder()
-        .code(code)
-        .name(name)
-        .build();
+    LanguageResponse response = LanguageResponse.builder().build();
+
     LanguageRepository repository = mock(LanguageRepository.class);
-    when(repository.findByCode(any())).thenReturn(Optional.of(fromDatabase));
+    when(repository.findByCode(any())).thenReturn(Optional.of(response));
 
     // WHEN
     Optional<LanguageResponse> fetched =
@@ -43,10 +40,7 @@ class FindLanguageByCodeInDatabaseUseCaseTest {
 
     // THEN
     assertTrue(fetched.isPresent());
-    LanguageResponse actual = fetched.get();
-    assertEquals(code, actual.getCode());
-    assertEquals(name, actual.getName());
-    assertEquals(correlationId, actual.getCorrelationId());
+    assertEquals(correlationId, fetched.get().getCorrelationId());
 
     verify(repository).findByCode(code);
   }

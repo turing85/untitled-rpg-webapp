@@ -1,8 +1,8 @@
 package de.untitledrpgwebapp.user.domain;
 
 import de.untitledrpgwebapp.domain.UseCase;
-import de.untitledrpgwebapp.user.impl.localstore.boundary.request.CreateUserRequest;
-import de.untitledrpgwebapp.user.impl.localstore.boundary.response.UserResponse;
+import de.untitledrpgwebapp.user.boundary.request.CreateUserRequest;
+import de.untitledrpgwebapp.user.boundary.response.UserResponse;
 
 /**
  * This use case creates a new user.

@@ -54,6 +54,7 @@ class KeycloakCreateAccountUseCaseTest {
         .password(password)
         .correlationId(correlationId)
         .build();
+    response = AccountResponse.builder().build();
 
     keycloakResponse = mock(Response.class);
     when(keycloakResponse.getStatus()).thenReturn(Status.CREATED.getStatusCode());
@@ -63,12 +64,6 @@ class KeycloakCreateAccountUseCaseTest {
     when(realmResource.users()).thenReturn(usersResource);
     Keycloak keycloak = mock(Keycloak.class);
     when(keycloak.realm(anyString())).thenReturn(realmResource);
-
-    response = AccountResponse.builder()
-        .name(name)
-        .email(email)
-        .correlationId(correlationId)
-        .build();
     mapper = mock(AccountMapper.class);
     when(mapper.requestToResponse(any())).thenReturn(response);
 
@@ -76,7 +71,8 @@ class KeycloakCreateAccountUseCaseTest {
   }
 
   @Test
-  @DisplayName("Should call UsersResource with the expected parameters.")
+  @DisplayName("Should call UsersResource with the expected parameters and return the expected "
+      + "response when everything is ok.")
   void shouldCallUsersResourceWithExpectedParametersWhenEverythingIsOk() {
     // GIVEN: defaults
 
@@ -85,10 +81,13 @@ class KeycloakCreateAccountUseCaseTest {
 
     // THEN
     assertNotNull(actual);
-    assertEquals(name, actual.getName());
-    assertEquals(email, actual.getEmail());
-    assertEquals(correlationId, actual.getCorrelationId());
+    assertSame(response, actual);
 
+    verifyUserResourceWasCalledWithExpectedParameters();
+    verify(mapper).requestToResponse(request);
+  }
+
+  private void verifyUserResourceWasCalledWithExpectedParameters() {
     verify(usersResource).create(argThat(user -> {
       assertEquals(name, user.getUsername());
       assertEquals(email, user.getEmail());
@@ -100,23 +99,15 @@ class KeycloakCreateAccountUseCaseTest {
       assertEquals(password, credential.getValue());
       return true;
     }));
-    verify(mapper).requestToResponse(argThat(source -> {
-      assertEquals(name, source.getName());
-      assertEquals(email, source.getEmail());
-      assertEquals(correlationId, source.getCorrelationId());
-      return true;
-    }));
   }
 
   @Test
-  @DisplayName(
-      "Should throw a KeycloakException with corresponding message when keycloak returns "
-          + "unexpected "
-          + "status code.")
+  @DisplayName("Should throw a KeycloakException with corresponding message when keycloak returns "
+      + "unexpected status code.")
   void shouldThrowKeycloakExceptionWhenKeycloakReturnsUnexpectedStatusCode() {
     // GIVEN
     Object entity = new Object();
-    final int unexpectedStatusCode = Status.BAD_REQUEST.getStatusCode();
+    int unexpectedStatusCode = Status.BAD_REQUEST.getStatusCode();
     when(keycloakResponse.getStatus()).thenReturn(unexpectedStatusCode);
     when(keycloakResponse.getEntity()).thenReturn(entity);
 
@@ -129,9 +120,7 @@ class KeycloakCreateAccountUseCaseTest {
         entity);
 
     // WHEN
-    KeycloakException exception = assertThrows(
-        KeycloakException.class,
-        () -> sut.execute(request));
+    KeycloakException exception = assertThrows(KeycloakException.class, () -> sut.execute(request));
 
     // THEN
     assertExceptionIsAsExpected(exception, expectedMessage, null);
@@ -160,9 +149,7 @@ class KeycloakCreateAccountUseCaseTest {
         email);
 
     // WHEN
-    KeycloakException exception = assertThrows(
-        KeycloakException.class,
-        () -> sut.execute(request));
+    KeycloakException exception = assertThrows(KeycloakException.class, () -> sut.execute(request));
 
     // THEN
     assertExceptionIsAsExpected(exception, expectedMessage, exception.getCause());
@@ -182,9 +169,7 @@ class KeycloakCreateAccountUseCaseTest {
         email);
 
     // WHEN
-    KeycloakException exception = assertThrows(
-        KeycloakException.class,
-        () -> sut.execute(request));
+    KeycloakException exception = assertThrows(KeycloakException.class, () -> sut.execute(request));
 
     // THEN
     assertExceptionIsAsExpected(exception, expectedMessage, cause);
