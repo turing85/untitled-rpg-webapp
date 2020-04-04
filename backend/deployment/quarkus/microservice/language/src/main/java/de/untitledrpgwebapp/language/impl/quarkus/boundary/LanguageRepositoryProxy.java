@@ -5,19 +5,14 @@ import de.untitledrpgwebapp.language.impl.localstore.boundary.LanguageRepository
 import de.untitledrpgwebapp.language.impl.quarkus.boundary.mapper.LanguageMapper;
 import java.util.Optional;
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
+import lombok.AllArgsConstructor;
 
 @ApplicationScoped
+@AllArgsConstructor
 public class LanguageRepositoryProxy implements LanguageRepository {
 
   private final JpaLanguageRepository repository;
   private final LanguageMapper mapper;
-
-  @Inject
-  public LanguageRepositoryProxy(JpaLanguageRepository repository, LanguageMapper mapper) {
-    this.repository = repository;
-    this.mapper = mapper;
-  }
 
   @Override
   public Optional<LanguageResponse> findByCode(String code) {
