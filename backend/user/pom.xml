@@ -16,9 +16,7 @@
   <packaging>pom</packaging>
   <modules>
     <module>api</module>
-    <module>common</module>
-    <module>impl</module>
-    <module>spi</module>
+    <module>impls</module>
   </modules>
 
 </project>

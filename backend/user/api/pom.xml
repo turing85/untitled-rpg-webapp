@@ -12,6 +12,7 @@
   </parent>
 
   <artifactId>user.api</artifactId>
+
   <dependencies>
     <!-- Sibling modules -->
     <dependency>
@@ -22,13 +23,7 @@
     </dependency>
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
-      <artifactId>user.spi</artifactId>
-      <version>${project.version}</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>de.nextrpgdevs</groupId>
-      <artifactId>language.impl</artifactId>
+      <artifactId>language.api</artifactId>
       <version>${project.version}</version>
       <scope>compile</scope>
     </dependency>

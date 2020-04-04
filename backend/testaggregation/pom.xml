@@ -23,6 +23,18 @@
       <version>${project.version}</version>
     </dependency>
 
+    <!-- deployment -->
+    <dependency>
+      <groupId>de.nextrpgdevs</groupId>
+      <artifactId>deployment.quarkus.common</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>de.nextrpgdevs</groupId>
+      <artifactId>deployment.quarkus.microservice.language</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
     <!-- language -->
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
@@ -31,17 +43,12 @@
     </dependency>
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
-      <artifactId>language.common</artifactId>
+      <artifactId>language.impls.localstore.impl</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
-      <artifactId>language.impl</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>de.nextrpgdevs</groupId>
-      <artifactId>language.spi</artifactId>
+      <artifactId>language.impls.localstore.spi</artifactId>
       <version>${project.version}</version>
     </dependency>
 
@@ -53,17 +60,7 @@
     </dependency>
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
-      <artifactId>oauth2.common</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>de.nextrpgdevs</groupId>
-      <artifactId>oauth2.impl.keycloak</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>de.nextrpgdevs</groupId>
-      <artifactId>oauth2.spi</artifactId>
+      <artifactId>oauth2.impls.keycloak</artifactId>
       <version>${project.version}</version>
     </dependency>
 
@@ -80,12 +77,12 @@
     </dependency>
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
-      <artifactId>user.impl</artifactId>
+      <artifactId>user.impls.localstore.impl</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
-      <artifactId>user.spi</artifactId>
+      <artifactId>user.impls.localstore.spi</artifactId>
       <version>${project.version}</version>
     </dependency>
   </dependencies>

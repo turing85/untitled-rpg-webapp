@@ -21,11 +21,6 @@
       <version>${project.version}</version>
       <scope>compile</scope>
     </dependency>
-    <dependency>
-      <groupId>de.nextrpgdevs</groupId>
-      <artifactId>oauth2.spi</artifactId>
-      <version>${project.version}</version>
-    </dependency>
   </dependencies>
 
 </project>

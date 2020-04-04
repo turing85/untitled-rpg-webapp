@@ -16,10 +16,11 @@
   <packaging>pom</packaging>
   <modules>
     <module>common</module>
+    <module>deployment</module>
     <module>language</module>
     <module>oauth2</module>
-    <module>user</module>
     <module>testaggregation</module>
+    <module>user</module>
   </modules>
 
   <properties>
@@ -46,7 +47,7 @@
 
     <!-- Jacoco exclusions -->
     <jacoco.exclusions>
-      **/mapper/*MapperImpl.class
+      **/*MapperImpl.class
     </jacoco.exclusions>
   </properties>
 
@@ -136,6 +137,19 @@
 
   <build>
     <plugins>
+      <plugin>
+        <groupId>org.jboss.jandex</groupId>
+        <artifactId>jandex-maven-plugin</artifactId>
+        <version>1.0.7</version>
+        <executions>
+          <execution>
+            <id>make-index</id>
+            <goals>
+              <goal>jandex</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>

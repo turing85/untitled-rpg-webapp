@@ -1,0 +1,13 @@
+quarkus:
+  datasource:
+    db-kind: postgresql
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:postgres}
+    jdbc:
+      driver: org.postgresql.Driver
+      url: jdbc:${quarkus.datasource.db-kind}://${DB_HOST:localhost}/${DB_NAME:test}
+      min-size: ${DB_MIN_SIZE:2}
+      max-size: ${DB_MAX_SIZE:8}
+  hibernate-orm:
+    database:
+      generation: none
