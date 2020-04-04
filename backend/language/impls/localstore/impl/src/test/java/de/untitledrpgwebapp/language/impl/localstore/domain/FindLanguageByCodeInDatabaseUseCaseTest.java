@@ -29,10 +29,9 @@ class FindLanguageByCodeInDatabaseUseCaseTest {
         .code(code)
         .correlationId(correlationId)
         .build();
-    LanguageResponse response = LanguageResponse.builder().build();
 
     LanguageRepository repository = mock(LanguageRepository.class);
-    when(repository.findByCode(any())).thenReturn(Optional.of(response));
+    when(repository.findByCode(any())).thenReturn(Optional.of(LanguageResponse.builder().build()));
 
     // WHEN
     Optional<LanguageResponse> fetched =

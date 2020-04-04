@@ -35,10 +35,10 @@ import org.keycloak.representations.idm.CredentialRepresentation;
 @DisplayName("Tests for KeycloakCreateAccountUseCase unit")
 class KeycloakCreateAccountUseCaseTest {
 
-  private UUID correlationId = UUID.randomUUID();
-  private String name = "name";
-  private String email = "email";
-  private String password = "password";
+  private final UUID correlationId = UUID.randomUUID();
+  private final String name = "name";
+  private final String email = "email";
+  private final String password = "password";
   private CreateAccountRequest request;
   private AccountResponse response;
   private Response keycloakResponse;
