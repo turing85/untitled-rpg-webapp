@@ -8,11 +8,11 @@
 
   <parent>
     <groupId>de.nextrpgdevs</groupId>
-    <artifactId>deployment.quarkus.microservice</artifactId>
+    <artifactId>deployment.quarkus.microservices</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>deployment.quarkus.microservice.language</artifactId>
+  <artifactId>deployment.quarkus.microservices.language</artifactId>
 
   <dependencies>
     <!-- Sibling modules -->

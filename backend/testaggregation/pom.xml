@@ -31,7 +31,7 @@
 <!--    </dependency>-->
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
-      <artifactId>deployment.quarkus.microservice.language</artifactId>
+      <artifactId>deployment.quarkus.microservices.language</artifactId>
       <version>${project.version}</version>
     </dependency>
 

@@ -43,5 +43,4 @@ class FindLanguageByCodeInDatabaseUseCaseTest {
 
     verify(repository).findByCode(code);
   }
-
 }

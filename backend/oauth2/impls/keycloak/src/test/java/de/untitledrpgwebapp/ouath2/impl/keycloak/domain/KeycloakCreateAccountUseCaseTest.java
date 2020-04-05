@@ -43,8 +43,8 @@ class KeycloakCreateAccountUseCaseTest {
   private AccountResponse response;
   private Response keycloakResponse;
   private UsersResource usersResource;
-  private KeycloakCreateAccountUseCase sut;
   private AccountMapper mapper;
+  private KeycloakCreateAccountUseCase uut;
 
   @BeforeEach
   void setup() {
@@ -67,7 +67,7 @@ class KeycloakCreateAccountUseCaseTest {
     mapper = mock(AccountMapper.class);
     when(mapper.requestToResponse(any())).thenReturn(response);
 
-    sut = new KeycloakCreateAccountUseCase(keycloak, "realmName", mapper);
+    uut = new KeycloakCreateAccountUseCase(keycloak, "realmName", mapper);
   }
 
   @Test
@@ -77,7 +77,7 @@ class KeycloakCreateAccountUseCaseTest {
     // GIVEN: defaults
 
     // WHEN
-    AccountResponse actual = sut.execute(request);
+    AccountResponse actual = uut.execute(request);
 
     // THEN
     assertNotNull(actual);
@@ -120,7 +120,7 @@ class KeycloakCreateAccountUseCaseTest {
         entity);
 
     // WHEN
-    KeycloakException exception = assertThrows(KeycloakException.class, () -> sut.execute(request));
+    KeycloakException exception = assertThrows(KeycloakException.class, () -> uut.execute(request));
 
     // THEN
     assertExceptionIsAsExpected(exception, expectedMessage, null);
@@ -149,7 +149,7 @@ class KeycloakCreateAccountUseCaseTest {
         email);
 
     // WHEN
-    KeycloakException exception = assertThrows(KeycloakException.class, () -> sut.execute(request));
+    KeycloakException exception = assertThrows(KeycloakException.class, () -> uut.execute(request));
 
     // THEN
     assertExceptionIsAsExpected(exception, expectedMessage, exception.getCause());
@@ -169,7 +169,7 @@ class KeycloakCreateAccountUseCaseTest {
         email);
 
     // WHEN
-    KeycloakException exception = assertThrows(KeycloakException.class, () -> sut.execute(request));
+    KeycloakException exception = assertThrows(KeycloakException.class, () -> uut.execute(request));
 
     // THEN
     assertExceptionIsAsExpected(exception, expectedMessage, cause);

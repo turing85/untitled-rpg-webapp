@@ -29,13 +29,12 @@ class FindUserByNameFromDatabaseUseCaseTest {
     FindUserByNameRequest request = FindUserByNameRequest.builder()
         .correlationId(correlationId)
         .build();
+    UserResponse response = UserResponse.builder().build();
 
     UserEntity entity = UserEntity.builder().build();
     UserRepository repository = mock(UserRepository.class);
     when(repository.findByName(any())).thenReturn(Optional.of(entity));
-
-    UserResponse response = UserResponse.builder().build();
-
+    
     UserMapper mapper = mock(UserMapper.class);
     when(mapper.entityToResponse(any())).thenReturn(response);
 

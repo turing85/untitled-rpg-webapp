@@ -41,13 +41,18 @@ class CreateUserInDatabaseUseCaseTest {
   CreateAccountRequest createAccountRequest;
   private CreateAccountUseCase createAccount;
 
-  private CreateUserInDatabaseUseCase sut;
+  private CreateUserInDatabaseUseCase uut;
 
   @BeforeEach
   void setup() {
     request = CreateUserRequest.builder()
         .preferredLanguageCode(code)
         .correlationId(correlationId)
+        .build();
+    UserResponse response = UserResponse.builder()
+        .name(name)
+        .email(email)
+        .preferredLanguageCode(code)
         .build();
 
     findLanguageByCode = mock(FindLanguageByCodeUseCase.class);
@@ -58,18 +63,12 @@ class CreateUserInDatabaseUseCaseTest {
     UserMapper mapper = mock(UserMapper.class);
     when(mapper.requestToRequest(any())).thenReturn(createAccountRequest);
     createAccount = mock(CreateAccountUseCase.class);
-
-    UserResponse response = UserResponse.builder()
-        .name(name)
-        .email(email)
-        .preferredLanguageCode(code)
-        .build();
     when(mapper.entityToResponse(any())).thenReturn(response);
     UserEntity entity = UserEntity.builder().build();
     repository = mock(UserRepository.class);
     when(repository.save(any())).thenReturn(entity);
 
-    sut = new CreateUserInDatabaseUseCase(mapper, repository, findLanguageByCode, createAccount);
+    uut = new CreateUserInDatabaseUseCase(mapper, repository, findLanguageByCode, createAccount);
   }
 
   @Test
@@ -79,7 +78,7 @@ class CreateUserInDatabaseUseCaseTest {
     // GIVEN: defaults
 
     // WHEN
-    UserResponse actual = sut.execute(request);
+    UserResponse actual = uut.execute(request);
 
     // THEN
     assertNotNull(actual);
@@ -88,12 +87,12 @@ class CreateUserInDatabaseUseCaseTest {
     assertEquals(code, actual.getPreferredLanguageCode());
     assertEquals(correlationId, actual.getCorrelationId());
 
-    verifyFindLanguageByCalledWascalledwithExpectedParameters();
+    verifyFindLanguageByCalledWasCalledWithExpectedParameters();
     verify(createAccount).execute(createAccountRequest);
     verify(repository).save(request);
   }
 
-  private void verifyFindLanguageByCalledWascalledwithExpectedParameters() {
+  private void verifyFindLanguageByCalledWasCalledWithExpectedParameters() {
     verify(findLanguageByCode).execute(argThat(request -> {
       assertEquals(correlationId, request.getCorrelationId());
       assertEquals(code, request.getCode());
@@ -113,7 +112,7 @@ class CreateUserInDatabaseUseCaseTest {
     // WHEN
     LanguageNotFoundException exception = assertThrows(
         LanguageNotFoundException.class,
-        () -> sut.execute(request));
+        () -> uut.execute(request));
 
     // THEN
     assertEquals(expectedMessage, exception.getMessage());
