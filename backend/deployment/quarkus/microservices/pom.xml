@@ -19,4 +19,22 @@
     <module>language</module>
   </modules>
 
+  <properties>
+    <flyway-plugin.version>6.0.4</flyway-plugin.version>
+  </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.flywaydb</groupId>
+        <artifactId>flyway-maven-plugin</artifactId>
+        <version>${flyway-plugin.version}</version>
+        <configuration>
+          <configFiles>src/main/resources/db/config/local.conf</configFiles>
+        </configuration>
+      </plugin>
+
+    </plugins>
+  </build>
+
 </project>
