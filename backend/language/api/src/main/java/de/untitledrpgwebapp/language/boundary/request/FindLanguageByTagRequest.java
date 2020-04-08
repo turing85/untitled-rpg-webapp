@@ -7,8 +7,8 @@ import lombok.experimental.SuperBuilder;
 
 @Getter
 @SuperBuilder
-public class FindLanguageByCodeRequest implements Correlated {
+public class FindLanguageByTagRequest implements Correlated {
 
-  final String code;
+  final String tag;
   final UUID correlationId;
 }

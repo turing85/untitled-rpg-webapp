@@ -7,7 +7,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import de.untitledrpgwebapp.language.boundary.request.FindLanguageByCodeRequest;
+import de.untitledrpgwebapp.language.boundary.request.FindLanguageByTagRequest;
 import de.untitledrpgwebapp.language.boundary.response.LanguageResponse;
 import de.untitledrpgwebapp.language.impl.localstore.boundary.LanguageRepository;
 import java.util.Optional;
@@ -15,32 +15,32 @@ import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@DisplayName("Tests for FindLanguageByCodeFromDatabaseUseCase unit")
-class FindLanguageByCodeInDatabaseUseCaseTest {
+@DisplayName("Tests for FindLanguageByTagFromDatabaseUseCase unit")
+class FindLanguageByTagInDatabaseUseCaseTest {
 
   @Test
   @DisplayName("Should call the repository with expected parameters and return the expected "
       + "response when everything is ok.")
   void shouldCallRepositoryWithExpectedParametersWhenEverythingIsOk() {
     // GIVEN
-    String code = "code";
+    String tag = "en_US";
     final UUID correlationId = UUID.randomUUID();
-    FindLanguageByCodeRequest request = FindLanguageByCodeRequest.builder()
-        .code(code)
+    FindLanguageByTagRequest request = FindLanguageByTagRequest.builder()
+        .tag(tag)
         .correlationId(correlationId)
         .build();
 
     LanguageRepository repository = mock(LanguageRepository.class);
-    when(repository.findByCode(any())).thenReturn(Optional.of(LanguageResponse.builder().build()));
+    when(repository.findByTag(any())).thenReturn(Optional.of(LanguageResponse.builder().build()));
 
     // WHEN
     Optional<LanguageResponse> fetched =
-        new FindLanguageByCodeInDatabaseUseCase(repository).execute(request);
+        new FindLanguageByTagInDatabaseUseCase(repository).execute(request);
 
     // THEN
     assertTrue(fetched.isPresent());
     assertEquals(correlationId, fetched.get().getCorrelationId());
 
-    verify(repository).findByCode(code);
+    verify(repository).findByTag(tag);
   }
 }

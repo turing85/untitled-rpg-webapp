@@ -15,8 +15,8 @@ public class LanguageRepositoryProxy implements LanguageRepository {
   private final LanguageMapper mapper;
 
   @Override
-  public Optional<LanguageResponse> findByCode(String code) {
-    return repository.findByCode(code)
+  public Optional<LanguageResponse> findByTag(String tag) {
+    return repository.findByTag(tag)
         .map(mapper::entityToResponse);
   }
 }

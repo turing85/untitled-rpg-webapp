@@ -10,18 +10,18 @@ import javax.persistence.Table;
 public class JpaLanguageEntity {
 
   @Id
-  @Column(name = "code", nullable = false, unique = true)
-  private String code;
+  @Column(name = "tag", nullable = false, unique = true)
+  private String tag;
 
   @Column(name = "name", nullable = false, unique = true)
   private String name;
 
-  public String getCode() {
-    return code;
+  public String getTag() {
+    return tag;
   }
 
-  public JpaLanguageEntity setCode(String code) {
-    this.code = code;
+  public JpaLanguageEntity setTag(String tag) {
+    this.tag = tag;
     return this;
   }
 

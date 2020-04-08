@@ -1,4 +1,4 @@
-package de.untitledrpgwebapp.user.boundary.response;
+package de.untitledrpgwebapp.user.boundary.common;
 
 import java.io.InputStream;
 import java.time.LocalDate;
@@ -13,7 +13,7 @@ public abstract class CommonUser {
   final String email;
   final String firstName;
   final String lastName;
-  final String preferredLanguageCode;
+  final String preferredLanguageTag;
   final LocalDate birthDate;
   final String bio;
   final InputStream avatar;

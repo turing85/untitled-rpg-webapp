@@ -1,5 +1,6 @@
 package de.untitledrpgwebapp.user.boundary.response;
 
+import de.untitledrpgwebapp.user.boundary.common.CommonUser;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 

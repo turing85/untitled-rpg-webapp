@@ -24,11 +24,11 @@
     </dependency>
 
     <!-- deployment -->
-<!--    <dependency>-->
-<!--      <groupId>de.nextrpgdevs</groupId>-->
-<!--      <artifactId>deployment.quarkus.common</artifactId>-->
-<!--      <version>${project.version}</version>-->
-<!--    </dependency>-->
+    <dependency>
+      <groupId>de.nextrpgdevs</groupId>
+      <artifactId>deployment.quarkus.common</artifactId>
+      <version>${project.version}</version>
+    </dependency>
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
       <artifactId>deployment.quarkus.microservices.language</artifactId>

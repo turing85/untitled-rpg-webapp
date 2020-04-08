@@ -6,5 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface JpaLanguageRepository extends CrudRepository<JpaLanguageEntity, String> {
 
-  Optional<JpaLanguageEntity> findByCode(String code);
+  Optional<JpaLanguageEntity> findByTag(String tag);
 }

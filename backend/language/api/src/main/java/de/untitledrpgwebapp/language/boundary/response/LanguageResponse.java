@@ -9,7 +9,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder(toBuilder = true)
 public class LanguageResponse implements Correlated {
 
-  final String code;
+  final String tag;
   final String name;
   final UUID correlationId;
 }

@@ -10,7 +10,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import de.untitledrpgwebapp.language.boundary.response.LanguageResponse;
-import de.untitledrpgwebapp.language.domain.FindLanguageByCodeUseCase;
+import de.untitledrpgwebapp.language.domain.FindLanguageByTagUseCase;
 import de.untitledrpgwebapp.language.exception.LanguageNotFoundException;
 import de.untitledrpgwebapp.oauth2.boundary.request.CreateAccountRequest;
 import de.untitledrpgwebapp.oauth2.domain.CreateAccountUseCase;
@@ -31,12 +31,12 @@ class CreateUserInDatabaseUseCaseTest {
   private final String name = "name";
   private final String email = "email";
   private final String password = "password";
-  private final String code = "code";
+  private final String tag = "tag";
   private UUID correlationId = UUID.randomUUID();
   private CreateUserRequest request;
 
   private UserRepository repository;
-  private FindLanguageByCodeUseCase findLanguageByCode;
+  private FindLanguageByTagUseCase findLanguageByTag;
 
   CreateAccountRequest createAccountRequest;
   private CreateAccountUseCase createAccount;
@@ -46,18 +46,18 @@ class CreateUserInDatabaseUseCaseTest {
   @BeforeEach
   void setup() {
     request = CreateUserRequest.builder()
-        .preferredLanguageCode(code)
+        .preferredLanguageTag(tag)
         .correlationId(correlationId)
         .build();
     UserResponse response = UserResponse.builder()
         .name(name)
         .email(email)
-        .preferredLanguageCode(code)
+        .preferredLanguageTag(tag)
         .build();
 
-    findLanguageByCode = mock(FindLanguageByCodeUseCase.class);
-    when(findLanguageByCode.execute(any()))
-        .thenReturn(Optional.of(LanguageResponse.builder().code(code).build()));
+    findLanguageByTag = mock(FindLanguageByTagUseCase.class);
+    when(findLanguageByTag.execute(any()))
+        .thenReturn(Optional.of(LanguageResponse.builder().tag(tag).build()));
 
     createAccountRequest = CreateAccountRequest.builder().build();
     UserMapper mapper = mock(UserMapper.class);
@@ -68,7 +68,7 @@ class CreateUserInDatabaseUseCaseTest {
     repository = mock(UserRepository.class);
     when(repository.save(any())).thenReturn(entity);
 
-    uut = new CreateUserInDatabaseUseCase(mapper, repository, findLanguageByCode, createAccount);
+    uut = new CreateUserInDatabaseUseCase(mapper, repository, findLanguageByTag, createAccount);
   }
 
   @Test
@@ -84,7 +84,7 @@ class CreateUserInDatabaseUseCaseTest {
     assertNotNull(actual);
     assertEquals(name, actual.getName());
     assertEquals(email, actual.getEmail());
-    assertEquals(code, actual.getPreferredLanguageCode());
+    assertEquals(tag, actual.getPreferredLanguageTag());
     assertEquals(correlationId, actual.getCorrelationId());
 
     verifyFindLanguageByCalledWasCalledWithExpectedParameters();
@@ -93,9 +93,9 @@ class CreateUserInDatabaseUseCaseTest {
   }
 
   private void verifyFindLanguageByCalledWasCalledWithExpectedParameters() {
-    verify(findLanguageByCode).execute(argThat(request -> {
+    verify(findLanguageByTag).execute(argThat(request -> {
       assertEquals(correlationId, request.getCorrelationId());
-      assertEquals(code, request.getCode());
+      assertEquals(tag, request.getTag());
       return true;
     }));
   }
@@ -104,10 +104,10 @@ class CreateUserInDatabaseUseCaseTest {
   @DisplayName("Should throw a LanguageNotFoundException if the preferred language is not found")
   void shouldThrowLanguageNotFoundExceptionWhenLanguageIsNotFound() {
     // GIVEN
-    when(findLanguageByCode.execute(any())).thenReturn(Optional.empty());
+    when(findLanguageByTag.execute(any())).thenReturn(Optional.empty());
 
     String expectedMessage =
-        String.format(LanguageNotFoundException.MESSAGE_FORMAT, code);
+        String.format(LanguageNotFoundException.MESSAGE_FORMAT, tag);
 
     // WHEN
     LanguageNotFoundException exception = assertThrows(

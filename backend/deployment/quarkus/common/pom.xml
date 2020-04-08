@@ -12,4 +12,12 @@
 
   <artifactId>deployment.quarkus.common</artifactId>
 
+  <dependencies>
+    <!-- JAX-RS annotations used by Quarkus -->
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-resteasy</artifactId>
+    </dependency>
+  </dependencies>
+
 </project>

@@ -1,8 +1,8 @@
 package de.untitledrpgwebapp.user.impl.localstore.domain;
 
-import de.untitledrpgwebapp.language.boundary.request.FindLanguageByCodeRequest;
+import de.untitledrpgwebapp.language.boundary.request.FindLanguageByTagRequest;
 import de.untitledrpgwebapp.language.boundary.response.LanguageResponse;
-import de.untitledrpgwebapp.language.domain.FindLanguageByCodeUseCase;
+import de.untitledrpgwebapp.language.domain.FindLanguageByTagUseCase;
 import de.untitledrpgwebapp.language.exception.LanguageNotFoundException;
 import de.untitledrpgwebapp.oauth2.boundary.request.CreateAccountRequest;
 import de.untitledrpgwebapp.oauth2.domain.CreateAccountUseCase;
@@ -20,16 +20,16 @@ public class CreateUserInDatabaseUseCase implements CreateUserUseCase {
 
   private final UserMapper userMapper;
   private final UserRepository userRepository;
-  private final FindLanguageByCodeUseCase fetchLanguageByCode;
+  private final FindLanguageByTagUseCase findLanguageByTag;
   private final CreateAccountUseCase createAccount;
 
   @Override
   public UserResponse execute(CreateUserRequest request) {
     UUID correlationId = request.getCorrelationId();
 
-    String preferredLanguageCode = request.getPreferredLanguageCode();
-    if (fetchLanguageCodeByCode(correlationId, preferredLanguageCode).isEmpty()) {
-      throw new LanguageNotFoundException(preferredLanguageCode, correlationId);
+    String preferredLanguageTag = request.getPreferredLanguageTag();
+    if (findLanguageByTag(preferredLanguageTag, correlationId).isEmpty()) {
+      throw new LanguageNotFoundException(preferredLanguageTag, correlationId);
     }
     CreateAccountRequest createAccountRequest = userMapper.requestToRequest(request);
     createAccount.execute(createAccountRequest);
@@ -37,13 +37,13 @@ public class CreateUserInDatabaseUseCase implements CreateUserUseCase {
         .toBuilder().correlationId(request.getCorrelationId()).build();
   }
 
-  private Optional<String> fetchLanguageCodeByCode(UUID correlationId, String languageCode) {
-    return fetchLanguageByCode
-        .execute(FindLanguageByCodeRequest.builder()
+  private Optional<String> findLanguageByTag(String languageTag, UUID correlationId) {
+    return findLanguageByTag
+        .execute(FindLanguageByTagRequest.builder()
+            .tag(languageTag)
             .correlationId(correlationId)
-            .code(languageCode)
             .build()
-        ).map(LanguageResponse::getCode);
+        ).map(LanguageResponse::getTag);
   }
 
 }

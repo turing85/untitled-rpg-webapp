@@ -5,5 +5,5 @@ import java.util.Optional;
 
 public interface LanguageRepository {
 
-  Optional<LanguageResponse> findByCode(String code);
+  Optional<LanguageResponse> findByTag(String tag);
 }
