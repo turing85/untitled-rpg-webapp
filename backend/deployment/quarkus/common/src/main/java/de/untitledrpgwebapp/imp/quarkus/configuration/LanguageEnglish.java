@@ -10,12 +10,12 @@ import org.slf4j.Logger;
 @ApplicationScoped
 @Startup
 @AllArgsConstructor
-public class UtcTimeZone {
+public class LanguageEnglish {
 
   private final Logger logger;
 
   public void onApplicationStartup(@Observes StartupEvent startupEvent) {
-    logger.info("Setting timezone to UTC");
-    System.setProperty("user.timezone", "UTC");
+    logger.info("Setting language to english");
+    System.setProperty("user.language", "en");
   }
 }

@@ -1,5 +1,7 @@
 package de.untitledrpgwebapp.imp.quarkus.configuration;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -26,25 +28,42 @@ import org.slf4j.LoggerFactory;
 public class HttpTrafficLogAndCorrelationIdAdderFilter
     implements ContainerRequestFilter, ContainerResponseFilter {
 
-  private final Logger logger = LoggerFactory.getLogger(this.getClass().getCanonicalName());
+  private final Logger logger;
+  private final ObjectMapper objectMapper;
+
+  public HttpTrafficLogAndCorrelationIdAdderFilter() {
+    logger = LoggerFactory.getLogger(this.getClass().getCanonicalName());
+    objectMapper = new ObjectMapper();
+  }
 
   @Override
   public void filter(ContainerRequestContext requestContext) throws IOException {
     final MultivaluedMap<String, String> originalHeaders = requestContext.getHeaders();
     boolean correlationIdAdded = addCorrelationIdIfNotPresent(originalHeaders);
-    MultivaluedMap<String, String> headers = anonymizeHeaders(originalHeaders);
-    Collection<Cookie> cookies = obfuscateCookies(requestContext.getCookies().values());
-    String body = extractEntityFromRequestContext(requestContext);
-    logger.info(
-        "Received request {} on {} with {} {} {}. Headers: {}. Cookies: {}. Body: {}",
-        requestContext.getMethod(),
-        requestContext.getUriInfo().getAbsolutePath(),
-        StaticConfig.X_CORRELATION_ID_HEADER,
-        headers.get(StaticConfig.X_CORRELATION_ID_HEADER).get(0),
-        correlationIdAdded ? "(added)" : "",
-        headers,
-        cookies,
-        body);
+    if (logger.isInfoEnabled()) {
+      MultivaluedMap<String, String> headers = anonymizeHeaders(originalHeaders);
+      Collection<Cookie> cookies = obfuscateCookies(requestContext.getCookies().values());
+      String body = extractEntityFromRequestContext(requestContext);
+      logRequest(requestContext, correlationIdAdded, headers, cookies, body);
+    }
+  }
+
+  @Override
+  public void filter(
+      ContainerRequestContext requestContext,
+      ContainerResponseContext responseContext) throws JsonProcessingException {
+    final MultivaluedMap<String, String> originalHeaders =
+        convertToMultiValuedHMapStringString(responseContext.getHeaders());
+    if (!originalHeaders.containsKey(StaticConfig.X_CORRELATION_ID_HEADER)) {
+      originalHeaders.add(
+          StaticConfig.X_CORRELATION_ID_HEADER,
+          requestContext.getHeaderString(StaticConfig.X_CORRELATION_ID_HEADER));
+    }
+    if (logger.isInfoEnabled()) {
+      MultivaluedMap<String, String> headers = anonymizeHeaders(originalHeaders);
+      Collection<NewCookie> newCookies = obfuscateNewCookies(responseContext.getCookies().values());
+      logResponse(requestContext, responseContext, headers, newCookies);
+    }
   }
 
   private boolean addCorrelationIdIfNotPresent(MultivaluedMap<String, String> headers) {
@@ -114,23 +133,23 @@ public class HttpTrafficLogAndCorrelationIdAdderFilter
     return replicaOutputStream;
   }
 
-  @Override
-  public void filter(
+  private void logRequest(
       ContainerRequestContext requestContext,
-      ContainerResponseContext responseContext) {
-    final MultivaluedMap<String, String> originalHeaders =
-        convertToMultiValuedHMapStringString(responseContext.getHeaders());
-    MultivaluedMap<String, String> headers = anonymizeHeaders(originalHeaders);
-    Collection<NewCookie> newCookies = obfuscateNewCookies(responseContext.getCookies().values());
-    logger.info(
-        "Returning Response {} to request on {} with {} {}. Headers: {}. Cookies: {}. Body: {}",
-        responseContext.getStatus(),
-        requestContext.getUriInfo().getAbsolutePath(),
-        StaticConfig.X_CORRELATION_ID_HEADER,
-        headers.get(StaticConfig.X_CORRELATION_ID_HEADER).get(0),
-        headers,
-        newCookies,
-        responseContext.getEntity());
+      boolean correlationIdAdded,
+      MultivaluedMap<String, String> headers, Collection<Cookie> cookies, String body)
+      throws JsonProcessingException {
+    if (logger.isInfoEnabled()) {
+      logger.info(
+          "Received request {} on {} with {} {} {}. Headers: {}. Cookies: {}. Body: {}",
+          requestContext.getMethod(),
+          requestContext.getUriInfo().getAbsolutePath(),
+          StaticConfig.X_CORRELATION_ID_HEADER,
+          headers.get(StaticConfig.X_CORRELATION_ID_HEADER).get(0),
+          correlationIdAdded ? "(added)" : "",
+          headers,
+          cookies,
+          objectMapper.writeValueAsString(body));
+    }
   }
 
   private MultivaluedMap<String, String> convertToMultiValuedHMapStringString(
@@ -169,5 +188,23 @@ public class HttpTrafficLogAndCorrelationIdAdderFilter
         cookie.getExpiry(),
         cookie.isSecure(),
         cookie.isHttpOnly());
+  }
+
+  private void logResponse(
+      ContainerRequestContext requestContext,
+      ContainerResponseContext responseContext,
+      MultivaluedMap<String, String> headers,
+      Collection<NewCookie> newCookies) throws JsonProcessingException {
+    if (logger.isInfoEnabled()) {
+      logger.info(
+          "Returning Response {} to request on {} with {} {}. Headers: {}. Cookies: {}. Body: {}",
+          responseContext.getStatus(),
+          requestContext.getUriInfo().getAbsolutePath(),
+          StaticConfig.X_CORRELATION_ID_HEADER,
+          headers.get(StaticConfig.X_CORRELATION_ID_HEADER).get(0),
+          headers,
+          newCookies,
+          objectMapper.writeValueAsString(responseContext.getEntity()));
+    }
   }
 }
