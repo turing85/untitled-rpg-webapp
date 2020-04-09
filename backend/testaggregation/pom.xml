@@ -34,6 +34,11 @@
       <artifactId>deployment.quarkus.microservices.language</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <dependency>
+      <groupId>de.nextrpgdevs</groupId>
+      <artifactId>deployment.quarkus.microservices.user</artifactId>
+      <version>${project.version}</version>
+    </dependency>
 
     <!-- language -->
     <dependency>
@@ -49,6 +54,11 @@
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
       <artifactId>language.impls.localstore.spi</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>de.nextrpgdevs</groupId>
+      <artifactId>language.impls.quarkusrestclient</artifactId>
       <version>${project.version}</version>
     </dependency>
 

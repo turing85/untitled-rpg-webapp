@@ -9,44 +9,39 @@ import static org.mockito.Mockito.when;
 
 import de.untitledrpgwebapp.user.boundary.UserRepository;
 import de.untitledrpgwebapp.user.boundary.request.FindUserByNameRequest;
-import de.untitledrpgwebapp.user.boundary.response.UserEntity;
 import de.untitledrpgwebapp.user.boundary.response.UserResponse;
-import de.untitledrpgwebapp.user.impl.localstore.boundary.mapper.UserMapper;
 import java.util.Optional;
 import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@DisplayName("Test for FindUserByNameFromDatabaseUseCaseTest unit.")
-class FindUserByNameFromDatabaseUseCaseTest {
+@DisplayName("Test for FindUserByNameInDatabaseUseCaseTest unit.")
+class FindUserByNameInDatabaseUseCaseTest {
 
   @Test
-  @DisplayName("Should call the repository and the mapper with the expected parameters and return"
-      + " the expected response when everything is ok.")
+  @DisplayName("Should call the repository with the expected parameter and return the expected "
+      + "response when everything is ok.")
   void shouldCallRepositoryAndMapperWithExpectedParameters() {
     // GIVEN:
     UUID correlationId = UUID.randomUUID();
+    final String name = "name";
     FindUserByNameRequest request = FindUserByNameRequest.builder()
+        .name(name)
         .correlationId(correlationId)
         .build();
     UserResponse response = UserResponse.builder().build();
 
-    UserEntity entity = UserEntity.builder().build();
     UserRepository repository = mock(UserRepository.class);
-    when(repository.findByName(any())).thenReturn(Optional.of(entity));
+    when(repository.findByName(any())).thenReturn(Optional.of(response));
     
-    UserMapper mapper = mock(UserMapper.class);
-    when(mapper.entityToResponse(any())).thenReturn(response);
-
     // WHEN
     Optional<UserResponse> result =
-        new FindUserByNameFromDatabaseUseCase(repository, mapper).execute(request);
+        new FindUserByNameInDatabaseUseCase(repository).execute(request);
 
     // THEN
     assertTrue(result.isPresent());
     assertEquals(correlationId, result.get().getCorrelationId());
 
-    verify(repository).findByName(request);
-    verify(mapper).entityToResponse(entity);
+    verify(repository).findByName(name);
   }
 }

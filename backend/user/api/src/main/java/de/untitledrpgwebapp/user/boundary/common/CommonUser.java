@@ -1,6 +1,5 @@
 package de.untitledrpgwebapp.user.boundary.common;
 
-import java.io.InputStream;
 import java.time.LocalDate;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
@@ -16,6 +15,6 @@ public abstract class CommonUser {
   final String preferredLanguageTag;
   final LocalDate birthDate;
   final String bio;
-  final InputStream avatar;
+  final byte[] avatar;
 
 }

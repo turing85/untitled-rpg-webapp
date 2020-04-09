@@ -1,6 +1,6 @@
 [
   {
-    "name": "de.untitledrpgwebapp.language.boundary.response.LanguageResponse",
+    "name": "de.untitledrpgwebapp.language.impl.quarkus.boundary.dto.LanguageDto",
     "allDeclaredConstructors": true,
     "allPublicConstructors": true,
     "allDeclaredMethods": true,

@@ -33,6 +33,12 @@
     <org.projectlombok.version>1.18.12</org.projectlombok.version>
     <org.mapstruct.version>1.3.1.Final</org.mapstruct.version>
 
+    <!-- Quarkus -->
+    <quarkus.plugin.version>1.3.2.Final</quarkus.plugin.version>
+    <quarkus.platform.version>1.3.2.Final</quarkus.platform.version>
+    <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
+    <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
+
     <!-- Testing -->
     <junit.version>5.4.2</junit.version>
     <mockito.version>3.3.3</mockito.version>
@@ -64,6 +70,15 @@
         <artifactId>lombok</artifactId>
         <version>${org.projectlombok.version}</version>
         <scope>provided</scope>
+      </dependency>
+
+      <!-- Quarkus -->
+      <dependency>
+        <groupId>${quarkus.platform.group-id}</groupId>
+        <artifactId>${quarkus.platform.artifact-id}</artifactId>
+        <version>${quarkus.platform.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
       </dependency>
 
       <!-- Testing -->

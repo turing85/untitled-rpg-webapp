@@ -1,3 +1,3 @@
-INSERT INTO language VALUES('de_DE', 'German');
-INSERT INTO language VALUES('en_US', 'American English');
-INSERT INTO language VALUES('en_GB', 'British English');
+INSERT INTO language VALUES('de-DE', 'German');
+INSERT INTO language VALUES('en-US', 'American English');
+INSERT INTO language VALUES('en-GB', 'British English');

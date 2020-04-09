@@ -1,0 +1,11 @@
+[
+  {
+    "name": "de.untitledrpgwebapp.user.impl.quarkus.boundary.dto.CreateUserDto",
+    "allDeclaredConstructors": true,
+    "allPublicConstructors": true,
+    "allDeclaredMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredFields": true,
+    "allPublicFields": true
+  }
+]

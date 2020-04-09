@@ -20,6 +20,8 @@ import org.junit.jupiter.api.Test;
 class FindAllLanguagesInDatabaseUseCaseTest {
 
   @Test
+  @DisplayName("Should call the repository with the expected parameter and return the expected "
+      + "response when everything is ok.")
   void shouldCallRepositoryWithExpectedParametersWhenEverythingIsOk() {
     // GIVEN
     final UUID correlationId = UUID.randomUUID();

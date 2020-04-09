@@ -97,7 +97,6 @@ public class HttpTrafficLogAndCorrelationIdAdderFilter
   }
 
   private MultivaluedMap<String, String> anonymizeHeaders(MultivaluedMap<String, String> headers) {
-    logger.info("beep");
     MultivaluedMap<String, String> anonymize = new MultivaluedHashMap<>();
     for (Map.Entry<String, List<String>> entry : headers.entrySet()) {
       String headerKey = entry.getKey();

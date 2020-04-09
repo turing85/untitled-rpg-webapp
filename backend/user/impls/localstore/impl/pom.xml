@@ -25,6 +25,11 @@
       <artifactId>language.api</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <dependency>
+      <groupId>de.nextrpgdevs</groupId>
+      <artifactId>oauth2.impls.keycloak</artifactId>
+      <version>${project.version}</version>
+    </dependency>
   </dependencies>
 
 </project>

@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 
 @Getter
-@SuperBuilder
+@SuperBuilder(toBuilder = true)
 public class CreateUserRequest extends CommonUser implements Correlated {
 
   final String password;

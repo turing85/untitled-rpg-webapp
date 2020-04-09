@@ -15,7 +15,7 @@ import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@DisplayName("Tests for FindLanguageByTagFromDatabaseUseCase unit")
+@DisplayName("Tests for FindLanguageByTagInDatabaseUseCase unit")
 class FindLanguageByTagInDatabaseUseCaseTest {
 
   @Test

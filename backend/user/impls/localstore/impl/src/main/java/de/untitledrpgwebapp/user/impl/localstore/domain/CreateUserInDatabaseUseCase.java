@@ -33,8 +33,10 @@ public class CreateUserInDatabaseUseCase implements CreateUserUseCase {
     }
     CreateAccountRequest createAccountRequest = userMapper.requestToRequest(request);
     createAccount.execute(createAccountRequest);
-    return userMapper.entityToResponse(userRepository.save(request))
-        .toBuilder().correlationId(request.getCorrelationId()).build();
+    return userRepository.save(request)
+        .toBuilder()
+        .correlationId(request.getCorrelationId())
+        .build();
   }
 
   private Optional<String> findLanguageByTag(String languageTag, UUID correlationId) {

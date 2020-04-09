@@ -1,6 +1,7 @@
 package de.untitledrpgwebapp.language.impl.quarkus.boundary.mapper;
 
 import de.untitledrpgwebapp.language.boundary.response.LanguageResponse;
+import de.untitledrpgwebapp.language.impl.quarkus.boundary.dto.CreateLanguageDto;
 import de.untitledrpgwebapp.language.impl.quarkus.boundary.dto.LanguageDto;
 import de.untitledrpgwebapp.language.impl.quarkus.entity.JpaLanguageEntity;
 import java.util.Collection;
@@ -14,4 +15,6 @@ public interface LanguageMapper {
   LanguageDto responseToDto(LanguageResponse response);
 
   Collection<LanguageDto> responsesToDtos(Collection<LanguageResponse> responses);
+
+  LanguageDto requestToResponse(CreateLanguageDto request);
 }

@@ -4,8 +4,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "language")
 public class JpaLanguageEntity {
 
@@ -15,22 +19,4 @@ public class JpaLanguageEntity {
 
   @Column(name = "name", nullable = false, unique = true)
   private String name;
-
-  public String getTag() {
-    return tag;
-  }
-
-  public JpaLanguageEntity setTag(String tag) {
-    this.tag = tag;
-    return this;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public JpaLanguageEntity setName(String name) {
-    this.name = name;
-    return this;
-  }
 }
