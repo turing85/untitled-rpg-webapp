@@ -15,8 +15,9 @@
     <!-- Sibling modules -->
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
-      <artifactId>deployment.quarkus.common</artifactId>
+      <artifactId>deployments.quarkus.microservices.language.api</artifactId>
       <version>${project.version}</version>
+      <scope>compile</scope>
     </dependency>
 
     <dependency>

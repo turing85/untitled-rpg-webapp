@@ -26,17 +26,27 @@
     <!-- deployment -->
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
-      <artifactId>deployment.quarkus.common</artifactId>
+      <artifactId>deployments.quarkus.common</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
-      <artifactId>deployment.quarkus.microservices.language</artifactId>
+      <artifactId>deployments.quarkus.microservices.language.api</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
-      <artifactId>deployment.quarkus.microservices.user</artifactId>
+      <artifactId>deployments.quarkus.microservices.language.impl</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>de.nextrpgdevs</groupId>
+      <artifactId>deployments.quarkus.microservices.user.api</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>de.nextrpgdevs</groupId>
+      <artifactId>deployments.quarkus.microservices.user.impl</artifactId>
       <version>${project.version}</version>
     </dependency>
 

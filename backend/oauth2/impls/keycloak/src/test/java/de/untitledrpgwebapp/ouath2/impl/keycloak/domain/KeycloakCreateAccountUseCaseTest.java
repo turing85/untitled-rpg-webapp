@@ -18,6 +18,8 @@ import de.untitledrpgwebapp.oauth2.boundary.request.CreateAccountRequest;
 import de.untitledrpgwebapp.oauth2.boundary.response.AccountResponse;
 import de.untitledrpgwebapp.ouath2.impl.keycloak.boundary.AccountMapper;
 import de.untitledrpgwebapp.ouath2.impl.keycloak.domain.exception.KeycloakException;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.List;
 import java.util.UUID;
 import javax.ws.rs.ProcessingException;
@@ -106,10 +108,11 @@ class KeycloakCreateAccountUseCaseTest {
       + "unexpected status code.")
   void shouldThrowKeycloakExceptionWhenKeycloakReturnsUnexpectedStatusCode() {
     // GIVEN
-    Object entity = new Object();
+    final String entity = "Oops";
+    InputStream entityAsStream = new ByteArrayInputStream(entity.getBytes());
     int unexpectedStatusCode = Status.BAD_REQUEST.getStatusCode();
     when(keycloakResponse.getStatus()).thenReturn(unexpectedStatusCode);
-    when(keycloakResponse.getEntity()).thenReturn(entity);
+    when(keycloakResponse.getEntity()).thenReturn(entityAsStream);
 
     String expectedMessage = String.format(
         KeycloakCreateAccountUseCase.KEYCLOAK_UNEXPECTED_RESPONSE_CODE_ERROR_MESSAGE_FORMAT,
@@ -118,6 +121,30 @@ class KeycloakCreateAccountUseCaseTest {
         Status.CREATED.getStatusCode(),
         unexpectedStatusCode,
         entity);
+
+    // WHEN
+    KeycloakException exception = assertThrows(KeycloakException.class, () -> uut.execute(request));
+
+    // THEN
+    assertExceptionIsAsExpected(exception, expectedMessage, null);
+  }
+
+  @Test
+  @DisplayName("Should throw a KeycloakException with corresponding message when keycloak returns "
+      + "unexpected status code and the message body is unreadable.")
+  void shouldThrowKeycloakExceptionWhenKeycloakReturnsUnexpectedStatusCodeAndMessageBodyIsUnreadable() {
+    // GIVEN
+    int unexpectedStatusCode = Status.BAD_REQUEST.getStatusCode();
+    when(keycloakResponse.getStatus()).thenReturn(unexpectedStatusCode);
+    when(keycloakResponse.getEntity()).thenReturn(new Object());
+
+    String expectedMessage = String.format(
+        KeycloakCreateAccountUseCase.KEYCLOAK_UNEXPECTED_RESPONSE_CODE_ERROR_MESSAGE_FORMAT,
+        name,
+        email,
+        Status.CREATED.getStatusCode(),
+        unexpectedStatusCode,
+        KeycloakCreateAccountUseCase.ENTITY_UNREADABLE_MESSAGE);
 
     // WHEN
     KeycloakException exception = assertThrows(KeycloakException.class, () -> uut.execute(request));

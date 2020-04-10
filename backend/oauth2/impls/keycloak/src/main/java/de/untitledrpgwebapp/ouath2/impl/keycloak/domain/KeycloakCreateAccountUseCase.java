@@ -6,6 +6,8 @@ import de.untitledrpgwebapp.oauth2.boundary.response.AccountResponse;
 import de.untitledrpgwebapp.oauth2.domain.CreateAccountUseCase;
 import de.untitledrpgwebapp.ouath2.impl.keycloak.boundary.AccountMapper;
 import de.untitledrpgwebapp.ouath2.impl.keycloak.domain.exception.KeycloakException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import javax.ws.rs.ProcessingException;
 import javax.ws.rs.WebApplicationException;
@@ -22,11 +24,12 @@ public class KeycloakCreateAccountUseCase implements CreateAccountUseCase {
 
   public static final String KEYCLOAK_UNEXPECTED_RESPONSE_CODE_ERROR_MESSAGE_FORMAT =
       "Error during creating the user %s with email %s in keycloak. Expected status code %s, but "
-          + "got %s instead. Full response:\n%s";
+          + "got %s instead. Full response: %s";
   public static final String GENERAL_KEYCLOAK_ERROR_MESSAGE_FORMAT =
       "Error during creation of user %s with email %s in keycloak.";
   public static final String UNKNOWN_KEYCLOAK_ERROR_MESSAGE_FORMAT =
       "Unknown error during creation of user %s with email %s in keycloak.";
+  public static final String ENTITY_UNREADABLE_MESSAGE = "(Entity unreadable)";
 
   private final Keycloak keycloak;
   private final String realmName;
@@ -56,6 +59,8 @@ public class KeycloakCreateAccountUseCase implements CreateAccountUseCase {
 
   private void validateKeycloakResponse(CreateAccountRequest request, Response response) {
     if (!Objects.equal(Status.CREATED.getStatusCode(), response.getStatus())) {
+      String body;
+      body = readMessageEntity(response);
       throw new KeycloakException(
           String.format(
               KEYCLOAK_UNEXPECTED_RESPONSE_CODE_ERROR_MESSAGE_FORMAT,
@@ -63,9 +68,19 @@ public class KeycloakCreateAccountUseCase implements CreateAccountUseCase {
               request.getEmail(),
               Status.CREATED.getStatusCode(),
               response.getStatus(),
-              response.getEntity()),
+              body),
           request.getCorrelationId());
     }
+  }
+
+  private String readMessageEntity(Response response) {
+    String body;
+    try {
+      body = new String(((InputStream) response.getEntity()).readAllBytes());
+    } catch (ClassCastException | IOException e) {
+      body = ENTITY_UNREADABLE_MESSAGE;
+    }
+    return body;
   }
 
   private UserRepresentation constructUserRepresentation(final CreateAccountRequest request) {

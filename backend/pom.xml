@@ -16,7 +16,7 @@
   <packaging>pom</packaging>
   <modules>
     <module>common</module>
-    <module>deployment</module>
+    <module>deployments</module>
     <module>language</module>
     <module>oauth2</module>
     <module>testaggregation</module>
