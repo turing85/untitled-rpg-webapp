@@ -4,7 +4,7 @@ SETLOCAL
 SET FROM_PATH=%cd%
 SET FROM_DRIVE=%cd:~0,3%
 SET SCRIPT_PATH=%~dp0
-SET SCRIPT_DRIVE=%CURRENT:~0,3%
+SET SCRIPT_DRIVE=%SCRIPT_PATH:~0,3%
 
 cd /D %SCRIPT_DRIVE%
 cd %SCRIPT_PATH%
@@ -19,7 +19,7 @@ mvnw.cmd ^
   package
 echo --------------------------------------------------------------------------------
 echo The relevant build artifacts can be found in
-echo     ${PWD}/backend/target
+echo     %cd%backend\target
 echo --------------------------------------------------------------------------------
 
 cd %FROM_DRIVE%

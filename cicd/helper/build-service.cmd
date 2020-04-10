@@ -25,7 +25,7 @@ call mvnw.cmd ^
   package
 echo --------------------------------------------------------------------------------
 echo The build artifact for %SERVICE% is available at
-echo     %cd%\target\%SERVICE%Service-runner.jar
+echo     %cd%\backend\target\%SERVICE%Service-runner.jar
 echo --------------------------------------------------------------------------------
 
 cd %FROM_DRIVE%
