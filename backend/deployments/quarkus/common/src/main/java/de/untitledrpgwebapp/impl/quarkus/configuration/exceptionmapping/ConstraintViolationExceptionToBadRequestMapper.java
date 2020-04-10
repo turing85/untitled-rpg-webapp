@@ -1,4 +1,4 @@
-package de.untitledrpgwebapp.imp.quarkus.configuration.exceptionmapping;
+package de.untitledrpgwebapp.impl.quarkus.configuration.exceptionmapping;
 
 import java.util.Optional;
 import javax.validation.ConstraintViolation;

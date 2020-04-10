@@ -9,6 +9,6 @@ echo "==========================================================================
 echo "Installing the whole project"
 echo "================================================================================"
 ./mvnw \
-  "${MVN_CLI_OPTS}" \
+  ${MVN_CLI_OPTS} \
   -DskipTests \
-  package
+  install

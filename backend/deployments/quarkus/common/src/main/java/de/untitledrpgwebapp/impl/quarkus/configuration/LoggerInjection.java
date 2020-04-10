@@ -1,4 +1,4 @@
-package de.untitledrpgwebapp.imp.quarkus.configuration;
+package de.untitledrpgwebapp.impl.quarkus.configuration;
 
 import java.util.Optional;
 import javax.enterprise.context.ApplicationScoped;

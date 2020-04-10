@@ -17,6 +17,10 @@ mvnw.cmd ^
   %MVN_CLI_OPTS% ^
   -DskipTests ^
   package
+echo --------------------------------------------------------------------------------
+echo The relevant build artifacts can be found in
+echo     ${PWD}/backend/target
+echo --------------------------------------------------------------------------------
 
 cd %FROM_DRIVE%
 cd %FROM_PATH%

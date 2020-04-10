@@ -1,6 +1,6 @@
 package de.untitledrpgwebapp.user.impl.quarkus.boundary.endpoint;
 
-import de.untitledrpgwebapp.imp.quarkus.configuration.StaticConfig;
+import de.untitledrpgwebapp.impl.quarkus.configuration.StaticConfig;
 import de.untitledrpgwebapp.user.boundary.request.FindAllUsersRequest;
 import de.untitledrpgwebapp.user.boundary.request.FindUserByNameRequest;
 import de.untitledrpgwebapp.user.boundary.response.UserResponse;

@@ -14,11 +14,12 @@ echo "==========================================================================
 echo "Building service ${SERVICE} with GraalVM natively"
 echo "================================================================================"
 ./mvnw \
-  "${MVN_CLI_OPTS}" \
+  ${MVN_CLI_OPTS} \
   -Pnative \
   --projects :deployments.quarkus.microservices."${SERVICE}".impl \
   package
+chmod +x ${PWD}/backend/target/${SERVICE}Service-runner
 echo "--------------------------------------------------------------------------------"
 echo "The native build artifact for %SERVICE% is available at"
-echo "    ${PWD}/target/${SERVICE}Service-runner"
+echo "    ${PWD}/backend/target/${SERVICE}Service-runner"
 echo "--------------------------------------------------------------------------------"

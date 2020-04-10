@@ -1,4 +1,4 @@
-package de.untitledrpgwebapp.imp.quarkus.configuration;
+package de.untitledrpgwebapp.impl.quarkus.configuration;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

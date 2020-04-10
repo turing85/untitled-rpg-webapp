@@ -1,6 +1,6 @@
 package de.untitledrpgwebapp.language.impl.quarkus.boundary.endpoint;
 
-import de.untitledrpgwebapp.imp.quarkus.configuration.StaticConfig;
+import de.untitledrpgwebapp.impl.quarkus.configuration.StaticConfig;
 import de.untitledrpgwebapp.language.boundary.request.FindAllLanguagesRequest;
 import de.untitledrpgwebapp.language.boundary.request.FindLanguageByTagRequest;
 import de.untitledrpgwebapp.language.boundary.response.LanguageResponse;

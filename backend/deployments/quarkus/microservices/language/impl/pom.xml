@@ -59,7 +59,7 @@
                     ${basedir}/target
                   </directory>
                   <includes>
-                    <include>${project.build.finalName}-runner.jar</include>
+                    <include>${project.build.finalName}-runner*</include>
                   </includes>
                 </resource>
               </resources>

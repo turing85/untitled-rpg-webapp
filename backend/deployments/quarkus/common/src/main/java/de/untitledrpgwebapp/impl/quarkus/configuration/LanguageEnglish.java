@@ -1,4 +1,4 @@
-package de.untitledrpgwebapp.imp.quarkus.configuration;
+package de.untitledrpgwebapp.impl.quarkus.configuration;
 
 import io.quarkus.runtime.Startup;
 import io.quarkus.runtime.StartupEvent;
@@ -10,12 +10,12 @@ import org.slf4j.Logger;
 @ApplicationScoped
 @Startup
 @AllArgsConstructor
-public class TimeZoneUtc {
+public class LanguageEnglish {
 
   private final Logger logger;
 
   public void onApplicationStartup(@Observes StartupEvent startupEvent) {
-    logger.info("Setting timezone to UTC");
-    System.setProperty("user.timezone", "UTC");
+    logger.info("Setting language to english");
+    System.setProperty("user.language", "en");
   }
 }
