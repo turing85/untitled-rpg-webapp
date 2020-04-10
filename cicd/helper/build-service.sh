@@ -11,14 +11,14 @@ cd "${SCRIPT_DIR}"
 
 cd ../..
 echo "================================================================================"
-echo "Building service ${SERVICE} with GraalVM natively"
+echo "Building service ${SERVICE}"
 echo "================================================================================"
 ./mvnw \
   "${MVN_CLI_OPTS}" \
-  -Pnative \
+  -DskipTests \
   --projects :deployments.quarkus.microservices."${SERVICE}".impl \
   package
 echo "--------------------------------------------------------------------------------"
-echo "The native build artifact for %SERVICE% is available at"
-echo "    ${PWD}/target/${SERVICE}Service-runner"
+echo "The build artifact for %SERVICE% is available at"
+echo "    ${PWD}/backend/target/${SERVICE}Service-runner.jar"
 echo "--------------------------------------------------------------------------------"

@@ -1,3 +1,12 @@
+@echo off
+
+SET FROM_PATH=%cd%
+SET FROM_DRIVE=%cd:~0,3%
+SET SCRIPT_PATH=%~dp0
+SET SCRIPT_DRIVE=%CURRENT:~0,3%
+
+cd /D %SCRIPT_DRIVE%
+cd %SCRIPT_PATH%
 echo ================================================================================
 echo Starting docker deployments
 echo ================================================================================
@@ -7,9 +16,12 @@ cd ..
 echo ================================================================================
 echo Migrating language database
 echo ================================================================================
-mvnw.cmd flyway:migrate --projects :deployments.quarkus.microservices.language.impl
+call mvnw.cmd flyway:migrate --projects :deployments.quarkus.microservices.language.impl
 
 echo ================================================================================
 echo Migrating user database
 echo ================================================================================
-mvnw.cmd flyway:migrate --projects :deployments.quarkus.microservices.user.impl
+call mvnw.cmd flyway:migrate --projects :deployments.quarkus.microservices.user.impl
+
+cd /D %FROM_DRIVE%
+cd %FROM_PATH%

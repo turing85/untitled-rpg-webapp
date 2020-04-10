@@ -39,6 +39,35 @@
 
   <build>
     <finalName>languageService</finalName>
+    <plugins>
+      <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>${maven.resource.plugin.version}</version>
+        <inherited>false</inherited>
+        <executions>
+          <execution>
+            <id>copy-resources</id>
+            <phase>package</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${basedir}/../../../../../target</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>
+                    ${basedir}/target
+                  </directory>
+                  <includes>
+                    <include>${project.build.finalName}-runner.jar</include>
+                  </includes>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
   </build>
 
 </project>
