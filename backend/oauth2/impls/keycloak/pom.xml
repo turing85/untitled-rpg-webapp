@@ -18,7 +18,6 @@
   </properties>
 
   <dependencies>
-    <!-- Parent modules -->
     <dependency>
       <groupId>org.keycloak</groupId>
       <artifactId>keycloak-admin-client</artifactId>

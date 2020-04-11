@@ -48,14 +48,14 @@ public class LanguageEndpoint {
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   @PermitAll
-  public Response findAll(@HeaderParam(StaticConfig.X_CORRELATION_ID_HEADER) UUID correlationId) {
+  public Response findAll(@HeaderParam(StaticConfig.CORRELATION_ID_HEADER_KEY) UUID correlationId) {
     Collection<LanguageResponse> responses = findAllLanguages.execute(
         FindAllLanguagesRequest.builder()
             .correlationId(correlationId)
             .build());
     return Response
         .ok(mapper.responsesToDtos(responses))
-        .header(StaticConfig.X_CORRELATION_ID_HEADER, correlationId)
+        .header(StaticConfig.CORRELATION_ID_HEADER_KEY, correlationId)
         .build();
   }
 
@@ -75,14 +75,14 @@ public class LanguageEndpoint {
   @PermitAll
   public Response findByTag(
       @PathParam("tag") @Valid @Pattern(regexp = "[a-z]{2}(?:-[A-Z]{2})?") String tag,
-      @HeaderParam(StaticConfig.X_CORRELATION_ID_HEADER) UUID correlationId,
+      @HeaderParam(StaticConfig.CORRELATION_ID_HEADER_KEY) UUID correlationId,
       @Context SecurityContext context) {
     LanguageResponse response = findLanguage
         .execute(FindLanguageByTagRequest.builder().tag(tag).correlationId(correlationId).build())
         .orElseThrow();
     return Response
         .ok(mapper.responseToDto(response))
-        .header(StaticConfig.X_CORRELATION_ID_HEADER, correlationId)
+        .header(StaticConfig.CORRELATION_ID_HEADER_KEY, correlationId)
         .build();
   }
 
@@ -102,9 +102,9 @@ public class LanguageEndpoint {
   @PermitAll
   public Response test(
       @NotNull @Valid CreateLanguageDto httpRequest,
-      @HeaderParam(StaticConfig.X_CORRELATION_ID_HEADER) UUID correlationId) {
+      @HeaderParam(StaticConfig.CORRELATION_ID_HEADER_KEY) UUID correlationId) {
     return Response.ok(mapper.requestToResponse(httpRequest))
-        .header(StaticConfig.X_CORRELATION_ID_HEADER, correlationId)
+        .header(StaticConfig.CORRELATION_ID_HEADER_KEY, correlationId)
         .build();
   }
 

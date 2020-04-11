@@ -23,12 +23,12 @@ public interface LanguageRestClient {
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   Collection<LanguageResponse> findAllLanguages(
-      @HeaderParam(StaticConfig.X_CORRELATION_ID_HEADER) UUID correlationId);
+      @HeaderParam(StaticConfig.CORRELATION_ID_HEADER_KEY) UUID correlationId);
 
   @GET
   @Path("/{tag}")
   @Produces(MediaType.APPLICATION_JSON)
   Optional<LanguageDto> findByTag(
       @PathParam("tag") @Valid @Pattern(regexp = "[a-z]{2}(?:-[A-Z]{2})?") String tag,
-      @HeaderParam(StaticConfig.X_CORRELATION_ID_HEADER) UUID correlationId);
+      @HeaderParam(StaticConfig.CORRELATION_ID_HEADER_KEY) UUID correlationId);
 }

@@ -49,11 +49,11 @@ public class UserEndpoint {
   @PermitAll
   @Produces(MediaType.APPLICATION_JSON)
   public Response findAllUsers(
-      @HeaderParam(StaticConfig.X_CORRELATION_ID_HEADER) UUID correlationId) {
+      @HeaderParam(StaticConfig.CORRELATION_ID_HEADER_KEY) UUID correlationId) {
     Collection<UserResponse> responses =
         findAllUsers.execute(FindAllUsersRequest.builder().correlationId(correlationId).build());
     return Response.ok(mapper.responsesToDtos(responses))
-        .header(StaticConfig.X_CORRELATION_ID_HEADER, correlationId)
+        .header(StaticConfig.CORRELATION_ID_HEADER_KEY, correlationId)
         .build();
   }
 
@@ -73,7 +73,7 @@ public class UserEndpoint {
   @PermitAll
   public Response findUserByName(
       @PathParam("name") @Valid @Pattern(regexp = "[a-zA-Z0-9\\-]{3,255}") String name,
-      @HeaderParam(StaticConfig.X_CORRELATION_ID_HEADER) UUID correlationId) {
+      @HeaderParam(StaticConfig.CORRELATION_ID_HEADER_KEY) UUID correlationId) {
     UserResponse response = findUser.execute(FindUserByNameRequest.builder()
         .name(name)
         .correlationId(correlationId)
@@ -81,7 +81,7 @@ public class UserEndpoint {
         // TODO: throw a proper exception here
         .orElseThrow();
     return Response.ok(mapper.responseToDto(response))
-        .header(StaticConfig.X_CORRELATION_ID_HEADER, correlationId)
+        .header(StaticConfig.CORRELATION_ID_HEADER_KEY, correlationId)
         .build();
   }
 
@@ -101,14 +101,14 @@ public class UserEndpoint {
   @Produces(MediaType.APPLICATION_JSON)
   public Response createUser(
       @NotNull @Valid CreateUserDto httpRequest,
-      @HeaderParam(StaticConfig.X_CORRELATION_ID_HEADER) UUID correlationId) {
+      @HeaderParam(StaticConfig.CORRELATION_ID_HEADER_KEY) UUID correlationId) {
     UserResponse response = createUser.execute(
         mapper.dtoToRequest(httpRequest)
             .toBuilder()
             .correlationId(correlationId)
             .build());
     return Response.ok(mapper.responseToDto(response))
-        .header(StaticConfig.X_CORRELATION_ID_HEADER, correlationId)
+        .header(StaticConfig.CORRELATION_ID_HEADER_KEY, correlationId)
         .build();
   }
 }

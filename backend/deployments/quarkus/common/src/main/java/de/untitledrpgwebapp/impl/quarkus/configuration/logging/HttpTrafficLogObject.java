@@ -23,7 +23,7 @@ public class HttpTrafficLogObject {
   private URI requestUri;
   private String requestCorrelationId;
   private boolean responseCorrelationIdCopied;
-  private boolean requestCorrelationIdAdded;
+  private boolean requestCorrelationIdCreated;
   private Map<String, List<String>> headers;
   private Collection<NewCookie> responseCookies;
   private Collection<Cookie> requestCookies;
