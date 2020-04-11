@@ -5,6 +5,7 @@ import { AppAuthGuard } from './core/guards/app-auth-guard.guard';
 import { DashboardPageModule } from './pages/dashboard-page/dashboard-page.module';
 import { LandingPageModule } from './pages/landing-page/landing-page.module';
 import { ForbiddenPageModule } from './pages/forbidden-page/forbidden-page.module';
+import { ForbiddenPageComponent } from './pages/forbidden-page/forbidden-page.component';
 
 const routes: Routes = [
   {
@@ -19,10 +20,10 @@ const routes: Routes = [
   },
   {
     path: 'forbidden',
-    component: ForbiddenPageModule
+    loadChildren: () => ForbiddenPageModule
   },
   {
-    path: '**',
+    path: '',
     loadChildren: () => LandingPageModule
   }
 ];
@@ -32,4 +33,4 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: [AppAuthGuard]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
