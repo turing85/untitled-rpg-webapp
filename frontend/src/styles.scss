@@ -1,33 +1,36 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import 'styles/colors';
 @import 'styles/sidebar';
 @import 'styles/debug';
-@import 'styles/breadcrumb.scss';
-@import 'styles/content-header.scss';
+@import 'styles/breadcrumb';
+@import 'styles/content-header';
 
-$grey-3: #3d3d3d;
-$text-color: #efefef;
+/* mobile */
+
+@import 'styles/mobile/main';
 body {
-  margin: 0px;
-  padding: 0px;
-  background-color: $grey-3;
-  color: $text-color;
+    margin: 0px;
+    padding: 0px;
+    background-color: $grey-3;
+    color: $text-color;
 }
 
 a {
-  text-decoration: none;
-  color: $primary-color-1;
+    text-decoration: none;
+    color: $primary-color-1;
 }
+
 p {
-  margin: 0px;
-  padding-top: 16px;
-  padding-bottom: 16px;
+    margin: 0px;
+    padding-top: 16px;
+    padding-bottom: 16px;
 }
 
 .main-page {
-  width: 100%;
-  .content {
-    margin: 10px;
-    background-color: $sidebar-grey-2;
-  }
+    width: 100%;
+    .content {
+        margin: 10px;
+        background-color: $grey-2;
+    }
 }
-
