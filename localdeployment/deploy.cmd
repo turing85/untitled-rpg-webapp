@@ -12,7 +12,7 @@ CD %SCRIPT_PATH%
 ECHO ================================================================================
 ECHO Starting docker deployments: postgres and keycloak
 ECHO ================================================================================
-CALL docker-compose up -d postgres keycloak
+CALL docker-compose up -d dbms-service oidc-service
 IF %errorlevel% neq 0 (
   CD /D %FROM_DRIVE%
   CD %FROM_PATH%
@@ -46,9 +46,9 @@ IF %errorlevel% neq 0 (
 )
 
 ECHO ================================================================================
-ECHO Starting docker deployments: language
+ECHO Starting docker deployment: language-service
 ECHO ================================================================================
-CALL docker-compose up -d language
+CALL docker-compose up -d language-service
 IF %errorlevel% neq 0 (
   CD /D %FROM_DRIVE%
   CD %FROM_PATH%
@@ -68,9 +68,9 @@ IF %errorlevel% neq 0 (
 )
 
 ECHO ================================================================================
-ECHO Starting docker deployments: user
+ECHO Starting docker deployment: user-service
 ECHO ================================================================================
-CALL docker-compose up -d user
+CALL docker-compose up -d user-service
 
 CD /D %FROM_DRIVE%
 CD %FROM_PATH%

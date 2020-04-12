@@ -7,7 +7,7 @@ cd ${SCRIPT_DIR}
 echo "================================================================================"
 echo "Starting docker deployments: postgres and keycloak"
 echo "================================================================================"
-docker-compose up -d postgres keycloak
+docker-compose up -d dbms-service oidc-service
 
 if [[ ${BUILD_PROJECT} == true ]]; then
   echo "================================================================================"
@@ -26,9 +26,9 @@ cd ..
 cd localdeployment
 
 echo "================================================================================"
-echo "Starting docker deployments: language-service"
+echo "Starting docker deployment: language-service"
 echo "================================================================================"
-docker-compose up -d language
+docker-compose up -d language-service
 
 echo "================================================================================"
 echo "Migrating user database"
@@ -38,6 +38,6 @@ cd ..
 cd localdeployment
 
 echo "================================================================================"
-echo "Starting docker deployments: user-service"
+echo "Starting docker deployment: user-service"
 echo "================================================================================"
-docker-compose up -d user
+docker-compose up -d user-service
