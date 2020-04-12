@@ -11,7 +11,7 @@ public final class StaticConfig {
       List.of("access_token", "refresh_token", "id_token");
   public static final List<String> HEADERS_TO_OBFUSCATE = List.of("Authorization");
   public static final List<String> BODY_ATTRIBUTES_TO_OBFUSCATE =
-      List.of("password", "(?:access|refresh|id)_token", "credentials");
+      List.of("password", "(?:[^\"]*_token)", "credentials");
   public static final String OBFUSCATION_VALUE = "<redacted>";
 
   private StaticConfig() {
