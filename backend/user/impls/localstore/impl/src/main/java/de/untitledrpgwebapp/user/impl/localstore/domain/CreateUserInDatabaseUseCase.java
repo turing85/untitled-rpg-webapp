@@ -14,13 +14,15 @@ import de.untitledrpgwebapp.user.impl.localstore.boundary.mapper.UserMapper;
 import java.util.Optional;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
+@Getter
 @AllArgsConstructor
 public class CreateUserInDatabaseUseCase implements CreateUserUseCase {
 
-  private final UserMapper userMapper;
-  private final UserRepository userRepository;
-  private final FindLanguageByTagUseCase findLanguageByTag;
+  private final UserMapper mapper;
+  private final UserRepository repository;
+  private final FindLanguageByTagUseCase findLanguage;
   private final CreateAccountUseCase createAccount;
 
   @Override
@@ -31,15 +33,15 @@ public class CreateUserInDatabaseUseCase implements CreateUserUseCase {
     if (findLanguageByTag(preferredLanguageTag, correlationId).isEmpty()) {
       throw new LanguageNotFoundException(preferredLanguageTag, correlationId);
     }
-    CreateAccountRequest createAccountRequest = userMapper.requestToRequest(request);
+    CreateAccountRequest createAccountRequest = mapper.requestToRequest(request);
     createAccount.execute(createAccountRequest);
-    return userRepository.save(request).toBuilder()
+    return repository.save(request).toBuilder()
         .correlationId(request.getCorrelationId())
         .build();
   }
 
   private Optional<String> findLanguageByTag(String languageTag, UUID correlationId) {
-    return findLanguageByTag
+    return findLanguage
         .execute(FindLanguageByTagRequest.builder()
             .tag(languageTag)
             .correlationId(correlationId)

@@ -1,7 +1,7 @@
 package de.untitledrpgwebapp.language.impl.localstore.domain;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.mock;
@@ -24,14 +24,12 @@ class CreateLanguageInDatabaseUseCaseTest {
   void shouldCallRepositoryWithExpectedParametersWhenEverythingIsOk() {
     // GIVEN
     final String tag = "tag";
-    final String name = "name";
     UUID correlationId = UUID.randomUUID();
     CreateLanguageRequest request = CreateLanguageRequest.builder()
         .tag(tag)
-        .name(name)
         .correlationId(correlationId)
         .build();
-    LanguageResponse response = LanguageResponse.builder().tag(tag).name(name).build();
+    LanguageResponse response = LanguageResponse.builder().tag(tag).build();
     LanguageRepository repository = mock(LanguageRepository.class);
     when(repository.save(any())).thenReturn(response);
 
@@ -39,14 +37,12 @@ class CreateLanguageInDatabaseUseCaseTest {
     LanguageResponse actual = new CreateLanguageInDatabaseUseCase(repository).execute(request);
 
     // THEN
-    assertEquals(tag, actual.getTag());
-    assertEquals(name, actual.getName());
-    assertEquals(correlationId, actual.getCorrelationId());
+    assertThat(actual.getTag(), is(tag));
+    assertThat(actual.getCorrelationId(), is(correlationId));
 
     verify(repository).save(argThat(r -> {
-      assertEquals(tag, r.getTag());
-      assertEquals(name, r.getName());
-      assertEquals(correlationId, r.getCorrelationId());
+      assertThat(r.getTag(), is(tag));
+      assertThat(r.getCorrelationId(), is(correlationId));
       return true;
     }));
   }

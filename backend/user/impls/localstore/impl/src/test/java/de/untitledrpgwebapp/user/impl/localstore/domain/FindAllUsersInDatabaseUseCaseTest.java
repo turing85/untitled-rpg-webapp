@@ -2,7 +2,7 @@ package de.untitledrpgwebapp.user.impl.localstore.domain;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -41,7 +41,7 @@ class FindAllUsersInDatabaseUseCaseTest {
     // THEN
     assertThat(actual, hasSize(responses.size()));
     for(UserResponse response : actual) {
-      assertEquals(correlationId, response.getCorrelationId());
+      assertThat(response.getCorrelationId(), is(correlationId));
     }
 
     verify(repository).findAll();

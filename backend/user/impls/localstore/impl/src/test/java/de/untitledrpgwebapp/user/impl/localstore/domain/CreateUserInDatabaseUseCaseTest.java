@@ -1,7 +1,8 @@
 package de.untitledrpgwebapp.user.impl.localstore.domain;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.argThat;
@@ -85,17 +86,17 @@ class CreateUserInDatabaseUseCaseTest {
   }
 
   private void assertThatActualIsAsExpected(UserResponse actual) {
-    assertNotNull(actual);
-    assertEquals(name, actual.getName());
-    assertEquals(email, actual.getEmail());
-    assertEquals(tag, actual.getPreferredLanguageTag());
-    assertEquals(correlationId, actual.getCorrelationId());
+    assertThat(actual, is(notNullValue()));
+    assertThat(actual.getName(), is(name));
+    assertThat(actual.getEmail(), is(email));
+    assertThat(actual.getPreferredLanguageTag(), is(tag));
+    assertThat(actual.getCorrelationId(), is(correlationId));
   }
 
   private void verifyFindLanguageByCalledWasCalledWithExpectedParameters() {
     verify(findLanguageByTag).execute(argThat(request -> {
-      assertEquals(correlationId, request.getCorrelationId());
-      assertEquals(tag, request.getTag());
+      assertThat(request.getCorrelationId(), is(correlationId));
+      assertThat(request.getTag(), is(tag));
       return true;
     }));
   }
@@ -115,7 +116,7 @@ class CreateUserInDatabaseUseCaseTest {
         () -> uut.execute(request));
 
     // THEN
-    assertEquals(expectedMessage, exception.getMessage());
-    assertEquals(correlationId, exception.getCorrelationId());
+    assertThat(exception.getMessage(), is(expectedMessage));
+    assertThat(exception.getCorrelationId(), is(correlationId));
   }
 }

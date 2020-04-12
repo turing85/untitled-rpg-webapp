@@ -7,15 +7,17 @@ import de.untitledrpgwebapp.user.domain.FindAllUsersUseCase;
 import java.util.Collection;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
+@Getter
 @AllArgsConstructor
 public class FindAllUsersInDatabaseUseCase implements FindAllUsersUseCase {
 
-  private final UserRepository userRepository;
+  private final UserRepository repository;
 
   @Override
   public Collection<UserResponse> execute(FindAllUsersRequest request) {
-    return userRepository.findAll()
+    return repository.findAll()
         .stream()
         .map(response -> response.toBuilder().correlationId(request.getCorrelationId()).build())
         .collect(Collectors.toList());

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import de.untitledrpgwebapp.impl.quarkus.configuration.StaticConfig;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -44,7 +45,9 @@ public class LogObfuscator {
   LogObfuscator() {
     this(
         StaticConfig.BODY_ATTRIBUTES_TO_OBFUSCATE,
-        new ObjectMapper().setSerializationInclusion(Include.NON_EMPTY));
+        new ObjectMapper()
+            .configure(SerializationFeature.WRITE_SINGLE_ELEM_ARRAYS_UNWRAPPED, true)
+            .setSerializationInclusion(Include.NON_EMPTY));
   }
 
   LogObfuscator(final List<String> attributesToObfuscate, ObjectMapper mapper) {

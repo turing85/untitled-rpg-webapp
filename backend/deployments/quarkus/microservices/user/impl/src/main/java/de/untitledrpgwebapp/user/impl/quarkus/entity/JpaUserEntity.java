@@ -9,12 +9,16 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 @Getter
+@Table(name = "\"user\"")
 @Setter
 @Entity
-@Table(name = "\"user\"")
+@SuperBuilder
+@NoArgsConstructor
 public class JpaUserEntity {
 
   @Id

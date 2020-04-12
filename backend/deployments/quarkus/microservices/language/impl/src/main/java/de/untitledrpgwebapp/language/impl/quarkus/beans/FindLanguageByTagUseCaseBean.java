@@ -1,8 +1,8 @@
 package de.untitledrpgwebapp.language.impl.quarkus.beans;
 
 import de.untitledrpgwebapp.language.domain.FindLanguageByTagUseCase;
+import de.untitledrpgwebapp.language.impl.localstore.boundary.LanguageRepository;
 import de.untitledrpgwebapp.language.impl.localstore.domain.FindLanguageByTagInDatabaseUseCase;
-import de.untitledrpgwebapp.language.impl.quarkus.boundary.LanguageRepositoryProxy;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 
@@ -10,7 +10,7 @@ import javax.enterprise.inject.Produces;
 public class FindLanguageByTagUseCaseBean {
 
   @Produces
-  public FindLanguageByTagUseCase findLanguage(LanguageRepositoryProxy proxy) {
-    return new FindLanguageByTagInDatabaseUseCase(proxy);
+  public FindLanguageByTagUseCase findLanguage(LanguageRepository repository) {
+    return new FindLanguageByTagInDatabaseUseCase(repository);
   }
 }

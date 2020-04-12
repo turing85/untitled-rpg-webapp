@@ -7,11 +7,15 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 @RegisterForReflection
 @Getter
 @Setter
+@SuperBuilder
+@NoArgsConstructor
 public class UserDto {
 
   @NotNull
@@ -36,3 +40,4 @@ public class UserDto {
   private String bio;
   private byte[] avatar;
 }
+

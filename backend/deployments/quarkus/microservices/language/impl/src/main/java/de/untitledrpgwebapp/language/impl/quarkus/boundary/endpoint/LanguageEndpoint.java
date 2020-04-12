@@ -24,10 +24,8 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.SecurityContext;
 import lombok.AllArgsConstructor;
 
 @ApplicationScoped
@@ -81,8 +79,7 @@ public class LanguageEndpoint {
   @PermitAll
   public Response findByTag(
       @PathParam("tag") @Valid @Pattern(regexp = "[a-z]{2}(?:-[A-Z]{2})?") String tag,
-      @HeaderParam(StaticConfig.CORRELATION_ID_HEADER_KEY) UUID correlationId,
-      @Context SecurityContext context) {
+      @HeaderParam(StaticConfig.CORRELATION_ID_HEADER_KEY) UUID correlationId) {
     LanguageResponse response = findLanguage
         .execute(FindLanguageByTagRequest.builder().tag(tag).correlationId(correlationId).build())
         .orElseThrow();

@@ -7,7 +7,9 @@ import de.untitledrpgwebapp.language.impl.quarkusrestclient.boundary.LanguageRes
 import de.untitledrpgwebapp.language.impl.quarkusrestclient.boundary.mapper.LanguageMapper;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
+@Getter
 @AllArgsConstructor
 public class FindLanguageByTagViaRestUseCase implements FindLanguageByTagUseCase {
 

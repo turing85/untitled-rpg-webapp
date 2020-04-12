@@ -2,9 +2,9 @@ package de.untitledrpgwebapp.ouath2.impl.keycloak.domain;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
@@ -82,8 +82,8 @@ class KeycloakCreateAccountUseCaseTest {
     AccountResponse actual = uut.execute(request);
 
     // THEN
-    assertNotNull(actual);
-    assertSame(response, actual);
+    assertThat(actual, is(notNullValue()));
+    assertThat(actual, sameInstance(response));
 
     verifyUserResourceWasCalledWithExpectedParameters();
     verify(mapper).requestToResponse(request);
@@ -91,14 +91,14 @@ class KeycloakCreateAccountUseCaseTest {
 
   private void verifyUserResourceWasCalledWithExpectedParameters() {
     verify(usersResource).create(argThat(user -> {
-      assertEquals(name, user.getUsername());
-      assertEquals(email, user.getEmail());
+      assertThat(user.getUsername(), is(name));
+      assertThat(user.getEmail(), is(email));
       assertTrue(user.isEnabled());
       List<CredentialRepresentation> credentials = user.getCredentials();
       assertThat(credentials, hasSize(1));
       CredentialRepresentation credential = credentials.get(0);
-      assertEquals(CredentialRepresentation.PASSWORD, credential.getType());
-      assertEquals(password, credential.getValue());
+      assertThat(credential.getType(), is(CredentialRepresentation.PASSWORD));
+      assertThat(credential.getValue(), is(password));
       return true;
     }));
   }
@@ -157,9 +157,9 @@ class KeycloakCreateAccountUseCaseTest {
       KeycloakException exception,
       String expectedMessage,
       Throwable cause) {
-    assertEquals(expectedMessage, exception.getMessage());
-    assertEquals(correlationId, exception.getCorrelationId());
-    assertSame(cause, exception.getCause());
+    assertThat(exception.getMessage(), is(expectedMessage));
+    assertThat(exception.getCorrelationId(), is(correlationId));
+    assertThat(exception.getCause(), sameInstance(cause));
   }
 
   @Test

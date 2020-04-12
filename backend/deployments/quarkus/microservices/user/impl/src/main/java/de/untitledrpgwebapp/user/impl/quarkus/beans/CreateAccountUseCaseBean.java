@@ -24,10 +24,10 @@ public class CreateAccountUseCaseBean {
    *
    * @return the CreateAccountUseCase bean.
    *
-   * @see #keycloak(String, String, String, String)
+   * @see #keycloak(KeycloakBuilder, String, String, String, String)
    */
   @Produces
-  public CreateAccountUseCase createAccount(
+  CreateAccountUseCase createAccount(
       Keycloak keycloak,
       @ConfigProperty(name = "oauth2.realm.name") String realmName) {
     return new KeycloakCreateAccountUseCase(
@@ -39,6 +39,8 @@ public class CreateAccountUseCaseBean {
   /**
    * Produces the Keycloak bean.
    *
+   * @param builder
+   *     the keycloak builder to use.
    * @param serverUrl
    *     the url to the keycloak server.
    * @param realmName
@@ -51,17 +53,28 @@ public class CreateAccountUseCaseBean {
    * @return the Keycloak bean.
    */
   @Produces
-  public Keycloak keycloak(
+  Keycloak keycloak(
+      KeycloakBuilder builder,
       @ConfigProperty(name = "oauth2.server-url") String serverUrl,
       @ConfigProperty(name = "oauth2.realm.name") String realmName,
       @ConfigProperty(name = "oauth2.admin-cli.id") String adminCliId,
       @ConfigProperty(name = "oauth2.admin-cli.secret") String adminCliSecret) {
-    return KeycloakBuilder.builder()
+    return builder
         .serverUrl(serverUrl)
         .realm(realmName)
         .grantType(OAuth2Constants.CLIENT_CREDENTIALS)
         .clientId(adminCliId)
         .clientSecret(adminCliSecret)
         .build();
+  }
+
+  /**
+   * Produces the standard keycloak builder.
+   *
+   * @return the KeycloakBuilder bean.
+   */
+  @Produces
+  KeycloakBuilder builder() {
+    return KeycloakBuilder.builder();
   }
 }

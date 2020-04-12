@@ -36,9 +36,9 @@ public class UserEndpoint {
   public static final String PATH = "/users";
   public static final String GET_ONE_PATH_TEMPLATE = PATH + "/%s";
 
-  private final CreateUserUseCase createUser;
   private final FindAllUsersUseCase findAllUsers;
   private final FindUserByNameUseCase findUser;
+  private final CreateUserUseCase createUser;
   private final UserMapper mapper;
 
   /**
@@ -52,7 +52,7 @@ public class UserEndpoint {
   @GET
   @PermitAll
   @Produces(MediaType.APPLICATION_JSON)
-  public Response findAllUsers(
+  public Response findAll(
       @HeaderParam(StaticConfig.CORRELATION_ID_HEADER_KEY) UUID correlationId) {
     Collection<UserResponse> responses =
         findAllUsers.execute(FindAllUsersRequest.builder().correlationId(correlationId).build());
@@ -75,7 +75,7 @@ public class UserEndpoint {
   @Path("/{name}")
   @Produces(MediaType.APPLICATION_JSON)
   @PermitAll
-  public Response findUserByName(
+  public Response findByName(
       @PathParam("name") @Valid @Pattern(regexp = "[a-zA-Z0-9\\-]{3,255}") String name,
       @HeaderParam(StaticConfig.CORRELATION_ID_HEADER_KEY) UUID correlationId) {
     UserResponse response = findUser.execute(FindUserByNameRequest.builder()

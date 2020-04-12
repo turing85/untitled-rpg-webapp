@@ -2,7 +2,7 @@ package de.untitledrpgwebapp.language.impl.localstore.domain;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -41,7 +41,7 @@ class FindAllLanguagesInDatabaseUseCaseTest {
     // THEN
     assertThat(actual, hasSize(response.size()));
     for (LanguageResponse entry : actual) {
-      assertEquals(correlationId, entry.getCorrelationId());
+      assertThat(entry.getCorrelationId(), is(correlationId));
     }
 
     verify(repository).findAll();

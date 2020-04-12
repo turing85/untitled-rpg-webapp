@@ -1,6 +1,7 @@
 package de.untitledrpgwebapp.user.impl.localstore.domain;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
@@ -15,7 +16,7 @@ import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@DisplayName("Test for FindUserByNameInDatabaseUseCaseTest unit.")
+@DisplayName("Test for FindUserByNameInDatabaseUseCase unit.")
 class FindUserByNameInDatabaseUseCaseTest {
 
   @Test
@@ -40,7 +41,7 @@ class FindUserByNameInDatabaseUseCaseTest {
 
     // THEN
     assertTrue(result.isPresent());
-    assertEquals(correlationId, result.get().getCorrelationId());
+    assertThat(result.get().getCorrelationId(), is(correlationId));
 
     verify(repository).findByName(name);
   }

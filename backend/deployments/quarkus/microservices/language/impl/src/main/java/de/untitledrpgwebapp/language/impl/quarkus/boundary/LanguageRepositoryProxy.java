@@ -19,16 +19,16 @@ public class LanguageRepositoryProxy implements LanguageRepository {
   private final LanguageMapper mapper;
 
   @Override
-  public Optional<LanguageResponse> findByTag(String tag) {
-    return repository.findByTag(tag)
-        .map(mapper::entityToResponse);
-  }
-
-  @Override
   public Collection<LanguageResponse> findAll() {
     return StreamSupport.stream(repository.findAll().spliterator(), false)
         .map(mapper::entityToResponse)
         .collect(Collectors.toList());
+  }
+
+  @Override
+  public Optional<LanguageResponse> findByTag(String tag) {
+    return repository.findByTag(tag)
+        .map(mapper::entityToResponse);
   }
 
   @Override

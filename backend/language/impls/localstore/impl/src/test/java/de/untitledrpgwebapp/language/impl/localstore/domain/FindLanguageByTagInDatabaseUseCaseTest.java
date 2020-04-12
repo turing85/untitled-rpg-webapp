@@ -1,6 +1,7 @@
 package de.untitledrpgwebapp.language.impl.localstore.domain;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
@@ -39,7 +40,7 @@ class FindLanguageByTagInDatabaseUseCaseTest {
 
     // THEN
     assertTrue(fetched.isPresent());
-    assertEquals(correlationId, fetched.get().getCorrelationId());
+    assertThat(fetched.get().getCorrelationId(), is(correlationId));
 
     verify(repository).findByTag(tag);
   }

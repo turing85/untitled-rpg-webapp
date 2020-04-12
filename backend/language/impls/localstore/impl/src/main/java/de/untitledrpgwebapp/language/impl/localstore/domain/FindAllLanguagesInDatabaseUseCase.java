@@ -7,7 +7,10 @@ import de.untitledrpgwebapp.language.impl.localstore.boundary.LanguageRepository
 import java.util.Collection;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 
+@Getter
 @AllArgsConstructor
 public class FindAllLanguagesInDatabaseUseCase implements FindAllLanguagesUseCase {
 
