@@ -4,10 +4,12 @@ import de.untitledrpgwebapp.impl.quarkus.configuration.StaticConfig;
 import de.untitledrpgwebapp.language.boundary.request.FindAllLanguagesRequest;
 import de.untitledrpgwebapp.language.boundary.request.FindLanguageByTagRequest;
 import de.untitledrpgwebapp.language.boundary.response.LanguageResponse;
+import de.untitledrpgwebapp.language.domain.CreateLanguageUseCase;
 import de.untitledrpgwebapp.language.domain.FindAllLanguagesUseCase;
 import de.untitledrpgwebapp.language.domain.FindLanguageByTagUseCase;
 import de.untitledrpgwebapp.language.impl.quarkus.boundary.dto.CreateLanguageDto;
 import de.untitledrpgwebapp.language.impl.quarkus.boundary.mapper.LanguageMapper;
+import java.net.URI;
 import java.util.Collection;
 import java.util.UUID;
 import javax.annotation.security.PermitAll;
@@ -29,12 +31,16 @@ import javax.ws.rs.core.SecurityContext;
 import lombok.AllArgsConstructor;
 
 @ApplicationScoped
-@Path("/languages")
+@Path(LanguageEndpoint.PATH)
 @AllArgsConstructor
 public class LanguageEndpoint {
 
+  public static final String PATH = "/languages";
+  public static final String GET_ONE_PATH_TEMPLATE = PATH + "/%s";
+
   private final FindAllLanguagesUseCase findAllLanguages;
   private final FindLanguageByTagUseCase findLanguage;
+  private final CreateLanguageUseCase createLanguage;
   private final LanguageMapper mapper;
 
   /**
@@ -89,7 +95,7 @@ public class LanguageEndpoint {
   /**
    * Creates a new language.
    *
-   * @param httpRequest
+   * @param dto
    *     the language to create.
    * @param correlationId
    *     the correlation-id for the process.
@@ -100,13 +106,17 @@ public class LanguageEndpoint {
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   @PermitAll
-  public Response test(
-      @NotNull @Valid CreateLanguageDto httpRequest,
+  public Response createLanguage(
+      @NotNull @Valid CreateLanguageDto dto,
       @HeaderParam(StaticConfig.CORRELATION_ID_HEADER_KEY) UUID correlationId) {
-    return Response.ok(mapper.requestToResponse(httpRequest))
+    LanguageResponse created = createLanguage
+        .execute(mapper.dtoToRequest(dto).toBuilder()
+            .correlationId(correlationId)
+            .build());
+    return Response.created(URI.create(String.format(GET_ONE_PATH_TEMPLATE, created.getTag())))
+        .entity(mapper.responseToDto(created))
         .header(StaticConfig.CORRELATION_ID_HEADER_KEY, correlationId)
         .build();
   }
-
 }
 

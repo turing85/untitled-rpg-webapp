@@ -9,6 +9,7 @@ import de.untitledrpgwebapp.user.domain.FindAllUsersUseCase;
 import de.untitledrpgwebapp.user.domain.FindUserByNameUseCase;
 import de.untitledrpgwebapp.user.impl.quarkus.boundary.dto.CreateUserDto;
 import de.untitledrpgwebapp.user.impl.quarkus.boundary.mapper.UserMapper;
+import java.net.URI;
 import java.util.Collection;
 import java.util.UUID;
 import javax.annotation.security.PermitAll;
@@ -28,9 +29,12 @@ import javax.ws.rs.core.Response;
 import lombok.AllArgsConstructor;
 
 @ApplicationScoped
-@Path("/users")
+@Path(UserEndpoint.PATH)
 @AllArgsConstructor
 public class UserEndpoint {
+
+  public static final String PATH = "/users";
+  public static final String GET_ONE_PATH_TEMPLATE = PATH + "/%s";
 
   private final CreateUserUseCase createUser;
   private final FindAllUsersUseCase findAllUsers;
@@ -86,9 +90,9 @@ public class UserEndpoint {
   }
 
   /**
-   * Creates a new language.
+   * Creates a new user.
    *
-   * @param httpRequest
+   * @param dto
    *     the user to create.
    * @param correlationId
    *     the correlation-id for the process.
@@ -100,14 +104,16 @@ public class UserEndpoint {
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public Response createUser(
-      @NotNull @Valid CreateUserDto httpRequest,
+      @NotNull @Valid CreateUserDto dto,
       @HeaderParam(StaticConfig.CORRELATION_ID_HEADER_KEY) UUID correlationId) {
     UserResponse response = createUser.execute(
-        mapper.dtoToRequest(httpRequest)
+        mapper.dtoToRequest(dto)
             .toBuilder()
             .correlationId(correlationId)
             .build());
-    return Response.ok(mapper.responseToDto(response))
+    return Response
+        .created(URI.create(String.format(GET_ONE_PATH_TEMPLATE, response.getName())))
+        .entity(mapper.responseToDto(response))
         .header(StaticConfig.CORRELATION_ID_HEADER_KEY, correlationId)
         .build();
   }

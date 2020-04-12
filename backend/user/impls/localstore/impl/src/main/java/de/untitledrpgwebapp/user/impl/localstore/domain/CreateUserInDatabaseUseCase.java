@@ -33,8 +33,7 @@ public class CreateUserInDatabaseUseCase implements CreateUserUseCase {
     }
     CreateAccountRequest createAccountRequest = userMapper.requestToRequest(request);
     createAccount.execute(createAccountRequest);
-    return userRepository.save(request)
-        .toBuilder()
+    return userRepository.save(request).toBuilder()
         .correlationId(request.getCorrelationId())
         .build();
   }

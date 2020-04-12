@@ -1,5 +1,6 @@
 package de.untitledrpgwebapp.language.impl.quarkus.boundary;
 
+import de.untitledrpgwebapp.language.boundary.request.CreateLanguageRequest;
 import de.untitledrpgwebapp.language.boundary.response.LanguageResponse;
 import de.untitledrpgwebapp.language.impl.localstore.boundary.LanguageRepository;
 import de.untitledrpgwebapp.language.impl.quarkus.boundary.mapper.LanguageMapper;
@@ -28,5 +29,10 @@ public class LanguageRepositoryProxy implements LanguageRepository {
     return StreamSupport.stream(repository.findAll().spliterator(), false)
         .map(mapper::entityToResponse)
         .collect(Collectors.toList());
+  }
+
+  @Override
+  public LanguageResponse save(CreateLanguageRequest request) {
+    return mapper.entityToResponse(repository.save(mapper.requestToEntity(request)));
   }
 }
