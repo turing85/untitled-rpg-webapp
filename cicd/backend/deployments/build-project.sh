@@ -4,16 +4,15 @@ set -e
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 cd "${SCRIPT_DIR}"
 
-cd ../..
+cd ../../..
 echo "================================================================================"
-echo "Running unit tests with coverage report"
+echo "Building the whole project"
 echo "================================================================================"
 ./mvnw \
   ${MVN_CLI_OPTS} \
-  -DskipTests=false \
-  --activate-profiles unit-test-coverage \
-  verify
+  -DskipTests \
+  package
 echo "--------------------------------------------------------------------------------"
-echo "Test reports for the backend are available at:"
-echo "    ${PWD}/backend/testaggregation/target/site/jacoco-aggregate-ut/index.html"
+echo "The relevant build artifacts can be found in"
+echo "    ${PWD}/backend/target"
 echo "--------------------------------------------------------------------------------"

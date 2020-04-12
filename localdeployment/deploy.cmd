@@ -1,27 +1,33 @@
-@echo off
+@ECHO off
 
-SET FROM_PATH=%cd%
-SET FROM_DRIVE=%cd:~0,3%
+SET FROM_PATH=%CD%
+SET FROM_DRIVE=%CD:~0,3%
 SET SCRIPT_PATH=%~dp0
 SET SCRIPT_DRIVE=%SCRIPT_PATH:~0,3%
 
-cd /D %SCRIPT_DRIVE%
-cd %SCRIPT_PATH%
-echo ================================================================================
-echo Starting docker deployments
-echo ================================================================================
+CD /D %SCRIPT_DRIVE%
+CD %SCRIPT_PATH%
+ECHO ================================================================================
+ECHO Starting docker deployments
+ECHO ================================================================================
 docker-compose up -d
+IF %errorlevel% neq 0 (
+  CD /D %FROM_DRIVE%
+  CD %FROM_PATH%
+  exit /b %errorlevel%
+)
 
-cd ..
-echo ================================================================================
-echo Migrating language database
-echo ================================================================================
-call mvnw.cmd flyway:migrate --projects :deployments.quarkus.microservices.language.impl
+CD ..
+ECHO ================================================================================
+ECHO Migrating language database
+ECHO ================================================================================
+CALL mvnw.cmd flyway:migrate --projects :deployments.quarkus.microservices.language.impl
 
-echo ================================================================================
-echo Migrating user database
-echo ================================================================================
-call mvnw.cmd flyway:migrate --projects :deployments.quarkus.microservices.user.impl
+ECHO ================================================================================
+ECHO Migrating user database
+ECHO ================================================================================
+CALL mvnw.cmd flyway:migrate --projects :deployments.quarkus.microservices.user.impl
 
-cd /D %FROM_DRIVE%
-cd %FROM_PATH%
+CD /D %FROM_DRIVE%
+CD %FROM_PATH%
+IF %errorlevel% NEQ 0 EXIT /b %errorlevel%

@@ -1,26 +1,31 @@
 @echo off
 
+if [%SERVICE%] == [] (
+  echo "variable SERVICE is not set. It must be set to the service's name that should be compiled."
+  return 1
+)
+
 SETLOCAL
 SET FROM_PATH=%cd%
 SET FROM_DRIVE=%cd:~0,3%
 SET SCRIPT_PATH=%~dp0
-SET SCRIPT_DRIVE=%SCRIPT_PATH:~0,3%
+SET SCRIPT_DRIVE=%CURRENT:~0,3%
 
-cd /D %SCRIPT_DRIVE%
+cd %SCRIPT_DRIVE%
 cd %SCRIPT_PATH%
 
-cd ../..
+cd ../../..
 echo ================================================================================
-echo Running unit tests with coverage report
+echo Building service %SERVICE%
 echo ================================================================================
 call mvnw.cmd ^
   %MVN_CLI_OPTS% ^
-  -DskipTests=false ^
-  --activate-profiles unit-test-coverage ^
-  verify
+  -DskipTests ^
+  --projects :deployments.quarkus.microservices.%SERVICE%.impl ^
+  package
 echo --------------------------------------------------------------------------------
-echo Test reports for the backenc are available at:
-echo     %cd%\backend\testaggregation\target\site\jacoco-aggregate-ut\index.html
+echo The build artifact for %SERVICE% is available at
+echo     %cd%\backend\target\%SERVICE%Service-runner.jar
 echo --------------------------------------------------------------------------------
 
 cd %FROM_DRIVE%

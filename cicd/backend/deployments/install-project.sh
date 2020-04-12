@@ -4,10 +4,11 @@ set -e
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 cd "${SCRIPT_DIR}"
 
-cd ../..
+cd ../../..
 echo "================================================================================"
-echo "Cleaning the whole project"
+echo "Installing the whole project"
 echo "================================================================================"
 ./mvnw \
   ${MVN_CLI_OPTS} \
-  clean
+  -DskipTests \
+  install
