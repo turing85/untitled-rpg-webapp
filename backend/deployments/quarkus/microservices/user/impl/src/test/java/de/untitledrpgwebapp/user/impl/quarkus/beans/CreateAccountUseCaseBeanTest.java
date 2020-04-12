@@ -36,7 +36,7 @@ class CreateAccountUseCaseBeanTest {
       .build();
   KeycloakBuilder builder;
 
-  private CreateAccountUseCaseBean uut = new CreateAccountUseCaseBean();
+  private final CreateAccountUseCaseBean uut = new CreateAccountUseCaseBean();
 
   @BeforeEach
   void setup() {

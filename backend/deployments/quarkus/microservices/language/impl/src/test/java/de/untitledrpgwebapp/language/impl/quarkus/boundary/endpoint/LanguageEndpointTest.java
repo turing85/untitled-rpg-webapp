@@ -50,7 +50,6 @@ class LanguageEndpointTest {
 
   private FindAllLanguagesUseCase findAllLanguages;
   private FindLanguageByTagUseCase findLanguage;
-  private CreateLanguageUseCase createLanguage;
   private LanguageMapper mapper;
 
   private LanguageEndpoint uut;
@@ -60,7 +59,7 @@ class LanguageEndpointTest {
     findAllLanguages = mock(FindAllLanguagesUseCase.class);
     findLanguage = mock(FindLanguageByTagUseCase.class);
 
-    createLanguage = mock(CreateLanguageUseCase.class);
+    CreateLanguageUseCase createLanguage = mock(CreateLanguageUseCase.class);
     when(findAllLanguages.execute(any())).thenReturn(found);
 
     findLanguage = mock(FindLanguageByTagUseCase.class);
@@ -98,7 +97,7 @@ class LanguageEndpointTest {
   }
 
   @Test
-  void shouldCallFindLanguageWithExpectedParameterAndReturnExpectedREsultWhenFindByTagIsCalled() {
+  void shouldCallFindLanguageWithExpectedParameterAndReturnExpectedResultWhenFindByTagIsCalled() {
     // GIVEN: defaults
 
     // WHEN

@@ -97,7 +97,7 @@ class UserEndpointTest {
   }
 
   @Test
-  void shouldCallFindUserWithExpectedParameterAndReturnExpectedREsultWhenFindByNameIsCalled() {
+  void shouldCallFindUserWithExpectedParameterAndReturnExpectedResultWhenFindByNameIsCalled() {
     // GIVEN: defaults
 
     // WHEN

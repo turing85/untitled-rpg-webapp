@@ -4,9 +4,6 @@ import de.untitledrpgwebapp.impl.quarkus.configuration.StaticConfig;
 import java.io.IOException;
 import java.util.Objects;
 import javax.ws.rs.core.Response;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

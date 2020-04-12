@@ -6,7 +6,6 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
 @RegisterForReflection
 @Getter

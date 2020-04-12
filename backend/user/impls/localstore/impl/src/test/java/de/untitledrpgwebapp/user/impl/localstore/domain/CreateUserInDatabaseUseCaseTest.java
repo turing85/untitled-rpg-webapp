@@ -28,10 +28,10 @@ import org.junit.jupiter.api.Test;
 @DisplayName("Tests for CreateUserInDatabaseUseCase unit")
 class CreateUserInDatabaseUseCaseTest {
 
+  private final UUID correlationId = UUID.randomUUID();
   private final String name = "name";
   private final String email = "email";
   private final String tag = "tag";
-  private UUID correlationId = UUID.randomUUID();
   private CreateUserRequest request;
 
   private UserRepository repository;
