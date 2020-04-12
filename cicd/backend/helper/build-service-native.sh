@@ -16,6 +16,8 @@ echo "==========================================================================
 ./mvnw \
   ${MVN_CLI_OPTS} \
   -Pnative \
+  -P!unit-test-coverage \
+  -DskipTests \
   --projects :deployments.quarkus.microservices."${SERVICE}".impl \
   package
 chmod +x ${PWD}/backend/target/${SERVICE}Service-runner
