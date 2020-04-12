@@ -1,4 +1,4 @@
-@echo off
+@ECHO off
 
 SETLOCAL
 SET FROM_PATH=%CD%
@@ -8,6 +8,7 @@ SET SCRIPT_DRIVE=%SCRIPT_PATH:~0,3%
 
 CD /D %SCRIPT_DRIVE%
 CD %SCRIPT_PATH%
+
 SET SERVICE=user
 CALL ../../helper/build-service.cmd
 

@@ -8,6 +8,7 @@ SET SCRIPT_DRIVE=%SCRIPT_PATH:~0,3%
 
 CD /D %SCRIPT_DRIVE%
 CD %SCRIPT_PATH%
+
 SET SERVICE=language
 CALL ../../helper/build-service.cmd
 

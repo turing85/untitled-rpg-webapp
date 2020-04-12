@@ -9,14 +9,15 @@ SET SCRIPT_DRIVE=%SCRIPT_PATH:~0,3%
 CD /D %SCRIPT_DRIVE%
 CD %SCRIPT_PATH%
 
+ECHO ================================================================================
+ECHO Building the project
+ECHO ================================================================================
 CD ../../..
-ECHO ================================================================================
-ECHO Building the whole project
-ECHO ================================================================================
 CALL mvnw.cmd ^
   %MVN_CLI_OPTS% ^
   -DskipTests ^
   package
+CD cicd/backend/deployments
 ECHO --------------------------------------------------------------------------------
 ECHO The relevant build artifacts can be found in
 ECHO     %CD%backend\target

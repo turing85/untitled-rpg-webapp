@@ -33,10 +33,10 @@ mp:
   jwt:
     verify:
       publickey:
-        location: ${OAUTH2_PUBLICKEY_URL:http://localhost:8090/auth/realms/${oauth2.realm.name}/protocol/openid-connect/certs}
+        location: ${OAUTH2_PUBLICKEY_URL:${oauth2.server-url}/realms/${oauth2.realm.name}/protocol/openid-connect/certs}
 microservice:
   language:
     url: ${URL_LANGUAGE_MS:http://localhost:8080}
 
-language-rest/mp-rest/url: http://localhost:8080
+language-rest/mp-rest/url: ${microservice.language.url}
 language-rest/mp-rest/scope: javax.inject.Singleton

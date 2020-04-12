@@ -9,13 +9,14 @@ SET SCRIPT_DRIVE=%SCRIPT_PATH:~0,3%
 CD /D %SCRIPT_DRIVE%
 CD %SCRIPT_PATH%
 
+ECHO ================================================================================
+ECHO Cleaning the project
+ECHO ================================================================================
 CD ../../..
-ECHO ================================================================================
-ECHO Cleaning the whole project
-ECHO ================================================================================
 CALL mvnw.cmd ^
   %MVN_CLI_OPTS% ^
   clean
+CD cicd/backend/deployments
 
 CD %FROM_DRIVE%
 CD %FROM_PATH%

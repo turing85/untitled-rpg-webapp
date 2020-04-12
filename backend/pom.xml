@@ -27,6 +27,7 @@
     <!-- project settings -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <java.version>11</java.version>
 
     <!-- libraries -->
     <!-- Annotation processors -->
@@ -46,6 +47,7 @@
 
     <!-- maven plugins -->
     <checkstyle.version>8.25</checkstyle.version>
+    <io.fabric8.version>0.32.0</io.fabric8.version>
     <jacoco.maven.plugin.version>0.8.4</jacoco.maven.plugin.version>
     <maven.checkstyle.plugin.version>3.1.0</maven.checkstyle.plugin.version>
     <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
@@ -151,6 +153,18 @@
   </dependencies>
 
   <build>
+    <pluginManagement>
+      <!-- Docker plung to build images -->
+      <plugins>
+        <plugin>
+          <groupId>io.fabric8</groupId>
+          <artifactId>docker-maven-plugin</artifactId>
+          <version>${io.fabric8.version}</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+
+    <!-- Jandex indexer for quarkus cdi -->
     <plugins>
       <plugin>
         <groupId>org.jboss.jandex</groupId>
@@ -170,6 +184,7 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>${maven.compiler.plugin.version}</version>
         <configuration>
+          <release>11</release>
           <annotationProcessorPaths>
             <!-- mapstruct must come first -->
             <path>

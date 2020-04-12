@@ -2,6 +2,7 @@
 set -e
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+cd "${SCRIPT_DIR}"
 
 export SERVICE=user
-"${SCRIPT_DIR}"/../../helper/build-service.sh
+../../helper/build-service.sh
