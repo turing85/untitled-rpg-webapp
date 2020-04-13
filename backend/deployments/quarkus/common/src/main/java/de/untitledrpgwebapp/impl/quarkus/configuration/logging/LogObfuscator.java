@@ -30,7 +30,6 @@ import javax.ws.rs.core.NewCookie;
  * <p>The attributes of the body with names defined in
  * {@link StaticConfig#BODY_ATTRIBUTES_TO_OBFUSCATE} are replaced by {@link
  * StaticConfig#OBFUSCATION_VALUE}.
- *
  */
 public class LogObfuscator {
 
@@ -133,6 +132,7 @@ public class LogObfuscator {
     ArrayList<MatchInterval> intervals = findMatchIntervals(entityString, matcher);
     return replaceIntervalsWithObfuscation(entityString, intervals)
         .replaceAll("\n", "\\\\n")
+        .replaceAll("\r", "\\\\r")
         .replaceAll("\t", "\\\\t");
   }
 

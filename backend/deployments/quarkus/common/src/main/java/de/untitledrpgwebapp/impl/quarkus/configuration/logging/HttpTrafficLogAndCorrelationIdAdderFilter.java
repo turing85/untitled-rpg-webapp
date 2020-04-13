@@ -5,6 +5,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -120,7 +121,7 @@ public class HttpTrafficLogAndCorrelationIdAdderFilter
       Consumer<InputStream> inputStreamSetter) throws IOException {
     ByteArrayOutputStream entityOutputStream = toOutputStream(inputStreamGetter.get());
     inputStreamSetter.accept(new ByteArrayInputStream(entityOutputStream.toByteArray()));
-    String entityString = new String(entityOutputStream.toByteArray());
+    String entityString = entityOutputStream.toString(Charset.defaultCharset());
     if (!entityString.isBlank()) {
       return entityString;
     }
@@ -180,7 +181,6 @@ public class HttpTrafficLogAndCorrelationIdAdderFilter
                 .map(Object::toString)
                 .collect(Collectors.toList())));
   }
-
 
   private void logRequestToBeSent(ClientRequestContext request, boolean correlationIdCreated)
       throws IOException {
