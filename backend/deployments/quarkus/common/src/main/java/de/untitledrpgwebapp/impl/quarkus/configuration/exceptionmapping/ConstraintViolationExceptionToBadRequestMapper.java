@@ -4,7 +4,6 @@ import java.util.Optional;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Path;
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.ExceptionMapper;
@@ -23,10 +22,7 @@ public class ConstraintViolationExceptionToBadRequestMapper implements
           violation.getInvalidValue(),
           violation.getMessage()));
     }
-    throw new WebApplicationException(Response
-        .status(Status.BAD_REQUEST)
-        .entity(message.toString())
-        .build());
+    return Response.status(Status.BAD_REQUEST).entity(message.toString()).build();
   }
 
   private String constructViolationDescription(
