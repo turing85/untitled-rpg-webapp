@@ -13,23 +13,23 @@ ECHO ===========================================================================
 ECHO Starting docker deployments: postgres and keycloak
 ECHO ================================================================================
 CALL docker-compose up -d dbms-service oidc-service
-IF %errorlevel% neq 0 (
+IF %ERRORLEVEL% NEQ 0 (
   CD /D %FROM_DRIVE%
   CD %FROM_PATH%
-  exit /b %errorlevel%
+  exit /b %ERRORLEVEL%
 )
 
-IF %BUILD_PROJECT%==true (
+IF "%BUILD_PROJECT%"=="true" (
   ECHO ================================================================================
   ECHO Building project and generating docker images
   ECHO ================================================================================
   CD ..
   CALL mvnw.cmd -Pdocker -P!unit-test-coverage -DskipTests package
   CD localdeployment
-  IF %errorlevel% neq 0 (
+  IF %ERRORLEVEL% NEQ 0 (
     CD /D %FROM_DRIVE%
     CD %FROM_PATH%
-    exit /b %errorlevel%
+    exit /b %ERRORLEVEL%
   )
 )
 
@@ -39,20 +39,20 @@ ECHO ===========================================================================
 CD ..
 CALL mvnw.cmd flyway:migrate --projects :deployments.quarkus.microservices.language.impl
 CD localdeployment
-IF %errorlevel% neq 0 (
+IF %ERRORLEVEL% NEQ 0 (
   CD /D %FROM_DRIVE%
   CD %FROM_PATH%
-  exit /b %errorlevel%
+  exit /b %ERRORLEVEL%
 )
 
 ECHO ================================================================================
 ECHO Starting docker deployment: language-service
 ECHO ================================================================================
 CALL docker-compose up -d language-service
-IF %errorlevel% neq 0 (
+IF %ERRORLEVEL% neq 0 (
   CD /D %FROM_DRIVE%
   CD %FROM_PATH%
-  exit /b %errorlevel%
+  exit /b %ERRORLEVEL%
 )
 
 ECHO ================================================================================
@@ -61,10 +61,10 @@ ECHO ===========================================================================
 CD ..
 CALL mvnw.cmd flyway:migrate --projects :deployments.quarkus.microservices.user.impl
 CD localdeployment
-IF %errorlevel% neq 0 (
+IF %ERRORLEVEL% neq 0 (
   CD /D %FROM_DRIVE%
   CD %FROM_PATH%
-  exit /b %errorlevel%
+  exit /b %ERRORLEVEL%
 )
 
 ECHO ================================================================================
@@ -74,5 +74,5 @@ CALL docker-compose up -d user-service
 
 CD /D %FROM_DRIVE%
 CD %FROM_PATH%
-IF %errorlevel% NEQ 0 EXIT /b %errorlevel%
+IF %ERRORLEVEL% NEQ 0 EXIT /b %ERRORLEVEL%
 ENDLOCAL
