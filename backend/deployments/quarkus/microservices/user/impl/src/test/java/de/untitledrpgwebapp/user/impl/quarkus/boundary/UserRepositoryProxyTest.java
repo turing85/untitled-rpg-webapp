@@ -1,5 +1,7 @@
 package de.untitledrpgwebapp.user.impl.quarkus.boundary;
 
+import static de.untitledrpgwebapp.user.impl.quarkus.testfixture.UserData.USER_NAMES;
+import static de.untitledrpgwebapp.user.impl.quarkus.testfixture.UserData.USER_ONE_NAME;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
@@ -15,7 +17,6 @@ import de.untitledrpgwebapp.user.boundary.response.UserResponse;
 import de.untitledrpgwebapp.user.impl.quarkus.boundary.mapper.UserMapper;
 import de.untitledrpgwebapp.user.impl.quarkus.entity.JpaUserEntity;
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,10 +25,6 @@ import org.junit.jupiter.api.Test;
 
 @DisplayName("Tests for UserRepositoryProxy unit")
 class UserRepositoryProxyTest {
-
-  private static final String USER_ONE_NAME = "userOneName";
-  private static final String USER_TWO_NAME = "userTwoName";
-  private static final List<String> USER_NAMES = List.of(USER_ONE_NAME, USER_TWO_NAME);
 
   JpaUserRepository repository;
   UserMapper mapper;

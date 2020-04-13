@@ -14,7 +14,7 @@ echo "==========================================================================
 echo "Building service ${SERVICE}"
 echo "================================================================================"
 ./mvnw \
-  ${MVN_CLI_OPTS} \
+  "${MVN_CLI_OPTS}" \
   -DskipTests \
   --projects :deployments.quarkus.microservices."${SERVICE}".impl \
   package

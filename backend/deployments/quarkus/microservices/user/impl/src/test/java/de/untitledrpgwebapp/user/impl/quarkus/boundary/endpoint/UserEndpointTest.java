@@ -1,5 +1,10 @@
 package de.untitledrpgwebapp.user.impl.quarkus.boundary.endpoint;
 
+import static de.untitledrpgwebapp.user.impl.quarkus.testfixture.UserData.CORRELATION_ID;
+import static de.untitledrpgwebapp.user.impl.quarkus.testfixture.UserData.DTOS;
+import static de.untitledrpgwebapp.user.impl.quarkus.testfixture.UserData.FOUND;
+import static de.untitledrpgwebapp.user.impl.quarkus.testfixture.UserData.USER_NAMES;
+import static de.untitledrpgwebapp.user.impl.quarkus.testfixture.UserData.USER_ONE_NAME;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -24,7 +29,6 @@ import de.untitledrpgwebapp.user.impl.quarkus.boundary.mapper.UserMapper;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.stream.Collectors;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -35,21 +39,9 @@ import org.junit.jupiter.api.Test;
 @DisplayName("Tests for UserEndpoint unit")
 class UserEndpointTest {
 
-  private static final UUID CORRELATION_ID = UUID.randomUUID();
-  private static final String USER_ONE_NAME = "userOneName";
-  private static final String USER_TWO_NAME = "userTwoName";
-  private static final List<String> USER_NAMES = List.of(USER_ONE_NAME, USER_TWO_NAME);
-
-  private static final List<UserResponse> FOUND = List.of(
-      UserResponse.builder().name(USER_ONE_NAME).build(),
-      UserResponse.builder().name(USER_TWO_NAME).build());
-
-  private static final List<UserDto> DTOS = List.of(
-      UserDto.builder().name(USER_ONE_NAME).build(),
-      UserDto.builder().name(USER_TWO_NAME).build());
-
   private FindAllUsersUseCase findAllUsers;
   private FindUserByNameUseCase findUser;
+  private CreateUserUseCase createUser;
   private UserMapper mapper;
 
   private UserEndpoint uut;
@@ -59,7 +51,7 @@ class UserEndpointTest {
     findAllUsers = mock(FindAllUsersUseCase.class);
     findUser = mock(FindUserByNameUseCase.class);
 
-    CreateUserUseCase createUser = mock(CreateUserUseCase.class);
+    createUser = mock(CreateUserUseCase.class);
     when(findAllUsers.execute(any())).thenReturn(FOUND);
 
     findUser = mock(FindUserByNameUseCase.class);
@@ -71,8 +63,6 @@ class UserEndpointTest {
     mapper = mock(UserMapper.class);
     when(mapper.responsesToDtos(anyList())).thenReturn(DTOS);
     when(mapper.responseToDto(any())).thenReturn(UserDto.builder().name(USER_ONE_NAME).build());
-    when(mapper.dtoToRequest(any()))
-        .thenReturn(CreateUserRequest.builder().name(USER_ONE_NAME).build());
 
     uut = new UserEndpoint(findAllUsers, findUser, createUser, mapper);
   }
@@ -114,7 +104,9 @@ class UserEndpointTest {
 
   @Test
   void shouldCallCreateUserWithExpectedParameterAndReturnExpectedResultWhenCreateUserIsCalled() {
-    // GIVEN: defaults
+    // GIVEN:
+    CreateUserRequest request = CreateUserRequest.builder().name(USER_ONE_NAME).build();
+    when(mapper.dtoToRequest(any(), any())).thenReturn(request);
 
     // WHEN
     Response response =
@@ -122,6 +114,8 @@ class UserEndpointTest {
 
     // THEN
     assertCreateUserResponseIsAsExpected(response);
+
+    verify(createUser).execute(request);
   }
 
   private void assertResponseIsAsExpected(Response response) {

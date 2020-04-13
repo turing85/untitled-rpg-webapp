@@ -9,7 +9,7 @@ echo "Installing the project"
 echo "================================================================================"
 cd ../../..
 ./mvnw \
-  ${MVN_CLI_OPTS} \
+  "${MVN_CLI_OPTS}" \
   -DskipTests \
   install
 cd cicd/backend/deployments

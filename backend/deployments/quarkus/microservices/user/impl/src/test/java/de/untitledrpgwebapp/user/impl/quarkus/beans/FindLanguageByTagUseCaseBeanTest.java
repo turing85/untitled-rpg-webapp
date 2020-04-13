@@ -29,7 +29,7 @@ class FindLanguageByTagUseCaseBeanTest {
     // THEN
     assertThat(created, instanceOf(FindLanguageByTagViaRestUseCase.class));
     FindLanguageByTagViaRestUseCase actual = (FindLanguageByTagViaRestUseCase) created;
-    assertThat(actual.getRestClient(), sameInstance(restClient));
+    assertThat(actual.getClient(), sameInstance(restClient));
     assertThat(actual.getMapper(), sameInstance(mapper));
   }
 

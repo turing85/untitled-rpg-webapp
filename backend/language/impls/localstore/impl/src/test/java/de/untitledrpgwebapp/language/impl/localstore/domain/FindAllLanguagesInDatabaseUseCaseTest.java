@@ -1,5 +1,7 @@
 package de.untitledrpgwebapp.language.impl.localstore.domain;
 
+import static de.untitledrpgwebapp.language.impl.localstore.testfixture.LanguageData.CORRELATION_ID;
+import static de.untitledrpgwebapp.language.impl.localstore.testfixture.LanguageData.LANGUAGES_RESPONSE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -11,8 +13,6 @@ import de.untitledrpgwebapp.language.boundary.request.FindAllLanguagesRequest;
 import de.untitledrpgwebapp.language.boundary.response.LanguageResponse;
 import de.untitledrpgwebapp.language.impl.localstore.boundary.LanguageRepository;
 import java.util.Collection;
-import java.util.List;
-import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -24,24 +24,20 @@ class FindAllLanguagesInDatabaseUseCaseTest {
       + "response when everything is ok.")
   void shouldCallRepositoryWithExpectedParametersWhenEverythingIsOk() {
     // GIVEN
-    final UUID correlationId = UUID.randomUUID();
     FindAllLanguagesRequest request =
-        FindAllLanguagesRequest.builder().correlationId(correlationId).build();
-    LanguageResponse languageOne = LanguageResponse.builder().build();
-    LanguageResponse languageTwo = LanguageResponse.builder().build();
-    List<LanguageResponse> response = List.of(languageOne, languageTwo);
+        FindAllLanguagesRequest.builder().correlationId(CORRELATION_ID).build();
 
     LanguageRepository repository = mock(LanguageRepository.class);
-    when(repository.findAll()).thenReturn(response);
+    when(repository.findAll()).thenReturn(LANGUAGES_RESPONSE);
 
     // WHEN
     Collection<LanguageResponse> actual =
         new FindAllLanguagesInDatabaseUseCase(repository).execute(request);
 
     // THEN
-    assertThat(actual, hasSize(response.size()));
+    assertThat(actual, hasSize(LANGUAGES_RESPONSE.size()));
     for (LanguageResponse entry : actual) {
-      assertThat(entry.getCorrelationId(), is(correlationId));
+      assertThat(entry.getCorrelationId(), is(CORRELATION_ID));
     }
 
     verify(repository).findAll();

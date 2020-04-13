@@ -9,6 +9,6 @@ echo "Cleaning the project"
 echo "================================================================================"
 cd ../../..
 ./mvnw \
-  ${MVN_CLI_OPTS} \
+  "${MVN_CLI_OPTS}" \
   clean
 cicd/backend/deployments

@@ -1,5 +1,9 @@
 package de.untitledrpgwebapp.language.impl.quarkus.boundary.endpoint;
 
+import static de.untitledrpgwebapp.language.impl.quarkus.testfixture.LanguageData.CORRELATION_ID;
+import static de.untitledrpgwebapp.language.impl.quarkus.testfixture.LanguageData.FOUND;
+import static de.untitledrpgwebapp.language.impl.quarkus.testfixture.LanguageData.LANGUAGE_ONE_TAG;
+import static de.untitledrpgwebapp.language.impl.quarkus.testfixture.LanguageData.LANGUAGE_TAGS;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -21,10 +25,10 @@ import de.untitledrpgwebapp.language.domain.FindLanguageByTagUseCase;
 import de.untitledrpgwebapp.language.impl.quarkus.boundary.dto.CreateLanguageDto;
 import de.untitledrpgwebapp.language.impl.quarkus.boundary.dto.LanguageDto;
 import de.untitledrpgwebapp.language.impl.quarkus.boundary.mapper.LanguageMapper;
+import de.untitledrpgwebapp.language.impl.quarkus.testfixture.LanguageData;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.stream.Collectors;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -35,21 +39,9 @@ import org.junit.jupiter.api.Test;
 @DisplayName("Tests for LanguageEndpoint unit")
 class LanguageEndpointTest {
 
-  private final UUID correlationId = UUID.randomUUID();
-  private final String languageOneTag = "languageOneTag";
-  private final String languageTwoTag = "languageTwoTag";
-  private final List<String> languageTags = List.of(languageOneTag, languageTwoTag);
-
-  private final List<LanguageResponse> found = List.of(
-      LanguageResponse.builder().tag(languageOneTag).build(),
-      LanguageResponse.builder().tag(languageTwoTag).build());
-
-  private final List<LanguageDto> dtos = List.of(
-      LanguageDto.builder().tag(languageOneTag).build(),
-      LanguageDto.builder().tag(languageTwoTag).build());
-
   private FindAllLanguagesUseCase findAllLanguages;
   private FindLanguageByTagUseCase findLanguage;
+  private CreateLanguageUseCase createLanguage;
   private LanguageMapper mapper;
 
   private LanguageEndpoint uut;
@@ -58,21 +50,11 @@ class LanguageEndpointTest {
   void setup() {
     findAllLanguages = mock(FindAllLanguagesUseCase.class);
     findLanguage = mock(FindLanguageByTagUseCase.class);
-
-    CreateLanguageUseCase createLanguage = mock(CreateLanguageUseCase.class);
-    when(findAllLanguages.execute(any())).thenReturn(found);
-
+    createLanguage = mock(CreateLanguageUseCase.class);
     findLanguage = mock(FindLanguageByTagUseCase.class);
-    when(findLanguage.execute(any()))
-        .thenReturn(Optional.of(LanguageResponse.builder().tag(languageOneTag).build()));
-    when(createLanguage.execute(any()))
-        .thenReturn(LanguageResponse.builder().tag(languageOneTag).build());
-
     mapper = mock(LanguageMapper.class);
-    when(mapper.responsesToDtos(anyList())).thenReturn(dtos);
-    when(mapper.responseToDto(any())).thenReturn(LanguageDto.builder().tag(languageOneTag).build());
-    when(mapper.dtoToRequest(any()))
-        .thenReturn(CreateLanguageRequest.builder().tag(languageOneTag).build());
+    when(mapper.responseToDto(any()))
+        .thenReturn(LanguageDto.builder().tag(LANGUAGE_ONE_TAG).build());
 
     uut = new LanguageEndpoint(findAllLanguages, findLanguage, createLanguage, mapper);
   }
@@ -81,47 +63,58 @@ class LanguageEndpointTest {
   @DisplayName("Should call findAllLanguages with the expected parameters and return the expected "
       + "response object")
   void shouldCallFindAllLanguagesWithExpectedParameterAndReturnExpectedResultWhenFindAllIsCalled() {
-    // GIVEN: defaults
+    // GIVEN
+    when(findAllLanguages.execute(any())).thenReturn(FOUND);
+    when(mapper.responsesToDtos(anyList())).thenReturn(LanguageData.DTOS);
 
     // WHEN
-    Response response = uut.findAll(correlationId);
+    Response response = uut.findAll(CORRELATION_ID);
 
     // THEN
     assertCollectionResponseIsAsExpected(response);
 
     verify(findAllLanguages).execute(argThat(r -> {
-      assertThat(r.getCorrelationId(), is(correlationId));
+      assertThat(r.getCorrelationId(), is(CORRELATION_ID));
       return true;
     }));
-    verify(mapper).responsesToDtos(found);
+    verify(mapper).responsesToDtos(FOUND);
   }
 
   @Test
   void shouldCallFindLanguageWithExpectedParameterAndReturnExpectedResultWhenFindByTagIsCalled() {
-    // GIVEN: defaults
+    // GIVEN
+    when(findLanguage.execute(any()))
+        .thenReturn(Optional.of(LanguageResponse.builder().tag(LANGUAGE_ONE_TAG).build()));
 
     // WHEN
-    Response response = uut.findByTag(languageOneTag, correlationId);
+    Response response = uut.findByTag(LANGUAGE_ONE_TAG, CORRELATION_ID);
 
     // THEN
     assertResponseIsAsExpected(response);
 
     verify(findLanguage).execute(argThat(r -> {
-      assertThat(r.getCorrelationId(), is(correlationId));
+      assertThat(r.getCorrelationId(), is(CORRELATION_ID));
       return true;
     }));
   }
 
   @Test
   void shouldCallCreateLanguageWithExpectedParameterAndReturnExpectedResultWhenCreateLanguageIsCalled() {
-    // GIVEN: defaults
+    // GIVEN:
+    CreateLanguageRequest request =
+        CreateLanguageRequest.builder().tag(LANGUAGE_ONE_TAG).build();
+    when(mapper.dtoToRequest(any(), any())).thenReturn(request);
+    when(createLanguage.execute(any()))
+        .thenReturn(LanguageResponse.builder().tag(LANGUAGE_ONE_TAG).build());
 
     // WHEN
     Response response =
-        uut.createLanguage(new CreateLanguageDto().setTag(languageOneTag), correlationId);
+        uut.createLanguage(new CreateLanguageDto().setTag(LANGUAGE_ONE_TAG), CORRELATION_ID);
 
     // THEN
     assertCreateLanguageResponseIsAsExpected(response);
+
+    verify(createLanguage).execute(request);
   }
 
   private void assertResponseIsAsExpected(Response response) {
@@ -133,11 +126,11 @@ class LanguageEndpointTest {
     List<Object> correlationIdHeaders =
         response.getHeaders().get(StaticConfig.CORRELATION_ID_HEADER_KEY);
     assertThat(correlationIdHeaders, hasSize(1));
-    assertThat(correlationIdHeaders.get(0), is(correlationId));
+    assertThat(correlationIdHeaders.get(0), is(CORRELATION_ID));
     Object entity = response.getEntity();
     assertThat(entity, instanceOf(LanguageDto.class));
     LanguageDto actual = (LanguageDto) entity;
-    assertThat(actual.getTag(), is(languageOneTag));
+    assertThat(actual.getTag(), is(LANGUAGE_ONE_TAG));
   }
 
   private void assertCollectionResponseIsAsExpected(Response response) {
@@ -145,15 +138,15 @@ class LanguageEndpointTest {
     List<Object> correlationIdHeaders =
         response.getHeaders().get(StaticConfig.CORRELATION_ID_HEADER_KEY);
     assertThat(correlationIdHeaders, hasSize(1));
-    assertThat(correlationIdHeaders.get(0), is(correlationId));
+    assertThat(correlationIdHeaders.get(0), is(CORRELATION_ID));
     Object entity = response.getEntity();
     assertThat(entity, instanceOf(List.class));
     @SuppressWarnings("unchecked")
     List<LanguageDto> actual = (List<LanguageDto>) entity;
-    assertThat(actual, hasSize(found.size()));
+    assertThat(actual, hasSize(FOUND.size()));
     assertThat(
         actual.stream().map(LanguageDto::getTag).collect(Collectors.toList()),
-        containsInAnyOrder(languageTags.toArray()));
+        containsInAnyOrder(LANGUAGE_TAGS.toArray()));
   }
 
   private void assertCreateLanguageResponseIsAsExpected(Response response) {
@@ -162,6 +155,6 @@ class LanguageEndpointTest {
     assertThat(locationHeaders, hasSize(1));
     assertThat(
         locationHeaders.get(0),
-        is(URI.create(String.format(LanguageEndpoint.GET_ONE_PATH_TEMPLATE, languageOneTag))));
+        is(URI.create(String.format(LanguageEndpoint.GET_ONE_PATH_TEMPLATE, LANGUAGE_ONE_TAG))));
   }
 }

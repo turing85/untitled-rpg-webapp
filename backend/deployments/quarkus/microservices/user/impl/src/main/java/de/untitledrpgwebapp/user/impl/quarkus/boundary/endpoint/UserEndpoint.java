@@ -106,11 +106,7 @@ public class UserEndpoint {
   public Response createUser(
       @NotNull @Valid CreateUserDto dto,
       @HeaderParam(StaticConfig.CORRELATION_ID_HEADER_KEY) UUID correlationId) {
-    UserResponse response = createUser.execute(
-        mapper.dtoToRequest(dto)
-            .toBuilder()
-            .correlationId(correlationId)
-            .build());
+    UserResponse response = createUser.execute(mapper.dtoToRequest(dto, correlationId));
     return Response
         .created(URI.create(String.format(GET_ONE_PATH_TEMPLATE, response.getName())))
         .entity(mapper.responseToDto(response))

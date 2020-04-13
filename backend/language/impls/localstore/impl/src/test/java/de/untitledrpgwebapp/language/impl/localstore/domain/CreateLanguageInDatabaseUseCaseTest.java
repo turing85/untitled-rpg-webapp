@@ -1,5 +1,8 @@
 package de.untitledrpgwebapp.language.impl.localstore.domain;
 
+import static de.untitledrpgwebapp.language.impl.localstore.testfixture.LanguageData.CORRELATION_ID;
+import static de.untitledrpgwebapp.language.impl.localstore.testfixture.LanguageData.RESPONSE_ONE;
+import static de.untitledrpgwebapp.language.impl.localstore.testfixture.LanguageData.TAG_ONE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
@@ -11,7 +14,6 @@ import static org.mockito.Mockito.when;
 import de.untitledrpgwebapp.language.boundary.request.CreateLanguageRequest;
 import de.untitledrpgwebapp.language.boundary.response.LanguageResponse;
 import de.untitledrpgwebapp.language.impl.localstore.boundary.LanguageRepository;
-import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -23,28 +25,31 @@ class CreateLanguageInDatabaseUseCaseTest {
       + "response when everything is ok.")
   void shouldCallRepositoryWithExpectedParametersWhenEverythingIsOk() {
     // GIVEN
-    final String tag = "tag";
-    UUID correlationId = UUID.randomUUID();
     CreateLanguageRequest request = CreateLanguageRequest.builder()
-        .tag(tag)
-        .correlationId(correlationId)
+        .tag(TAG_ONE)
+        .correlationId(CORRELATION_ID)
         .build();
-    LanguageResponse response = LanguageResponse.builder().tag(tag).build();
     LanguageRepository repository = mock(LanguageRepository.class);
-    when(repository.save(any())).thenReturn(response);
+    when(repository.save(any())).thenReturn(RESPONSE_ONE);
 
     // WHEN
     LanguageResponse actual = new CreateLanguageInDatabaseUseCase(repository).execute(request);
 
     // THEN
-    assertThat(actual.getTag(), is(tag));
-    assertThat(actual.getCorrelationId(), is(correlationId));
+    assertResponseIsAsExpected(actual);
+    verifyRepositoryWasCalledWithExpectedParameters(repository);
+  }
 
+  private void assertResponseIsAsExpected(LanguageResponse response) {
+    assertThat(response.getTag(), is(TAG_ONE));
+    assertThat(response.getCorrelationId(), is(CORRELATION_ID));
+  }
+
+  private void verifyRepositoryWasCalledWithExpectedParameters(LanguageRepository repository) {
     verify(repository).save(argThat(r -> {
-      assertThat(r.getTag(), is(tag));
-      assertThat(r.getCorrelationId(), is(correlationId));
+      assertThat(r.getTag(), is(TAG_ONE));
+      assertThat(r.getCorrelationId(), is(CORRELATION_ID));
       return true;
     }));
   }
-
 }

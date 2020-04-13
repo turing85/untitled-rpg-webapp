@@ -28,5 +28,4 @@ class FindAllLanguagesUseCaseBeanTest {
     FindAllLanguagesInDatabaseUseCase actual = (FindAllLanguagesInDatabaseUseCase) created;
     assertThat(actual.getRepository(), sameInstance(repository));
   }
-
 }

@@ -6,7 +6,9 @@ import de.untitledrpgwebapp.language.impl.quarkus.boundary.dto.CreateLanguageDto
 import de.untitledrpgwebapp.language.impl.quarkus.boundary.dto.LanguageDto;
 import de.untitledrpgwebapp.language.impl.quarkus.entity.JpaLanguageEntity;
 import java.util.Collection;
+import java.util.UUID;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "cdi")
 public interface LanguageMapper {
@@ -17,7 +19,8 @@ public interface LanguageMapper {
 
   Collection<LanguageDto> responsesToDtos(Collection<LanguageResponse> responses);
 
-  CreateLanguageRequest dtoToRequest(CreateLanguageDto dto);
+  @Mapping(source = "correlationId", target = "correlationId")
+  CreateLanguageRequest dtoToRequest(CreateLanguageDto dto, UUID correlationId);
 
   JpaLanguageEntity requestToEntity(CreateLanguageRequest request);
 }

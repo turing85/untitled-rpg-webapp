@@ -1,5 +1,7 @@
 package de.untitledrpgwebapp.language.impl.quarkus.boundary;
 
+import static de.untitledrpgwebapp.language.impl.quarkus.testfixture.LanguageData.LANGUAGE_ONE_TAG;
+import static de.untitledrpgwebapp.language.impl.quarkus.testfixture.LanguageData.LANGUAGE_TAGS;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
@@ -15,7 +17,6 @@ import de.untitledrpgwebapp.language.boundary.response.LanguageResponse;
 import de.untitledrpgwebapp.language.impl.quarkus.boundary.mapper.LanguageMapper;
 import de.untitledrpgwebapp.language.impl.quarkus.entity.JpaLanguageEntity;
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,10 +26,6 @@ import org.junit.jupiter.api.Test;
 @DisplayName("Tests for LanguageRepositoryProxy unit")
 class LanguageRepositoryProxyTest {
 
-  private final String languageOneTag = "languageOneTag";
-  private final String languageTwoTag = "languageTwoTag";
-  private final List<String> languageTags = List.of(languageOneTag, languageTwoTag);
-
   JpaLanguageRepository repository;
   LanguageMapper mapper;
 
@@ -37,13 +34,13 @@ class LanguageRepositoryProxyTest {
   @BeforeEach
   void setup() {
     repository = mock(JpaLanguageRepository.class);
-    when(repository.findAll()).thenReturn(languageTags.stream()
+    when(repository.findAll()).thenReturn(LANGUAGE_TAGS.stream()
         .map(tag -> JpaLanguageEntity.builder().tag(tag).build())
         .collect(Collectors.toList()));
     when(repository.findByTag(anyString()))
-        .thenReturn(Optional.of(JpaLanguageEntity.builder().tag(languageOneTag).build()));
+        .thenReturn(Optional.of(JpaLanguageEntity.builder().tag(LANGUAGE_ONE_TAG).build()));
     when(repository.save(any()))
-        .thenReturn(JpaLanguageEntity.builder().tag(languageOneTag).build());
+        .thenReturn(JpaLanguageEntity.builder().tag(LANGUAGE_ONE_TAG).build());
 
     mapper = mock(LanguageMapper.class);
     when(mapper.entityToResponse(any()))
@@ -64,10 +61,10 @@ class LanguageRepositoryProxyTest {
     Collection<LanguageResponse> actual = uut.findAll();
 
     // THEN
-    assertThat(actual, hasSize(languageTags.size()));
+    assertThat(actual, hasSize(LANGUAGE_TAGS.size()));
     assertThat(
         actual.stream().map(LanguageResponse::getTag).collect(Collectors.toList()),
-        containsInAnyOrder(languageTags.toArray()));
+        containsInAnyOrder(LANGUAGE_TAGS.toArray()));
   }
 
   @Test
@@ -77,11 +74,11 @@ class LanguageRepositoryProxyTest {
     // GIVEN: defaults
 
     // WHEN:
-    Optional<LanguageResponse> actual = uut.findByTag(languageOneTag);
+    Optional<LanguageResponse> actual = uut.findByTag(LANGUAGE_ONE_TAG);
 
     // THEN
     assertTrue(actual.isPresent());
-    assertThat(actual.get().getTag(), is(languageOneTag));
+    assertThat(actual.get().getTag(), is(LANGUAGE_ONE_TAG));
   }
 
   @Test
@@ -91,9 +88,9 @@ class LanguageRepositoryProxyTest {
     // GIVEN: defaults
 
     // WHEN
-    LanguageResponse actual = uut.save(CreateLanguageRequest.builder().tag(languageOneTag).build());
+    LanguageResponse actual = uut.save(CreateLanguageRequest.builder().tag(LANGUAGE_ONE_TAG).build());
 
     // THEN
-    assertThat(actual.getTag(), is(languageOneTag));
+    assertThat(actual.getTag(), is(LANGUAGE_ONE_TAG));
   }
 }

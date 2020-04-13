@@ -37,10 +37,11 @@ import org.keycloak.representations.idm.CredentialRepresentation;
 @DisplayName("Tests for KeycloakCreateAccountUseCase unit")
 class KeycloakCreateAccountUseCaseTest {
 
-  private final UUID correlationId = UUID.randomUUID();
-  private final String name = "name";
-  private final String email = "email";
-  private final String password = "password";
+  public static final UUID CORRELATION_ID = UUID.randomUUID();
+  public static final String NAME = "name";
+  public static final String EMAIL = "email";
+  public static final String PASSWORD = "password";
+
   private CreateAccountRequest request;
   private AccountResponse response;
   private Response keycloakResponse;
@@ -51,10 +52,10 @@ class KeycloakCreateAccountUseCaseTest {
   @BeforeEach
   void setup() {
     request = CreateAccountRequest.builder()
-        .name(name)
-        .email(email)
-        .password(password)
-        .correlationId(correlationId)
+        .name(NAME)
+        .email(EMAIL)
+        .password(PASSWORD)
+        .correlationId(CORRELATION_ID)
         .build();
     response = AccountResponse.builder().build();
 
@@ -91,14 +92,14 @@ class KeycloakCreateAccountUseCaseTest {
 
   private void verifyUserResourceWasCalledWithExpectedParameters() {
     verify(usersResource).create(argThat(user -> {
-      assertThat(user.getUsername(), is(name));
-      assertThat(user.getEmail(), is(email));
+      assertThat(user.getUsername(), is(NAME));
+      assertThat(user.getEmail(), is(EMAIL));
       assertTrue(user.isEnabled());
       List<CredentialRepresentation> credentials = user.getCredentials();
       assertThat(credentials, hasSize(1));
       CredentialRepresentation credential = credentials.get(0);
       assertThat(credential.getType(), is(CredentialRepresentation.PASSWORD));
-      assertThat(credential.getValue(), is(password));
+      assertThat(credential.getValue(), is(PASSWORD));
       return true;
     }));
   }
@@ -116,8 +117,8 @@ class KeycloakCreateAccountUseCaseTest {
 
     String expectedMessage = String.format(
         KeycloakCreateAccountUseCase.KEYCLOAK_UNEXPECTED_RESPONSE_CODE_ERROR_MESSAGE_FORMAT,
-        name,
-        email,
+        NAME,
+        EMAIL,
         Status.CREATED.getStatusCode(),
         unexpectedStatusCode,
         entity);
@@ -140,8 +141,8 @@ class KeycloakCreateAccountUseCaseTest {
 
     String expectedMessage = String.format(
         KeycloakCreateAccountUseCase.KEYCLOAK_UNEXPECTED_RESPONSE_CODE_ERROR_MESSAGE_FORMAT,
-        name,
-        email,
+        NAME,
+        EMAIL,
         Status.CREATED.getStatusCode(),
         unexpectedStatusCode,
         KeycloakCreateAccountUseCase.ENTITY_UNREADABLE_MESSAGE);
@@ -158,7 +159,7 @@ class KeycloakCreateAccountUseCaseTest {
       String expectedMessage,
       Throwable cause) {
     assertThat(exception.getMessage(), is(expectedMessage));
-    assertThat(exception.getCorrelationId(), is(correlationId));
+    assertThat(exception.getCorrelationId(), is(CORRELATION_ID));
     assertThat(exception.getCause(), sameInstance(cause));
   }
 
@@ -172,8 +173,8 @@ class KeycloakCreateAccountUseCaseTest {
 
     String expectedMessage = String.format(
         KeycloakCreateAccountUseCase.GENERAL_KEYCLOAK_ERROR_MESSAGE_FORMAT,
-        name,
-        email);
+        NAME,
+        EMAIL);
 
     // WHEN
     KeycloakException exception = assertThrows(KeycloakException.class, () -> uut.execute(request));
@@ -192,8 +193,8 @@ class KeycloakCreateAccountUseCaseTest {
 
     String expectedMessage = String.format(
         KeycloakCreateAccountUseCase.UNKNOWN_KEYCLOAK_ERROR_MESSAGE_FORMAT,
-        name,
-        email);
+        NAME,
+        EMAIL);
 
     // WHEN
     KeycloakException exception = assertThrows(KeycloakException.class, () -> uut.execute(request));

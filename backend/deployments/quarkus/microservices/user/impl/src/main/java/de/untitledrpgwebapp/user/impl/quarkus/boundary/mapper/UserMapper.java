@@ -6,7 +6,9 @@ import de.untitledrpgwebapp.user.impl.quarkus.boundary.dto.CreateUserDto;
 import de.untitledrpgwebapp.user.impl.quarkus.boundary.dto.UserDto;
 import de.untitledrpgwebapp.user.impl.quarkus.entity.JpaUserEntity;
 import java.util.Collection;
+import java.util.UUID;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "cdi")
 public interface UserMapper {
@@ -19,5 +21,6 @@ public interface UserMapper {
 
   Collection<UserDto> responsesToDtos(Collection<UserResponse> responses);
 
-  CreateUserRequest dtoToRequest(CreateUserDto dto);
+  @Mapping(source = "correlationId", target = "correlationId")
+  CreateUserRequest dtoToRequest(CreateUserDto dto, UUID correlationId);
 }

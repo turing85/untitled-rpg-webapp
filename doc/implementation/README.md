@@ -40,7 +40,7 @@ important behavior and continue implementing business logic rather than writing 
 ##### Plugable architecture and separation
 
 While we want to write a web application with a relational database as persistence provider, we do 
-not want to limit ourselfs to these technologies. Thus, we want to separate those concerns and make
+not want to limit ourselves to these technologies. Thus, we want to separate those concerns and make
 the I/O-channels (web and persistence) plugable.
 
 [lombok]: https://projectlombok.org/

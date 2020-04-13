@@ -6,6 +6,7 @@ import de.untitledrpgwebapp.language.domain.FindLanguageByTagUseCase;
 import de.untitledrpgwebapp.language.impl.quarkusrestclient.boundary.LanguageRestClient;
 import de.untitledrpgwebapp.language.impl.quarkusrestclient.boundary.mapper.LanguageMapper;
 import java.util.Optional;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -13,13 +14,14 @@ import lombok.Getter;
 @AllArgsConstructor
 public class FindLanguageByTagViaRestUseCase implements FindLanguageByTagUseCase {
 
-  private LanguageRestClient restClient;
+  private LanguageRestClient client;
   private LanguageMapper mapper;
 
   @Override
   public Optional<LanguageResponse> execute(
       FindLanguageByTagRequest request) {
-    return restClient.findByTag(request.getTag(), request.getCorrelationId())
-        .map(mapper::dtoToResponse);
+    UUID correlationId = request.getCorrelationId();
+    return client.findByTag(request.getTag(), correlationId)
+        .map(dto -> mapper.dtoToResponse(dto, correlationId));
   }
 }

@@ -107,9 +107,7 @@ public class LanguageEndpoint {
       @NotNull @Valid CreateLanguageDto dto,
       @HeaderParam(StaticConfig.CORRELATION_ID_HEADER_KEY) UUID correlationId) {
     LanguageResponse created = createLanguage
-        .execute(mapper.dtoToRequest(dto).toBuilder()
-            .correlationId(correlationId)
-            .build());
+        .execute(mapper.dtoToRequest(dto, correlationId));
     return Response.created(URI.create(String.format(GET_ONE_PATH_TEMPLATE, created.getTag())))
         .entity(mapper.responseToDto(created))
         .header(StaticConfig.CORRELATION_ID_HEADER_KEY, correlationId)

@@ -9,7 +9,7 @@ echo "Running unit tests with coverage report for the project"
 echo "================================================================================"
 cd ../../..
 ./mvnw \
-  ${MVN_CLI_OPTS} \
+  "${MVN_CLI_OPTS}" \
   -DskipTests=false \
   --activate-profiles unit-test-coverage \
   verify
