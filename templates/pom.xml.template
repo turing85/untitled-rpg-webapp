@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>de.nextrpgdevs</groupId>
+    <artifactId>parent.module</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>path.to.module.from.backend</artifactId>
+
+  <!-- Optional: If the module has sub-modules -->
+  <packaging>pom</packaging>
+  <modules>
+  </modules>
+
+  <!-- Optional: define properties -->
+  <properties>
+  </properties>
+
+  <!-- Optional: If the module defines dependencies for sub-modules -->
+  <dependencyManagement>
+  </dependencyManagement>
+
+  <!-- Optional: If the modules needs dependencies -->
+  <dependencies>
+  </dependencies>
+
+  <!-- Optional: build configuration -->
+  <build>
+  </build>
+
+  <!-- Optional: profile configuration -->
+  <profiles>
+  </profiles>
+</project>

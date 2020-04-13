@@ -9,7 +9,7 @@ This document serves as a guideline for implementing features for the applicatio
 TBA.
 
 ##### Java 11 features
-We want to be nullsafe without much overhead. Thus, we want to return [`Optional`s][optionalApi]
+We want to be null-safe without much overhead. Thus, we want to return [`Optional`s][optionalApi]
 instead of `null` when feasible. Furthermore, for stateless processing, we want to use the 
 [Java `stream` api][streamApi].
 

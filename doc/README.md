@@ -13,7 +13,10 @@ The application is structured with a [Domain-driven design][ddd]. In particular,
 
 ## [Data model][dataModel]
 
+## [Project structure][projectStructure]
+
 [ddd]: https://en.wikipedia.org/wiki/Domain-driven_design
 [boundedContext]: https://en.wikipedia.org/wiki/Domain-driven_design#Bounded_context
 [implementation]: implementation/README.md
 [dataModel]: datamodel/README.md
+[projectStructure]: projectstructure/README.md

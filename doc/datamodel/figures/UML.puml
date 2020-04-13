@@ -6,11 +6,11 @@ package domain {
         {field} - name: String [0-9a-zA-z\-]+ unmodifiable <<ID>>
         {field} - email: String
         {field} - created: Instant unmodifiable
-        {field} - displayName: String nullable
+        {field} - displayName: String
         {field} - firstName: String nullable
         {field} - lastName: String nullable
-        {field} - preferredLanguage: Language
-        {field} - birthDay: LocalDate nullable
+        {field} - preferredLanguageTag: String
+        {field} - birthDate: LocalDate nullable
         {field} - bio: String nullable
         {field} - hoursPlayed: int not negative
         {field} - avatar: tbd nullable
@@ -45,8 +45,8 @@ package persistence {
         {field} - displayName: String nullable
         {field} - firstName: String nullable
         {field} - lastName: String nullable
-        {field} - preferredLanguage: Language
-        {field} - birthDay: LocalDate nullable
+        {field} - preferredLanguageTag: String
+        {field} - birthDate: LocalDate nullable
         {field} - bio: String nullable
         {field} - hoursPlayed: int not negative
         {field} - avatar: tbd nullable
@@ -63,10 +63,10 @@ package persistence {
 
 }
 
-User "each" o-down- "one" Language:  has
+User "each" --> "one" Language:  references a
 
 PersistenceEntity <|-- PersistenceUser
-PersistenceUser "each" o-- "one" PersistenceLanguage: has
+PersistenceUser "each" --> "one" PersistenceLanguage: references a
 
 PersistenceUser <-left-> User: maps to
 PersistenceLanguage <-left-> Language: maps to

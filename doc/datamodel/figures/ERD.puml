@@ -1,57 +1,58 @@
 @startuml
 
-entity user {
-    id: BIGINT NOT NULL
-    \tAUTOINCREMENT (only for MySQL)
-    \tCONSTRAINT user_pk_id PRIMARY KEY
-    --
-    name: VARCHAR(16) NOT NULL
-    \tCONSTRAINT user_unique_name UNIQUE
-    --
-    email: VARCHAR(255) NOT NULL
-    \tCONSTRAINT user_unique_email UNIQUE
-    --
-    created_utc: TIMESTAMP NOT NULL
-    --
-    displayName: VARCHAR(255)
-    --
-    first_name: VARCHAR(255)
-    --
-    last_name: VARCHAR(255)
-    --
-    preferredLanguage: VARCHAR(5) NOT NULL
-    \tCONSTRAINT user_fk_language
-    \t\tREFERENCES language(tag) NOT NULL
-    \tDEFAULT 'en-US'
-    --
-    birthday: DATE
-    --
-    bio: TEXT
-    --
-    hours_played: INT NOT NULL DEFAULT 0
-    --
-    avatar: BYTEA (PostgreSQL) or BLOB (MySQL)
-    == Indexes ==
-    UNIQUE INDEX user_index_name
-    \tON user USING BTREE(name)
-    INDEX user_index_language
-    \tON user USING BTREE(language)
-    == specific for PostgreSQL ==
-    SEQUENCE user_seq_id
-    \tOWNED BY user.id
+package "database: user" {
+
+  entity user {
+      id: BIGINT NOT NULL
+      \tAUTOINCREMENT (only for MySQL)
+      \tCONSTRAINT user_pk_id PRIMARY KEY
+      --
+      name: VARCHAR(16) NOT NULL
+      \tCONSTRAINT user_unique_name UNIQUE
+      --
+      email: VARCHAR(255) NOT NULL
+      \tCONSTRAINT user_unique_email UNIQUE
+      --
+      created_utc: TIMESTAMP NOT NULL
+      --
+      displayName: VARCHAR(255)
+      --
+      first_name: VARCHAR(255)
+      --
+      last_name: VARCHAR(255)
+      --
+      preferredLanguageTag: VARCHAR(5) NOT NULL
+      \tCONSTRAINT user_fk_language
+      \tDEFAULT 'en-US'
+      --
+      birthday: DATE
+      --
+      bio: TEXT
+      --
+      hours_played: INT NOT NULL DEFAULT 0
+      --
+      avatar: BYTEA (PostgreSQL) or BLOB (MySQL)
+      == Indexes ==
+      UNIQUE INDEX user_index_name
+      \tON user USING BTREE(name)
+      == specific for PostgreSQL ==
+      SEQUENCE user_seq_id
+      \tOWNED BY user.id
+  }
 }
 
-entity language {
-    tag: VARCHAR(5) NOT NULL
-    \tCONSTRAINT language_pk_tag PRIMARY KEY
-    --
-    name: VARCHAR(255) NOT NULL
-    \tCONSTRAINT language_unique_name UNIQUE
-    == specific for PostgreSQL ==
-    SEQUENCE language_seq_id
-    \tOWNED BY language.id
+package "database: language" {
+  entity language {
+      tag: VARCHAR(5) NOT NULL
+      \tCONSTRAINT language_pk_tag PRIMARY KEY
+      --
+      name: VARCHAR(255) NOT NULL
+      \tCONSTRAINT language_unique_name UNIQUE
+      == specific for PostgreSQL ==
+      SEQUENCE language_seq_id
+      \tOWNED BY language.id
+  }
 }
-
 user }|--|| language
 
 @enduml

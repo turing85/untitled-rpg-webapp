@@ -8,29 +8,28 @@
 
   <parent>
     <groupId>de.nextrpgdevs</groupId>
-    <artifactId>user</artifactId>
+    <artifactId>language.impls.quarkusrestclient</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>user.impls</artifactId>
-
-  <packaging>pom</packaging>
-  <modules>
-    <module>localstore</module>
-  </modules>
+  <artifactId>language.impls.quarkusrestclient.impl</artifactId>
 
   <dependencies>
     <!-- Sibling modules -->
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
-      <artifactId>user.api</artifactId>
+      <artifactId>deployments.quarkus.microservices.language.api</artifactId>
       <version>${project.version}</version>
       <scope>compile</scope>
     </dependency>
+
     <dependency>
-      <groupId>de.nextrpgdevs</groupId>
-      <artifactId>oauth2.api</artifactId>
-      <version>${project.version}</version>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-resteasy-jsonb</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-rest-client</artifactId>
     </dependency>
   </dependencies>
 

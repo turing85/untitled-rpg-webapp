@@ -24,7 +24,7 @@ IF "%BUILD_PROJECT%"=="true" (
   ECHO Building project and generating docker images
   ECHO ================================================================================
   CD ..
-  CALL mvnw.cmd -Pdocker -P!unit-test-coverage -DskipTests package
+  CALL mvnw.cmd -Pdocker -P!unit-test-coverage -DskipTests install
   CD localdeployment
   IF %ERRORLEVEL% NEQ 0 (
     CD /D %FROM_DRIVE%
