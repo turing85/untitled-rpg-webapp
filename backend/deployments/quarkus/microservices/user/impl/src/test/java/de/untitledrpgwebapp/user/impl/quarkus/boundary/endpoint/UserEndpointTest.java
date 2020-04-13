@@ -118,7 +118,7 @@ class UserEndpointTest {
 
     // WHEN
     Response response =
-        uut.createUser(CreateUserDto.builder().name(USER_ONE_NAME).build(), CORRELATION_ID);
+        uut.createUser(new CreateUserDto().setName(USER_ONE_NAME), CORRELATION_ID);
 
     // THEN
     assertCreateUserResponseIsAsExpected(response);

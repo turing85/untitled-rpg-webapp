@@ -118,7 +118,7 @@ class LanguageEndpointTest {
 
     // WHEN
     Response response =
-        uut.createLanguage(CreateLanguageDto.builder().tag(languageOneTag).build(), correlationId);
+        uut.createLanguage(new CreateLanguageDto().setTag(languageOneTag), correlationId);
 
     // THEN
     assertCreateLanguageResponseIsAsExpected(response);
