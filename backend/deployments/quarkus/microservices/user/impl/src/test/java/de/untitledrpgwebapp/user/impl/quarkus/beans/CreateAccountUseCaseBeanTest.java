@@ -1,5 +1,9 @@
 package de.untitledrpgwebapp.user.impl.quarkus.beans;
 
+import static de.untitledrpgwebapp.user.impl.quarkus.testfixture.UserBoundaryFixture.ADMIN_CLI_ID;
+import static de.untitledrpgwebapp.user.impl.quarkus.testfixture.UserBoundaryFixture.ADMIN_CLI_SECRET;
+import static de.untitledrpgwebapp.user.impl.quarkus.testfixture.UserBoundaryFixture.REALM_NAME;
+import static de.untitledrpgwebapp.user.impl.quarkus.testfixture.UserBoundaryFixture.SERVER_URL;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
@@ -23,20 +27,17 @@ import org.keycloak.admin.client.KeycloakBuilder;
 @DisplayName("Tests for CreateAccountUseCaseBean unit")
 class CreateAccountUseCaseBeanTest {
 
-  private static final String SERVER_URL = "serverUrl";
-  private static final String REALM_NAME = "realmName";
-  private static final String ADMIN_CLI_ID = "adminCliId";
-  private static final String ADMIN_CLI_SECRET = "adminCliSecret";
-  private static final Keycloak KEYCLOAK = KeycloakBuilder.builder()
+  KeycloakBuilder builder;
+
+  private final CreateAccountUseCaseBean uut = new CreateAccountUseCaseBean();
+
+  private final Keycloak keycloak = KeycloakBuilder.builder()
       .serverUrl(SERVER_URL)
       .realm(REALM_NAME)
       .grantType(OAuth2Constants.CLIENT_CREDENTIALS)
       .clientId(ADMIN_CLI_ID)
       .clientSecret(ADMIN_CLI_SECRET)
       .build();
-  KeycloakBuilder builder;
-
-  private final CreateAccountUseCaseBean uut = new CreateAccountUseCaseBean();
 
   @BeforeEach
   void setup() {
@@ -46,7 +47,7 @@ class CreateAccountUseCaseBeanTest {
     when(builder.grantType(any())).thenReturn(builder);
     when(builder.clientId(anyString())).thenReturn(builder);
     when(builder.clientSecret(anyString())).thenReturn(builder);
-    when(builder.build()).thenReturn(KEYCLOAK);
+    when(builder.build()).thenReturn(keycloak);
   }
 
   @Test
@@ -55,12 +56,12 @@ class CreateAccountUseCaseBeanTest {
     // GIVEN: defaults
 
     // WHEN
-    CreateAccountUseCase created = uut.createAccount(KEYCLOAK, REALM_NAME);
+    CreateAccountUseCase created = uut.createAccount(keycloak, REALM_NAME);
 
     // THEN
     assertThat(created, instanceOf(KeycloakCreateAccountUseCase.class));
     KeycloakCreateAccountUseCase actual = (KeycloakCreateAccountUseCase) created;
-    assertThat(actual.getKeycloak(), is(KEYCLOAK));
+    assertThat(actual.getKeycloak(), is(keycloak));
     assertThat(actual.getRealmName(), is(REALM_NAME));
   }
 
@@ -73,7 +74,7 @@ class CreateAccountUseCaseBeanTest {
     Keycloak actual = uut.keycloak(builder, SERVER_URL, REALM_NAME, ADMIN_CLI_ID, ADMIN_CLI_SECRET);
 
     // THEN
-    assertThat(actual, is(sameInstance(KEYCLOAK)));
+    assertThat(actual, is(sameInstance(keycloak)));
 
     verify(builder).serverUrl(SERVER_URL);
     verify(builder).realm(REALM_NAME);

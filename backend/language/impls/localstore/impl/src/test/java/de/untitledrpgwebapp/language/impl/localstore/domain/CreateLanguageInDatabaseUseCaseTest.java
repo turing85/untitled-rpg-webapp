@@ -1,12 +1,11 @@
 package de.untitledrpgwebapp.language.impl.localstore.domain;
 
-import static de.untitledrpgwebapp.language.impl.localstore.testfixture.LanguageData.CORRELATION_ID;
-import static de.untitledrpgwebapp.language.impl.localstore.testfixture.LanguageData.RESPONSE_ONE;
-import static de.untitledrpgwebapp.language.impl.localstore.testfixture.LanguageData.TAG_ONE;
+import static de.untitledrpgwebapp.language.testfixture.LanguageFixture.CORRELATION_ID;
+import static de.untitledrpgwebapp.language.testfixture.LanguageFixture.LANGUAGE_ONE_RESPONSE;
+import static de.untitledrpgwebapp.language.testfixture.LanguageFixture.LANGUAGE_ONE_TAG;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -26,30 +25,19 @@ class CreateLanguageInDatabaseUseCaseTest {
   void shouldCallRepositoryWithExpectedParametersWhenEverythingIsOk() {
     // GIVEN
     CreateLanguageRequest request = CreateLanguageRequest.builder()
-        .tag(TAG_ONE)
+        .tag(LANGUAGE_ONE_TAG)
         .correlationId(CORRELATION_ID)
         .build();
     LanguageRepository repository = mock(LanguageRepository.class);
-    when(repository.save(any())).thenReturn(RESPONSE_ONE);
+    when(repository.save(any())).thenReturn(LANGUAGE_ONE_RESPONSE);
 
     // WHEN
     LanguageResponse actual = new CreateLanguageInDatabaseUseCase(repository).execute(request);
 
     // THEN
-    assertResponseIsAsExpected(actual);
-    verifyRepositoryWasCalledWithExpectedParameters(repository);
-  }
+    assertThat(actual.getTag(), is(LANGUAGE_ONE_TAG));
+    assertThat(actual.getCorrelationId(), is(CORRELATION_ID));
 
-  private void assertResponseIsAsExpected(LanguageResponse response) {
-    assertThat(response.getTag(), is(TAG_ONE));
-    assertThat(response.getCorrelationId(), is(CORRELATION_ID));
-  }
-
-  private void verifyRepositoryWasCalledWithExpectedParameters(LanguageRepository repository) {
-    verify(repository).save(argThat(r -> {
-      assertThat(r.getTag(), is(TAG_ONE));
-      assertThat(r.getCorrelationId(), is(CORRELATION_ID));
-      return true;
-    }));
+    verify(repository).save(request);
   }
 }

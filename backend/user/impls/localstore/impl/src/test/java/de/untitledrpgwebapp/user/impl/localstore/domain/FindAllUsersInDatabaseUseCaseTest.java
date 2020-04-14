@@ -1,7 +1,7 @@
 package de.untitledrpgwebapp.user.impl.localstore.domain;
 
-import static de.untitledrpgwebapp.user.impl.localstore.testfixture.UserData.CORRELATION_ID;
-import static de.untitledrpgwebapp.user.impl.localstore.testfixture.UserData.RESPONSES;
+import static de.untitledrpgwebapp.user.testfixture.UserFixture.CORRELATION_ID;
+import static de.untitledrpgwebapp.user.testfixture.UserFixture.USER_RESPONSES;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -28,14 +28,14 @@ class FindAllUsersInDatabaseUseCaseTest {
         FindAllUsersRequest.builder().correlationId(CORRELATION_ID).build();
 
     UserRepository repository = mock(UserRepository.class);
-    when(repository.findAll()).thenReturn(RESPONSES);
+    when(repository.findAll()).thenReturn(USER_RESPONSES);
 
     // WHEN
     Collection<UserResponse> actual =
         new FindAllUsersInDatabaseUseCase(repository).execute(request);
 
     // THEN
-    assertThat(actual, hasSize(RESPONSES.size()));
+    assertThat(actual, hasSize(USER_RESPONSES.size()));
     for(UserResponse response : actual) {
       assertThat(response.getCorrelationId(), is(CORRELATION_ID));
     }

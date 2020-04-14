@@ -1,10 +1,12 @@
 package de.untitledrpgwebapp.user.boundary.common;
 
 import java.time.LocalDate;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 
 @Getter
+@EqualsAndHashCode
 @SuperBuilder(toBuilder = true)
 public abstract class CommonUser {
 

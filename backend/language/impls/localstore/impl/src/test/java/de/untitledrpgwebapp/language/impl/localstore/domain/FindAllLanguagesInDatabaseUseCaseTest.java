@@ -1,7 +1,7 @@
 package de.untitledrpgwebapp.language.impl.localstore.domain;
 
-import static de.untitledrpgwebapp.language.impl.localstore.testfixture.LanguageData.CORRELATION_ID;
-import static de.untitledrpgwebapp.language.impl.localstore.testfixture.LanguageData.LANGUAGES_RESPONSE;
+import static de.untitledrpgwebapp.language.testfixture.LanguageFixture.CORRELATION_ID;
+import static de.untitledrpgwebapp.language.testfixture.LanguageFixture.LANGUAGE_RESPONSES;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -28,14 +28,14 @@ class FindAllLanguagesInDatabaseUseCaseTest {
         FindAllLanguagesRequest.builder().correlationId(CORRELATION_ID).build();
 
     LanguageRepository repository = mock(LanguageRepository.class);
-    when(repository.findAll()).thenReturn(LANGUAGES_RESPONSE);
+    when(repository.findAll()).thenReturn(LANGUAGE_RESPONSES);
 
     // WHEN
     Collection<LanguageResponse> actual =
         new FindAllLanguagesInDatabaseUseCase(repository).execute(request);
 
     // THEN
-    assertThat(actual, hasSize(LANGUAGES_RESPONSE.size()));
+    assertThat(actual, hasSize(LANGUAGE_RESPONSES.size()));
     for (LanguageResponse entry : actual) {
       assertThat(entry.getCorrelationId(), is(CORRELATION_ID));
     }

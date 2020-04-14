@@ -20,8 +20,33 @@
       <groupId>de.nextrpgdevs</groupId>
       <artifactId>common</artifactId>
       <version>${project.version}</version>
-      <scope>compile</scope>
+    </dependency>
+
+    <!-- Test fixtures -->
+    <dependency>
+      <groupId>de.nextrpgdevs</groupId>
+      <artifactId>language.api</artifactId>
+      <version>${project.version}</version>
+      <type>test-jar</type>
+      <scope>test</scope>
     </dependency>
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>${maven.jar.plugin.version}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>test-jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 
 </project>

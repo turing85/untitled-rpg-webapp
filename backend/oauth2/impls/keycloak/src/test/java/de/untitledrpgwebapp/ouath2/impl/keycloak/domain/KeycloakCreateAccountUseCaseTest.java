@@ -1,5 +1,9 @@
 package de.untitledrpgwebapp.ouath2.impl.keycloak.domain;
 
+import static de.untitledrpgwebapp.ouath2.impl.keycloak.testfixture.KeycloakFixture.CORRELATION_ID;
+import static de.untitledrpgwebapp.ouath2.impl.keycloak.testfixture.KeycloakFixture.EMAIL;
+import static de.untitledrpgwebapp.ouath2.impl.keycloak.testfixture.KeycloakFixture.NAME;
+import static de.untitledrpgwebapp.ouath2.impl.keycloak.testfixture.KeycloakFixture.PASSWORD;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -21,7 +25,6 @@ import de.untitledrpgwebapp.ouath2.impl.keycloak.domain.exception.KeycloakExcept
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.List;
-import java.util.UUID;
 import javax.ws.rs.ProcessingException;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
@@ -36,11 +39,6 @@ import org.keycloak.representations.idm.CredentialRepresentation;
 
 @DisplayName("Tests for KeycloakCreateAccountUseCase unit")
 class KeycloakCreateAccountUseCaseTest {
-
-  public static final UUID CORRELATION_ID = UUID.randomUUID();
-  public static final String NAME = "name";
-  public static final String EMAIL = "email";
-  public static final String PASSWORD = "password";
 
   private CreateAccountRequest request;
   private AccountResponse response;

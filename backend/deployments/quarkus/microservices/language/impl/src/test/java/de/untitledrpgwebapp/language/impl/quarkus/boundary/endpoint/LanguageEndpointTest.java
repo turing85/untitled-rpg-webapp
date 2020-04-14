@@ -1,9 +1,11 @@
 package de.untitledrpgwebapp.language.impl.quarkus.boundary.endpoint;
 
-import static de.untitledrpgwebapp.language.impl.quarkus.testfixture.LanguageData.CORRELATION_ID;
-import static de.untitledrpgwebapp.language.impl.quarkus.testfixture.LanguageData.FOUND;
-import static de.untitledrpgwebapp.language.impl.quarkus.testfixture.LanguageData.LANGUAGE_ONE_TAG;
-import static de.untitledrpgwebapp.language.impl.quarkus.testfixture.LanguageData.LANGUAGE_TAGS;
+import static de.untitledrpgwebapp.language.impl.quarkus.boundary.testfixture.LanguageDtoFixture.DTOS;
+import static de.untitledrpgwebapp.language.testfixture.LanguageFixture.CORRELATION_ID;
+import static de.untitledrpgwebapp.language.testfixture.LanguageFixture.LANGUAGE_ONE_RESPONSE;
+import static de.untitledrpgwebapp.language.testfixture.LanguageFixture.LANGUAGE_ONE_TAG;
+import static de.untitledrpgwebapp.language.testfixture.LanguageFixture.LANGUAGE_RESPONSES;
+import static de.untitledrpgwebapp.language.testfixture.LanguageFixture.LANGUAGE_TAGS;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -18,14 +20,12 @@ import static org.mockito.Mockito.when;
 
 import de.untitledrpgwebapp.impl.quarkus.configuration.StaticConfig;
 import de.untitledrpgwebapp.language.boundary.request.CreateLanguageRequest;
-import de.untitledrpgwebapp.language.boundary.response.LanguageResponse;
 import de.untitledrpgwebapp.language.domain.CreateLanguageUseCase;
 import de.untitledrpgwebapp.language.domain.FindAllLanguagesUseCase;
 import de.untitledrpgwebapp.language.domain.FindLanguageByTagUseCase;
 import de.untitledrpgwebapp.language.impl.quarkus.boundary.dto.CreateLanguageDto;
 import de.untitledrpgwebapp.language.impl.quarkus.boundary.dto.LanguageDto;
 import de.untitledrpgwebapp.language.impl.quarkus.boundary.mapper.LanguageMapper;
-import de.untitledrpgwebapp.language.impl.quarkus.testfixture.LanguageData;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
@@ -39,24 +39,16 @@ import org.junit.jupiter.api.Test;
 @DisplayName("Tests for LanguageEndpoint unit")
 class LanguageEndpointTest {
 
-  private FindAllLanguagesUseCase findAllLanguages;
-  private FindLanguageByTagUseCase findLanguage;
-  private CreateLanguageUseCase createLanguage;
-  private LanguageMapper mapper;
+  private final FindAllLanguagesUseCase findAllLanguages= mock(FindAllLanguagesUseCase.class);
+  private final FindLanguageByTagUseCase findLanguage = mock(FindLanguageByTagUseCase.class);
+  private final CreateLanguageUseCase createLanguage = mock(CreateLanguageUseCase.class);
+  private final LanguageMapper mapper = mock(LanguageMapper.class);
 
-  private LanguageEndpoint uut;
+  private final LanguageEndpoint uut  = new LanguageEndpoint(findAllLanguages, findLanguage, createLanguage, mapper);
 
   @BeforeEach
   void setup() {
-    findAllLanguages = mock(FindAllLanguagesUseCase.class);
-    findLanguage = mock(FindLanguageByTagUseCase.class);
-    createLanguage = mock(CreateLanguageUseCase.class);
-    findLanguage = mock(FindLanguageByTagUseCase.class);
-    mapper = mock(LanguageMapper.class);
-    when(mapper.responseToDto(any()))
-        .thenReturn(LanguageDto.builder().tag(LANGUAGE_ONE_TAG).build());
-
-    uut = new LanguageEndpoint(findAllLanguages, findLanguage, createLanguage, mapper);
+    when(mapper.responseToDto(any())).thenReturn(LanguageDto.builder().tag(LANGUAGE_ONE_TAG).build());
   }
 
   @Test
@@ -64,8 +56,8 @@ class LanguageEndpointTest {
       + "response object")
   void shouldCallFindAllLanguagesWithExpectedParameterAndReturnExpectedResultWhenFindAllIsCalled() {
     // GIVEN
-    when(findAllLanguages.execute(any())).thenReturn(FOUND);
-    when(mapper.responsesToDtos(anyList())).thenReturn(LanguageData.DTOS);
+    when(findAllLanguages.execute(any())).thenReturn(LANGUAGE_RESPONSES);
+    when(mapper.responsesToDtos(anyList())).thenReturn(DTOS);
 
     // WHEN
     Response response = uut.findAll(CORRELATION_ID);
@@ -77,14 +69,13 @@ class LanguageEndpointTest {
       assertThat(r.getCorrelationId(), is(CORRELATION_ID));
       return true;
     }));
-    verify(mapper).responsesToDtos(FOUND);
+    verify(mapper).responsesToDtos(LANGUAGE_RESPONSES);
   }
 
   @Test
   void shouldCallFindLanguageWithExpectedParameterAndReturnExpectedResultWhenFindByTagIsCalled() {
     // GIVEN
-    when(findLanguage.execute(any()))
-        .thenReturn(Optional.of(LanguageResponse.builder().tag(LANGUAGE_ONE_TAG).build()));
+    when(findLanguage.execute(any())).thenReturn(Optional.of(LANGUAGE_ONE_RESPONSE));
 
     // WHEN
     Response response = uut.findByTag(LANGUAGE_ONE_TAG, CORRELATION_ID);
@@ -101,15 +92,12 @@ class LanguageEndpointTest {
   @Test
   void shouldCallCreateLanguageWithExpectedParameterAndReturnExpectedResultWhenCreateLanguageIsCalled() {
     // GIVEN:
-    CreateLanguageRequest request =
-        CreateLanguageRequest.builder().tag(LANGUAGE_ONE_TAG).build();
+    CreateLanguageRequest request = CreateLanguageRequest.builder().tag(LANGUAGE_ONE_TAG).build();
     when(mapper.dtoToRequest(any(), any())).thenReturn(request);
-    when(createLanguage.execute(any()))
-        .thenReturn(LanguageResponse.builder().tag(LANGUAGE_ONE_TAG).build());
+    when(createLanguage.execute(any())).thenReturn(LANGUAGE_ONE_RESPONSE);
 
     // WHEN
-    Response response =
-        uut.createLanguage(new CreateLanguageDto().setTag(LANGUAGE_ONE_TAG), CORRELATION_ID);
+    Response response = uut.createLanguage(new CreateLanguageDto().setTag(LANGUAGE_ONE_TAG), CORRELATION_ID);
 
     // THEN
     assertCreateLanguageResponseIsAsExpected(response);
@@ -143,7 +131,7 @@ class LanguageEndpointTest {
     assertThat(entity, instanceOf(List.class));
     @SuppressWarnings("unchecked")
     List<LanguageDto> actual = (List<LanguageDto>) entity;
-    assertThat(actual, hasSize(FOUND.size()));
+    assertThat(actual, hasSize(LANGUAGE_RESPONSES.size()));
     assertThat(
         actual.stream().map(LanguageDto::getTag).collect(Collectors.toList()),
         containsInAnyOrder(LANGUAGE_TAGS.toArray()));

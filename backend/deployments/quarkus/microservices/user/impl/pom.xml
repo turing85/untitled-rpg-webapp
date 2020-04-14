@@ -37,6 +37,22 @@
       <version>${project.version}</version>
     </dependency>
 
+    <!-- Test fixtures -->
+    <dependency>
+      <groupId>de.nextrpgdevs</groupId>
+      <artifactId>user.api</artifactId>
+      <version>${project.version}</version>
+      <type>test-jar</type>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>de.nextrpgdevs</groupId>
+      <artifactId>deployments.quarkus.microservices.user.api</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+      <type>test-jar</type>
+      <scope>test</scope>
+    </dependency>
+
     <!-- database -->
     <dependency>
       <groupId>io.quarkus</groupId>

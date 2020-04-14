@@ -1,7 +1,7 @@
 package de.untitledrpgwebapp.user.impl.localstore.domain;
 
-import static de.untitledrpgwebapp.user.impl.localstore.testfixture.UserData.CORRELATION_ID;
-import static de.untitledrpgwebapp.user.impl.localstore.testfixture.UserData.NAME_ONE;
+import static de.untitledrpgwebapp.user.testfixture.UserFixture.CORRELATION_ID;
+import static de.untitledrpgwebapp.user.testfixture.UserFixture.USER_ONE_NAME;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -26,7 +26,7 @@ class FindUserByNameInDatabaseUseCaseTest {
   void shouldCallRepositoryAndMapperWithExpectedParameters() {
     // GIVEN:
     FindUserByNameRequest request = FindUserByNameRequest.builder()
-        .name(NAME_ONE)
+        .name(USER_ONE_NAME)
         .correlationId(CORRELATION_ID)
         .build();
     UserResponse response = UserResponse.builder().build();
@@ -42,6 +42,6 @@ class FindUserByNameInDatabaseUseCaseTest {
     assertTrue(result.isPresent());
     assertThat(result.get().getCorrelationId(), is(CORRELATION_ID));
 
-    verify(repository).findByName(NAME_ONE);
+    verify(repository).findByName(USER_ONE_NAME);
   }
 }

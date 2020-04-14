@@ -1,8 +1,8 @@
 package de.untitledrpgwebapp.language.impl.localstore.domain;
 
-import static de.untitledrpgwebapp.language.impl.localstore.testfixture.LanguageData.CORRELATION_ID;
-import static de.untitledrpgwebapp.language.impl.localstore.testfixture.LanguageData.RESPONSE_ONE;
-import static de.untitledrpgwebapp.language.impl.localstore.testfixture.LanguageData.TAG_ONE;
+import static de.untitledrpgwebapp.language.testfixture.LanguageFixture.CORRELATION_ID;
+import static de.untitledrpgwebapp.language.testfixture.LanguageFixture.LANGUAGE_ONE_RESPONSE;
+import static de.untitledrpgwebapp.language.testfixture.LanguageFixture.LANGUAGE_ONE_TAG;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -27,12 +27,12 @@ class FindLanguageByTagInDatabaseUseCaseTest {
   void shouldCallRepositoryWithExpectedParametersWhenEverythingIsOk() {
     // GIVEN
     FindLanguageByTagRequest request = FindLanguageByTagRequest.builder()
-        .tag(TAG_ONE)
+        .tag(LANGUAGE_ONE_TAG)
         .correlationId(CORRELATION_ID)
         .build();
 
     LanguageRepository repository = mock(LanguageRepository.class);
-    when(repository.findByTag(any())).thenReturn(Optional.of(RESPONSE_ONE));
+    when(repository.findByTag(any())).thenReturn(Optional.of(LANGUAGE_ONE_RESPONSE));
 
     // WHEN
     Optional<LanguageResponse> fetched =
@@ -42,6 +42,6 @@ class FindLanguageByTagInDatabaseUseCaseTest {
     assertTrue(fetched.isPresent());
     assertThat(fetched.get().getCorrelationId(), is(CORRELATION_ID));
 
-    verify(repository).findByTag(TAG_ONE);
+    verify(repository).findByTag(LANGUAGE_ONE_TAG);
   }
 }

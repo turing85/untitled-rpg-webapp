@@ -1,10 +1,10 @@
 package de.untitledrpgwebapp.user.impl.quarkus.boundary.endpoint;
 
-import static de.untitledrpgwebapp.user.impl.quarkus.testfixture.UserData.CORRELATION_ID;
-import static de.untitledrpgwebapp.user.impl.quarkus.testfixture.UserData.DTOS;
-import static de.untitledrpgwebapp.user.impl.quarkus.testfixture.UserData.FOUND;
-import static de.untitledrpgwebapp.user.impl.quarkus.testfixture.UserData.USER_NAMES;
-import static de.untitledrpgwebapp.user.impl.quarkus.testfixture.UserData.USER_ONE_NAME;
+import static de.untitledrpgwebapp.user.impl.quarkus.boundary.testfixture.UserDtoFixture.DTOS;
+import static de.untitledrpgwebapp.user.testfixture.UserFixture.CORRELATION_ID;
+import static de.untitledrpgwebapp.user.testfixture.UserFixture.USER_NAMES;
+import static de.untitledrpgwebapp.user.testfixture.UserFixture.USER_ONE_NAME;
+import static de.untitledrpgwebapp.user.testfixture.UserFixture.USER_RESPONSES;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -52,7 +52,7 @@ class UserEndpointTest {
     findUser = mock(FindUserByNameUseCase.class);
 
     createUser = mock(CreateUserUseCase.class);
-    when(findAllUsers.execute(any())).thenReturn(FOUND);
+    when(findAllUsers.execute(any())).thenReturn(USER_RESPONSES);
 
     findUser = mock(FindUserByNameUseCase.class);
     when(findUser.execute(any()))
@@ -83,7 +83,7 @@ class UserEndpointTest {
       assertThat(r.getCorrelationId(), is(CORRELATION_ID));
       return true;
     }));
-    verify(mapper).responsesToDtos(FOUND);
+    verify(mapper).responsesToDtos(USER_RESPONSES);
   }
 
   @Test
@@ -144,7 +144,7 @@ class UserEndpointTest {
     assertThat(entity, instanceOf(List.class));
     @SuppressWarnings("unchecked")
     List<UserDto> actual = (List<UserDto>) entity;
-    assertThat(actual, hasSize(FOUND.size()));
+    assertThat(actual, hasSize(USER_RESPONSES.size()));
     assertThat(
         actual.stream().map(UserDto::getName).collect(Collectors.toList()),
         containsInAnyOrder(USER_NAMES.toArray()));
