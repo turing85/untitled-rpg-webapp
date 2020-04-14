@@ -18,7 +18,7 @@ echo "==========================================================================
   -Pnative \
   -P!unit-test-coverage \
   -DskipTests \
-  --projects :deployments.quarkus.microservices."${SERVICE}".impl \
+  --projects :untitled-rpg-webapp.backend.deployments.quarkus.microservices."${SERVICE}".impl \
   package
 chmod +x "${PWD}"/backend/target/"${SERVICE}"Service-runner
 echo "--------------------------------------------------------------------------------"

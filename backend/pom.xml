@@ -12,16 +12,15 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>backend</artifactId>
+  <artifactId>untitled-rpg-webapp.backend</artifactId>
 
   <packaging>pom</packaging>
   <modules>
     <module>common</module>
     <module>deployments</module>
-    <module>language</module>
-    <module>oauth2</module>
+    <module>domains</module>
+    <module>io</module>
     <module>testaggregation</module>
-    <module>user</module>
   </modules>
 
   <properties>
@@ -156,7 +155,7 @@
 
   <build>
     <pluginManagement>
-      <!-- Docker plung to build images -->
+      <!-- Docker plugin to build images -->
       <plugins>
         <plugin>
           <groupId>io.fabric8</groupId>

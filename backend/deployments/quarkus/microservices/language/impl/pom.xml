@@ -8,36 +8,41 @@
 
   <parent>
     <groupId>de.nextrpgdevs</groupId>
-    <artifactId>deployments.quarkus.microservices.language</artifactId>
+    <artifactId>untitled-rpg-webapp.backend.deployments.quarkus.microservices.language</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>deployments.quarkus.microservices.language.impl</artifactId>
+  <artifactId>untitled-rpg-webapp.backend.deployments.quarkus.microservices.language.impl</artifactId>
 
   <dependencies>
     <!-- Sibling modules -->
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
-      <artifactId>deployments.quarkus.microservices.language.api</artifactId>
+      <artifactId>untitled-rpg-webapp.backend.deployments.quarkus.microservices.language.api</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
-      <artifactId>language.impls.localstore.impl</artifactId>
+      <artifactId>untitled-rpg-webapp.backend.domains.language.impls.localstore.impl</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>de.nextrpgdevs</groupId>
+      <artifactId>untitled-rpg-webapp.backend.io.persistence.language.springdatajpa.impl</artifactId>
       <version>${project.version}</version>
     </dependency>
 
     <!-- Test fixtures -->
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
-      <artifactId>language.api</artifactId>
+      <artifactId>untitled-rpg-webapp.backend.domains.language.api</artifactId>
       <version>${project.version}</version>
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
-      <artifactId>deployments.quarkus.microservices.language.api</artifactId>
+      <artifactId>untitled-rpg-webapp.backend.deployments.quarkus.microservices.language.api</artifactId>
       <version>${project.version}</version>
       <type>test-jar</type>
       <scope>test</scope>

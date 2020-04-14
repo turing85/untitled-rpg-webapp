@@ -12,7 +12,7 @@ cd ../../..
   "${MVN_CLI_OPTS}" \
   -DskipTests \
   package
-cd cicd/backend/deplyoments
+cd cicd/backend/deployments
 echo "--------------------------------------------------------------------------------"
 echo "The relevant build artifacts can be found in"
 echo "    ${PWD}/backend/target"

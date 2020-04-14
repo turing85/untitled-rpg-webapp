@@ -8,16 +8,16 @@
 
   <parent>
     <groupId>de.nextrpgdevs</groupId>
-    <artifactId>deployments.quarkus.microservices.language</artifactId>
+    <artifactId>untitled-rpg-webapp.backend.deployments.quarkus.microservices.language</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>deployments.quarkus.microservices.language.api</artifactId>
+  <artifactId>untitled-rpg-webapp.backend.deployments.quarkus.microservices.language.api</artifactId>
 
   <dependencies>
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
-      <artifactId>language.api</artifactId>
+      <artifactId>untitled-rpg-webapp.backend.domains.language.api</artifactId>
       <version>${project.version}</version>
       <type>test-jar</type>
       <scope>test</scope>

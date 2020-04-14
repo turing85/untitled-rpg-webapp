@@ -8,11 +8,11 @@
 
   <parent>
     <groupId>de.nextrpgdevs</groupId>
-    <artifactId>backend</artifactId>
+    <artifactId>untitled-rpg-webapp.backend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>deployments</artifactId>
+  <artifactId>untitled-rpg-webapp.backend.deployments</artifactId>
 
   <packaging>pom</packaging>
   <modules>

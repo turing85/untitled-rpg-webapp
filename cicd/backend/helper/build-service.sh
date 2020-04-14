@@ -16,7 +16,7 @@ echo "==========================================================================
 ./mvnw \
   "${MVN_CLI_OPTS}" \
   -DskipTests \
-  --projects :deployments.quarkus.microservices."${SERVICE}".impl \
+  --projects :untitled-rpg-webapp.backend.deployments.quarkus.microservices."${SERVICE}".impl \
   package
 echo "--------------------------------------------------------------------------------"
 echo "The build artifact for %SERVICE% is available at"

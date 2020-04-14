@@ -8,56 +8,62 @@
 
   <parent>
     <groupId>de.nextrpgdevs</groupId>
-    <artifactId>deployments.quarkus.microservices.user</artifactId>
+    <artifactId>untitled-rpg-webapp.backend.deployments.quarkus.microservices.user</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>deployments.quarkus.microservices.user.impl</artifactId>
+  <artifactId>untitled-rpg-webapp.backend.deployments.quarkus.microservices.user.impl</artifactId>
 
   <dependencies>
     <!-- Sibling modules -->
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
-      <artifactId>deployments.quarkus.microservices.user.api</artifactId>
+      <artifactId>untitled-rpg-webapp.backend.domains.user.api</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
-      <artifactId>user.impls.localstore.impl</artifactId>
+      <artifactId>untitled-rpg-webapp.backend.deployments.quarkus.microservices.user.api</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
-      <artifactId>language.impls.quarkusrestclient.impl</artifactId>
+      <artifactId>untitled-rpg-webapp.backend.domains.user.impls.localstore.impl</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
-      <artifactId>oauth2.impls.keycloak</artifactId>
+      <artifactId>untitled-rpg-webapp.backend.io.persistence.user.springdatajpa.impl</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>de.nextrpgdevs</groupId>
+      <artifactId>untitled-rpg-webapp.backend.domains.language.impls.quarkusrestclient.impl</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>de.nextrpgdevs</groupId>
+      <artifactId>untitled-rpg-webapp.backend.domains.oauth2.impls.keycloak.impl</artifactId>
       <version>${project.version}</version>
     </dependency>
 
     <!-- Test fixtures -->
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
-      <artifactId>user.api</artifactId>
+      <artifactId>untitled-rpg-webapp.backend.domains.user.api</artifactId>
       <version>${project.version}</version>
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
-      <artifactId>deployments.quarkus.microservices.user.api</artifactId>
+      <artifactId>untitled-rpg-webapp.backend.deployments.quarkus.microservices.user.api</artifactId>
       <version>0.0.1-SNAPSHOT</version>
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
 
     <!-- database -->
-    <dependency>
-      <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-spring-data-jpa</artifactId>
-    </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-jdbc-postgresql</artifactId>

@@ -8,11 +8,11 @@
 
   <parent>
     <groupId>de.nextrpgdevs</groupId>
-    <artifactId>backend</artifactId>
+    <artifactId>untitled-rpg-webapp.backend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>testaggregation</artifactId>
+  <artifactId>untitled-rpg-webapp.backend.testaggregation</artifactId>
 
   <packaging>pom</packaging>
 
@@ -20,85 +20,97 @@
     <!-- common -->
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
-      <artifactId>common</artifactId>
+      <artifactId>untitled-rpg-webapp.backend.common</artifactId>
       <version>${project.version}</version>
     </dependency>
 
     <!-- deployment -->
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
-      <artifactId>deployments.quarkus.common</artifactId>
+      <artifactId>untitled-rpg-webapp.backend.deployments.quarkus.common</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
-      <artifactId>deployments.quarkus.microservices.language.api</artifactId>
+      <artifactId>untitled-rpg-webapp.backend.deployments.quarkus.microservices.language.api</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
-      <artifactId>deployments.quarkus.microservices.language.impl</artifactId>
+      <artifactId>untitled-rpg-webapp.backend.deployments.quarkus.microservices.language.impl</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
-      <artifactId>deployments.quarkus.microservices.user.api</artifactId>
+      <artifactId>untitled-rpg-webapp.backend.deployments.quarkus.microservices.user.api</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
-      <artifactId>deployments.quarkus.microservices.user.impl</artifactId>
+      <artifactId>untitled-rpg-webapp.backend.deployments.quarkus.microservices.user.impl</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
+    <!-- io -->
+    <dependency>
+      <groupId>de.nextrpgdevs</groupId>
+      <artifactId>untitled-rpg-webapp.backend.io.persistence.language.springdatajpa.impl</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>de.nextrpgdevs</groupId>
+      <artifactId>untitled-rpg-webapp.backend.io.persistence.user.springdatajpa.impl</artifactId>
       <version>${project.version}</version>
     </dependency>
 
     <!-- language -->
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
-      <artifactId>language.api</artifactId>
+      <artifactId>untitled-rpg-webapp.backend.domains.language.api</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
-      <artifactId>language.impls.localstore.impl</artifactId>
+      <artifactId>untitled-rpg-webapp.backend.domains.language.impls.localstore.impl</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
-      <artifactId>language.impls.localstore.spi</artifactId>
+      <artifactId>untitled-rpg-webapp.backend.domains.language.impls.localstore.spi</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
-      <artifactId>language.impls.quarkusrestclient.impl</artifactId>
+      <artifactId>untitled-rpg-webapp.backend.domains.language.impls.quarkusrestclient.impl</artifactId>
       <version>${project.version}</version>
     </dependency>
 
     <!-- oauth2 -->
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
-      <artifactId>oauth2.api</artifactId>
+      <artifactId>untitled-rpg-webapp.backend.domains.oauth2.api</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
-      <artifactId>oauth2.impls.keycloak</artifactId>
+      <artifactId>untitled-rpg-webapp.backend.domains.oauth2.impls.keycloak.impl</artifactId>
       <version>${project.version}</version>
     </dependency>
 
     <!-- user -->
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
-      <artifactId>user.api</artifactId>
+      <artifactId>untitled-rpg-webapp.backend.domains.user.api</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
-      <artifactId>user.impls.localstore.impl</artifactId>
+      <artifactId>untitled-rpg-webapp.backend.domains.user.impls.localstore.impl</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
-      <artifactId>user.impls.localstore.spi</artifactId>
+      <artifactId>untitled-rpg-webapp.backend.domains.user.impls.localstore.spi</artifactId>
       <version>${project.version}</version>
     </dependency>
   </dependencies>

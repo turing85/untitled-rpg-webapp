@@ -37,7 +37,9 @@ ECHO ===========================================================================
 ECHO Migrating language database
 ECHO ================================================================================
 CD ..
-CALL mvnw.cmd flyway:migrate --projects :deployments.quarkus.microservices.language.impl
+CALL mvnw.cmd ^
+  --projects :untitled-rpg-webapp.backend.deployments.quarkus.microservices.language.impl ^
+  flyway:migrate
 CD localdeployment
 IF %ERRORLEVEL% NEQ 0 (
   CD /D %FROM_DRIVE%
@@ -59,7 +61,9 @@ ECHO ===========================================================================
 ECHO Migrating user database
 ECHO ================================================================================
 CD ..
-CALL mvnw.cmd flyway:migrate --projects :deployments.quarkus.microservices.user.impl
+CALL mvnw.cmd ^
+  --projects :untitled-rpg-webapp.backend.deployments.quarkus.microservices.user.impl ^
+  flyway:migrate
 CD localdeployment
 IF %ERRORLEVEL% neq 0 (
   CD /D %FROM_DRIVE%

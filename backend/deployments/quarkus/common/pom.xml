@@ -8,11 +8,11 @@
 
   <parent>
     <groupId>de.nextrpgdevs</groupId>
-    <artifactId>deployments.quarkus</artifactId>
+    <artifactId>untitled-rpg-webapp.backend.deployments.quarkus</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>deployments.quarkus.common</artifactId>
+  <artifactId>untitled-rpg-webapp.backend.deployments.quarkus.common</artifactId>
 
   <dependencies>
     <!-- JAX-RS annotations used by Quarkus -->

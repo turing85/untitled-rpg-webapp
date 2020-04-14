@@ -22,7 +22,9 @@ echo "==========================================================================
 echo "Migrating language database"
 echo "================================================================================"
 cd ..
-./mvnw flyway:migrate --projects :deployments.quarkus.microservices.language.impl
+./mvnw \
+  --projects :flyway:migratedeployments.quarkus.microservices.language.impl \
+  flyway:migrate
 cd localdeployment
 
 echo "================================================================================"
@@ -34,7 +36,9 @@ echo "==========================================================================
 echo "Migrating user database"
 echo "================================================================================"
 cd ..
-./mvnw flyway:migrate --projects :deployments.quarkus.microservices.user.impl
+./mvnw \
+  --projects :untitled-rpg-webapp.backend.deployments.quarkus.microservices.user.impl \
+  flyway:migrate
 cd localdeployment
 
 echo "================================================================================"

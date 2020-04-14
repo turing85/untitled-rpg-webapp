@@ -8,16 +8,16 @@
 
   <parent>
     <groupId>de.nextrpgdevs</groupId>
-    <artifactId>deployments.quarkus.microservices</artifactId>
+    <artifactId>untitled-rpg-webapp.backend.deployments.quarkus.microservices</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>deployments.quarkus.microservices.user</artifactId>
+  <artifactId>untitled-rpg-webapp.backend.deployments.quarkus.microservices.user</artifactId>
 
   <packaging>pom</packaging>
   <modules>
-    <module>impl</module>
     <module>api</module>
+    <module>impl</module>
   </modules>
 
 </project>
