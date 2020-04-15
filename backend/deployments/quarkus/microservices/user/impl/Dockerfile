@@ -10,4 +10,3 @@ ENTRYPOINT [ \
   "-jar", \
   "/opt/app/userService-runner.jar" \
 ]
-EXPOSE 8080/tcp
