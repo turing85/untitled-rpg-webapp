@@ -15,7 +15,7 @@
   <artifactId>untitled-rpg-webapp.backend.domains.oauth2.impls.keycloak.impl</artifactId>
 
   <properties>
-    <org.keycloak.version>9.0.2</org.keycloak.version>
+    <org.keycloak.version>9.0.3</org.keycloak.version>
   </properties>
 
   <dependencies>
