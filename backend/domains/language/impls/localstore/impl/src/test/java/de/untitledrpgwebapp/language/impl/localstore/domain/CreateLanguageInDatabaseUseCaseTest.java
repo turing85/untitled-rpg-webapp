@@ -16,7 +16,7 @@ import de.untitledrpgwebapp.language.impl.localstore.boundary.LanguageRepository
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@DisplayName("Tests for CreateLanguageInDatabaseUseCase unit")
+@DisplayName("Tests for CreateLanguageInDatabaseUseCase unit.")
 class CreateLanguageInDatabaseUseCaseTest {
 
   @Test

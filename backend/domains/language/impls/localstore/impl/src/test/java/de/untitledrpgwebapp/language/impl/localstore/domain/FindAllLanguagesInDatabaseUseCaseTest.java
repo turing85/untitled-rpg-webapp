@@ -16,7 +16,7 @@ import java.util.Collection;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@DisplayName("Tests for FindAllLanguagesInDatabaseUseCase unit")
+@DisplayName("Tests for FindAllLanguagesInDatabaseUseCase unit.")
 class FindAllLanguagesInDatabaseUseCaseTest {
 
   @Test

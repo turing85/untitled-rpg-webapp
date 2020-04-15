@@ -20,7 +20,22 @@
       <groupId>de.nextrpgdevs</groupId>
       <artifactId>untitled-rpg-webapp.backend.deployments.quarkus.microservices.language.api</artifactId>
       <version>${project.version}</version>
-      <scope>compile</scope>
+    </dependency>
+
+    <!-- Text fixtures -->
+    <dependency>
+      <groupId>de.nextrpgdevs</groupId>
+      <artifactId>untitled-rpg-webapp.backend.domains.language.api</artifactId>
+      <version>${project.version}</version>
+      <type>test-jar</type>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>de.nextrpgdevs</groupId>
+      <artifactId>untitled-rpg-webapp.backend.deployments.quarkus.microservices.language.api</artifactId>
+      <version>${project.version}</version>
+      <type>test-jar</type>
+      <scope>test</scope>
     </dependency>
 
     <dependency>

@@ -24,7 +24,7 @@ import org.keycloak.OAuth2Constants;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
 
-@DisplayName("Tests for CreateAccountUseCaseBean unit")
+@DisplayName("Tests for CreateAccountUseCaseBean unit.")
 class CreateAccountUseCaseBeanTest {
 
   KeycloakBuilder builder;

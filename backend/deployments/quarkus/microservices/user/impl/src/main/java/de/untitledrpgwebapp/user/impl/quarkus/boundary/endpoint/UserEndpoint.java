@@ -1,5 +1,6 @@
 package de.untitledrpgwebapp.user.impl.quarkus.boundary.endpoint;
 
+import de.untitledrpgwebapp.domain.exception.EntityNotFoundException;
 import de.untitledrpgwebapp.impl.quarkus.configuration.StaticConfig;
 import de.untitledrpgwebapp.user.boundary.request.FindAllUsersRequest;
 import de.untitledrpgwebapp.user.boundary.request.FindUserByNameRequest;
@@ -82,8 +83,7 @@ public class UserEndpoint {
         .name(name)
         .correlationId(correlationId)
         .build())
-        // TODO: throw a proper exception here
-        .orElseThrow();
+        .orElseThrow(() -> EntityNotFoundException.userWithName(name, correlationId));
     return Response.ok(mapper.responseToDto(response))
         .header(StaticConfig.CORRELATION_ID_HEADER_KEY, correlationId)
         .build();

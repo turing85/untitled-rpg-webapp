@@ -11,6 +11,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.argThat;
@@ -18,6 +19,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import de.untitledrpgwebapp.domain.exception.EntityNotFoundException;
 import de.untitledrpgwebapp.impl.quarkus.configuration.StaticConfig;
 import de.untitledrpgwebapp.language.boundary.request.CreateLanguageRequest;
 import de.untitledrpgwebapp.language.domain.CreateLanguageUseCase;
@@ -36,7 +38,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@DisplayName("Tests for LanguageEndpoint unit")
+@DisplayName("Tests for LanguageEndpoint unit.")
 class LanguageEndpointTest {
 
   private final FindAllLanguagesUseCase findAllLanguages= mock(FindAllLanguagesUseCase.class);
@@ -53,7 +55,7 @@ class LanguageEndpointTest {
 
   @Test
   @DisplayName("Should call findAllLanguages with the expected parameters and return the expected "
-      + "response object")
+      + "response object.")
   void shouldCallFindAllLanguagesWithExpectedParameterAndReturnExpectedResultWhenFindAllIsCalled() {
     // GIVEN
     when(findAllLanguages.execute(any())).thenReturn(LANGUAGE_RESPONSES);
@@ -73,6 +75,8 @@ class LanguageEndpointTest {
   }
 
   @Test
+  @DisplayName("Should call findLanguage with the expected parameters and return the expected "
+      + "response object.")
   void shouldCallFindLanguageWithExpectedParameterAndReturnExpectedResultWhenFindByTagIsCalled() {
     // GIVEN
     when(findLanguage.execute(any())).thenReturn(Optional.of(LANGUAGE_ONE_RESPONSE));
@@ -90,6 +94,27 @@ class LanguageEndpointTest {
   }
 
   @Test
+  @DisplayName("Should throw an EntityNotFoundException when findLanguage is called and no "
+      + "language is found")
+  void shouldThrowEntityNotFoundExceptionWhenFindLanguageIsCalledAndNoLanguageIsFound() {
+    // GIVEN
+    when(findLanguage.execute(any())).thenReturn(Optional.empty());
+
+    String expectedMessage =
+        String.format(EntityNotFoundException.MESSAGE_FORMAT, "language", "tag", LANGUAGE_ONE_TAG);
+
+    // WHEN
+    EntityNotFoundException exception = assertThrows(
+        EntityNotFoundException.class,
+        () -> uut.findByTag(LANGUAGE_ONE_TAG, CORRELATION_ID));
+
+    // THEN
+    assertThat(exception.getMessage(), is(expectedMessage));
+  }
+
+  @Test
+  @DisplayName("Should call createLanguage with the expected parameters and return the expected "
+      + "response object.")
   void shouldCallCreateLanguageWithExpectedParameterAndReturnExpectedResultWhenCreateLanguageIsCalled() {
     // GIVEN:
     CreateLanguageRequest request = CreateLanguageRequest.builder().tag(LANGUAGE_ONE_TAG).build();

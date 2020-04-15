@@ -12,7 +12,7 @@ import de.untitledrpgwebapp.language.impl.quarkusrestclient.domain.FindLanguageB
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@DisplayName("Tests for FindLanguageByTagUseCaseBean unit")
+@DisplayName("Tests for FindLanguageByTagUseCaseBean unit.")
 class FindLanguageByTagUseCaseBeanTest {
 
   @Test

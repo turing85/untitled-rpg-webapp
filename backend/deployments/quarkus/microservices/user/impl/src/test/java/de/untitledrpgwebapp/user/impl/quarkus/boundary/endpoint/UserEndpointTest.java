@@ -10,6 +10,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.argThat;
@@ -17,6 +18,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import de.untitledrpgwebapp.domain.exception.EntityNotFoundException;
 import de.untitledrpgwebapp.impl.quarkus.configuration.StaticConfig;
 import de.untitledrpgwebapp.user.boundary.request.CreateUserRequest;
 import de.untitledrpgwebapp.user.boundary.response.UserResponse;
@@ -36,7 +38,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@DisplayName("Tests for UserEndpoint unit")
+@DisplayName("Tests for UserEndpoint unit.")
 class UserEndpointTest {
 
   private FindAllUsersUseCase findAllUsers;
@@ -69,7 +71,7 @@ class UserEndpointTest {
 
   @Test
   @DisplayName("Should call findAllUsers with the expected parameters and return the expected "
-      + "response object")
+      + "response object.")
   void shouldCallFindAllUsersWithExpectedParameterAndReturnExpectedResultWhenFindAllIsCalled() {
     // GIVEN: defaults
 
@@ -87,6 +89,8 @@ class UserEndpointTest {
   }
 
   @Test
+  @DisplayName("Should call findUser with the expected parameters and return the expected response "
+      + "object.")
   void shouldCallFindUserWithExpectedParameterAndReturnExpectedResultWhenFindByNameIsCalled() {
     // GIVEN: defaults
 
@@ -103,6 +107,27 @@ class UserEndpointTest {
   }
 
   @Test
+  @DisplayName("Should throw an EntityNotFoundException if no user with the given name is "
+      + "found.")
+  void shouldThrowDependencyNotFoundExceptionWhenLanguageIsNotFound() {
+    // GIVEN
+    when(findUser.execute(any())).thenReturn(Optional.empty());
+
+    String expectedMessage =
+        String.format(EntityNotFoundException.MESSAGE_FORMAT, "user", "name", USER_ONE_NAME);
+
+    // WHEN
+    EntityNotFoundException exception = assertThrows(
+        EntityNotFoundException.class,
+        () -> uut.findByName(USER_ONE_NAME, CORRELATION_ID));
+
+    // THEN
+    assertThat(exception.getMessage(), is(expectedMessage));
+  }
+
+  @Test
+  @DisplayName("Should call createUser with the expected parameters and return the expected "
+      + "response object.")
   void shouldCallCreateUserWithExpectedParameterAndReturnExpectedResultWhenCreateUserIsCalled() {
     // GIVEN:
     CreateUserRequest request = CreateUserRequest.builder().name(USER_ONE_NAME).build();

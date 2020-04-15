@@ -1,9 +1,9 @@
 package de.untitledrpgwebapp.user.impl.localstore.domain;
 
+import de.untitledrpgwebapp.domain.exception.DependencyNotFoundException;
 import de.untitledrpgwebapp.language.boundary.request.FindLanguageByTagRequest;
 import de.untitledrpgwebapp.language.boundary.response.LanguageResponse;
 import de.untitledrpgwebapp.language.domain.FindLanguageByTagUseCase;
-import de.untitledrpgwebapp.language.exception.LanguageNotFoundException;
 import de.untitledrpgwebapp.oauth2.boundary.request.CreateAccountRequest;
 import de.untitledrpgwebapp.oauth2.domain.CreateAccountUseCase;
 import de.untitledrpgwebapp.user.boundary.UserRepository;
@@ -31,7 +31,7 @@ public class CreateUserInDatabaseUseCase implements CreateUserUseCase {
 
     String preferredLanguageTag = request.getPreferredLanguageTag();
     if (findLanguageByTag(preferredLanguageTag, correlationId).isEmpty()) {
-      throw new LanguageNotFoundException(preferredLanguageTag, correlationId);
+      throw DependencyNotFoundException.languageWithTag(preferredLanguageTag, correlationId);
     }
     CreateAccountRequest createAccountRequest = mapper.requestToRequest(request);
     createAccount.execute(createAccountRequest);

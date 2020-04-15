@@ -37,7 +37,7 @@ import org.keycloak.admin.client.resource.RealmResource;
 import org.keycloak.admin.client.resource.UsersResource;
 import org.keycloak.representations.idm.CredentialRepresentation;
 
-@DisplayName("Tests for KeycloakCreateAccountUseCase unit")
+@DisplayName("Tests for KeycloakCreateAccountUseCase unit.")
 class KeycloakCreateAccountUseCaseTest {
 
   private CreateAccountRequest request;

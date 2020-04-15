@@ -16,8 +16,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import de.untitledrpgwebapp.domain.exception.DependencyNotFoundException;
 import de.untitledrpgwebapp.language.domain.FindLanguageByTagUseCase;
-import de.untitledrpgwebapp.language.exception.LanguageNotFoundException;
 import de.untitledrpgwebapp.oauth2.boundary.request.CreateAccountRequest;
 import de.untitledrpgwebapp.oauth2.domain.CreateAccountUseCase;
 import de.untitledrpgwebapp.user.boundary.UserRepository;
@@ -29,7 +29,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@DisplayName("Tests for CreateUserInDatabaseUseCase unit")
+@DisplayName("Tests for CreateUserInDatabaseUseCase unit.")
 class CreateUserInDatabaseUseCaseTest {
 
   private final CreateUserRequest request = CreateUserRequest.builder()
@@ -79,12 +79,15 @@ class CreateUserInDatabaseUseCaseTest {
     // GIVEN
     when(findLanguageByTag.execute(any())).thenReturn(Optional.empty());
 
-    String expectedMessage =
-        String.format(LanguageNotFoundException.MESSAGE_FORMAT, LANGUAGE_ONE_TAG);
+    String expectedMessage = String.format(
+        DependencyNotFoundException.MESSAGE_FORMAT,
+        "language",
+        "tag",
+        LANGUAGE_ONE_TAG);
 
     // WHEN
-    LanguageNotFoundException exception = assertThrows(
-        LanguageNotFoundException.class,
+    DependencyNotFoundException exception = assertThrows(
+        DependencyNotFoundException.class,
         () -> uut.execute(request));
 
     // THEN

@@ -1,7 +1,9 @@
-package de.untitledrpgwebapp.language.exception;
+package de.untitledrpgwebapp.domain.exception;
 
 import java.util.UUID;
+import lombok.Getter;
 
+@Getter
 public abstract class BusinessException extends RuntimeException {
 
   private final UUID correlationId;
@@ -14,9 +16,5 @@ public abstract class BusinessException extends RuntimeException {
   public BusinessException(String message, Throwable cause, UUID correlationId) {
     super(message, cause);
     this.correlationId = correlationId;
-  }
-
-  public UUID getCorrelationId() {
-    return correlationId;
   }
 }

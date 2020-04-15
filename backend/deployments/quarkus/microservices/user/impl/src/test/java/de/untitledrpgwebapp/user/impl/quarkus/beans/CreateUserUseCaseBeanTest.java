@@ -13,11 +13,11 @@ import de.untitledrpgwebapp.user.impl.localstore.domain.CreateUserInDatabaseUseC
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@DisplayName("Tests for CreateUserUseCaseBean unit")
+@DisplayName("Tests for CreateUserUseCaseBean unit.")
 class CreateUserUseCaseBeanTest {
 
   @Test
-  @DisplayName("Should create a CreateUserInDatabaseUseCase with the expected settings")
+  @DisplayName("Should create a CreateUserInDatabaseUseCase with the expected settings.")
   void shouldCreateExpectedCreateLanguageUseCase() {
     // GIVEN
     UserRepository repository = mock(UserRepository.class);

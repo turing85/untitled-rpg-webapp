@@ -11,7 +11,7 @@ import de.untitledrpgwebapp.language.impl.localstore.domain.FindAllLanguagesInDa
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@DisplayName("Tests for FindAllLanguagesUseCaseBean unit")
+@DisplayName("Tests for FindAllLanguagesUseCaseBean unit.")
 class FindAllLanguagesUseCaseBeanTest {
 
   @Test

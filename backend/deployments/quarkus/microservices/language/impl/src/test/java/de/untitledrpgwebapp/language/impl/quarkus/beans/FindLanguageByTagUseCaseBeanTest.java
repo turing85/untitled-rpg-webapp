@@ -11,11 +11,11 @@ import de.untitledrpgwebapp.language.impl.localstore.domain.FindLanguageByTagInD
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@DisplayName("Tests for FindLanguageByTagUseCaseBean unit")
+@DisplayName("Tests for FindLanguageByTagUseCaseBean unit.")
 class FindLanguageByTagUseCaseBeanTest {
 
   @Test
-  @DisplayName("Should create a FindLanguageByTagInDatabaseUseCase with the expected repository")
+  @DisplayName("Should create a FindLanguageByTagInDatabaseUseCase with the expected repository.")
   void shouldCreateExpectedFindLanguageByTagUseCase() {
     // GIVEN
     final LanguageRepository repository = mock(LanguageRepository.class);

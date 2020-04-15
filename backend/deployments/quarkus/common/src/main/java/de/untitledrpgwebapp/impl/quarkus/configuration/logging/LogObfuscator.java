@@ -46,6 +46,7 @@ public class LogObfuscator {
         StaticConfig.BODY_ATTRIBUTES_TO_OBFUSCATE,
         new ObjectMapper()
             .configure(SerializationFeature.WRITE_SINGLE_ELEM_ARRAYS_UNWRAPPED, true)
+            .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
             .setSerializationInclusion(Include.NON_EMPTY));
   }
 

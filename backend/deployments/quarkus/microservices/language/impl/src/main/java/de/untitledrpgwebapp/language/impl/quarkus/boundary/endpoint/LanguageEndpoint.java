@@ -1,5 +1,6 @@
 package de.untitledrpgwebapp.language.impl.quarkus.boundary.endpoint;
 
+import de.untitledrpgwebapp.domain.exception.EntityNotFoundException;
 import de.untitledrpgwebapp.impl.quarkus.configuration.StaticConfig;
 import de.untitledrpgwebapp.language.boundary.request.FindAllLanguagesRequest;
 import de.untitledrpgwebapp.language.boundary.request.FindLanguageByTagRequest;
@@ -82,7 +83,7 @@ public class LanguageEndpoint {
       @HeaderParam(StaticConfig.CORRELATION_ID_HEADER_KEY) UUID correlationId) {
     LanguageResponse response = findLanguage
         .execute(FindLanguageByTagRequest.builder().tag(tag).correlationId(correlationId).build())
-        .orElseThrow();
+        .orElseThrow(() -> EntityNotFoundException.tagWithLanguage(tag, correlationId));
     return Response
         .ok(mapper.responseToDto(response))
         .header(StaticConfig.CORRELATION_ID_HEADER_KEY, correlationId)

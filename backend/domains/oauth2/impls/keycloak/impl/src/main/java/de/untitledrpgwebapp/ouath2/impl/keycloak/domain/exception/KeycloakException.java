@@ -1,6 +1,6 @@
 package de.untitledrpgwebapp.ouath2.impl.keycloak.domain.exception;
 
-import de.untitledrpgwebapp.language.exception.BusinessException;
+import de.untitledrpgwebapp.domain.exception.BusinessException;
 import java.util.UUID;
 
 public class KeycloakException extends BusinessException {

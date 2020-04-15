@@ -13,23 +13,28 @@ import javax.ws.rs.ext.Provider;
 public class ConstraintViolationExceptionToBadRequestMapper implements
     ExceptionMapper<ConstraintViolationException> {
 
+  public static final String BODY_FORMAT = "Parameter %s (=\"%s\"): %s%n";
+  public static final String UNNAMED_PROPERTY = "(unnamed)";
+
   @Override
   public Response toResponse(ConstraintViolationException exception) {
     StringBuilder message = new StringBuilder();
     for (ConstraintViolation<?> violation : exception.getConstraintViolations()) {
       message.append(constructViolationDescription(
-          getPropertyNameFromPath(violation).orElse("(unnamed)"),
+          getPropertyNameFromPath(violation).orElse(UNNAMED_PROPERTY),
           violation.getInvalidValue(),
           violation.getMessage()));
     }
-    return Response.status(Status.BAD_REQUEST).entity(message.toString()).build();
+    return Response.status(Status.BAD_REQUEST)
+        .entity(ErrorResponseEntity.builder().message(message.toString()).build())
+        .build();
   }
 
   private String constructViolationDescription(
       String propertyName,
       Object invalidValue,
       String message) {
-    return String.format("Parameter %s (=\"%s\"): %s%n", propertyName, invalidValue, message);
+    return String.format(BODY_FORMAT, propertyName, invalidValue, message);
   }
 
   private Optional<String> getPropertyNameFromPath(ConstraintViolation<?> violation) {

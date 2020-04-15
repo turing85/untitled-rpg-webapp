@@ -18,7 +18,7 @@ import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@DisplayName("Tests for FindLanguageByTagInDatabaseUseCase unit")
+@DisplayName("Tests for FindLanguageByTagInDatabaseUseCase unit.")
 class FindLanguageByTagInDatabaseUseCaseTest {
 
   @Test

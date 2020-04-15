@@ -28,7 +28,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@DisplayName("Tests for LanguageRepositoryProxy unit")
+@DisplayName("Tests for LanguageRepositoryProxy unit.")
 class LanguageRepositoryProxyTest {
 
   final JpaLanguageRepository repository = mock(JpaLanguageRepository.class);

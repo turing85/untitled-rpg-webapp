@@ -15,6 +15,13 @@
   <artifactId>untitled-rpg-webapp.backend.deployments.quarkus.common</artifactId>
 
   <dependencies>
+    <!-- Sibling porjects -->
+    <dependency>
+      <groupId>de.nextrpgdevs</groupId>
+      <artifactId>untitled-rpg-webapp.backend.common</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
     <!-- JAX-RS annotations used by Quarkus -->
     <dependency>
       <groupId>io.quarkus</groupId>

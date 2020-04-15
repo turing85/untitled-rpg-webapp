@@ -11,7 +11,7 @@ import de.untitledrpgwebapp.user.impl.localstore.domain.FindAllUsersInDatabaseUs
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@DisplayName("Tests for CreateLanguageUseCaseBean unit")
+@DisplayName("Tests for CreateLanguageUseCaseBean unit.")
 class FindAllUsersUseCaseBeanTest {
 
   @Test

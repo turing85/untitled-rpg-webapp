@@ -11,7 +11,7 @@ import de.untitledrpgwebapp.user.impl.localstore.domain.FindUserByNameInDatabase
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@DisplayName("Tests for FindUserByNameUseCaseBean unit")
+@DisplayName("Tests for FindUserByNameUseCaseBean unit.")
 class FindUserByNameUseCaseBeanTest {
 
   @Test
