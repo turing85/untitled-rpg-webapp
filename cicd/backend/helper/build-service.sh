@@ -14,7 +14,7 @@ echo "==========================================================================
 echo "Building service ${SERVICE}"
 echo "================================================================================"
 ./mvnw \
-  "${MVN_CLI_OPTS}" \
+  ${MVN_CLI_OPTS} \
   -DskipTests \
   --projects :untitled-rpg-webapp.backend.deployments.quarkus.microservices."${SERVICE}".impl \
   package

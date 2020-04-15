@@ -14,7 +14,7 @@ echo "==========================================================================
 echo "Building service ${SERVICE} with GraalVM natively"
 echo "================================================================================"
 ./mvnw \
-  "${MVN_CLI_OPTS}" \
+  ${MVN_CLI_OPTS} \
   -Pnative \
   -P!unit-test-coverage \
   -DskipTests \

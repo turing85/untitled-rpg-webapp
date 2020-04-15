@@ -19,13 +19,13 @@ if [[ ${BUILD_PROJECT} == true ]]; then
   cd localdeployment
 fi
 
-if [[ ${BUILD_PROJECT} == true ]]; then
+if [[ ${MIGRATE_DATABASES} == true ]]; then
   echo "================================================================================"
   echo "Migrating language database"
   echo "================================================================================"
   cd ..
   ./mvnw \
-    --projects :flyway:migratedeployments.quarkus.microservices.language.impl \
+    --projects :untitled-rpg-webapp.backend.deployments.quarkus.microservices.language.impl \
     flyway:migrate
   cd localdeployment
 fi
@@ -35,7 +35,7 @@ echo "Starting docker deployment: language-service"
 echo "================================================================================"
 docker-compose up -d language-service
 
-if [[ ${BUILD_PROJECT} == true ]]; then
+if [[ ${MIGRATE_DATABASES} == true ]]; then
   echo "================================================================================"
   echo "Migrating user database"
   echo "================================================================================"
