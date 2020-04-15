@@ -1,6 +1,6 @@
 @ECHO off
 
-SETLOCAL
+SETLOCAL EnableDelayedExpansion
 SET FROM_PATH=%CD%
 SET FROM_DRIVE=%CD:~0,3%
 SET SCRIPT_PATH=%~dp0
@@ -16,6 +16,11 @@ CD ../../..
 CALL mvnw.cmd ^
   %MVN_CLI_OPTS% ^
   clean
+IF !ERRORLEVEL! NEQ 0 (
+  CD /D %FROM_DRIVE%
+  CD %FROM_PATH%
+  exit /b !ERRORLEVEL!
+)
 CD cicd/backend/deployments
 
 CD %FROM_DRIVE%

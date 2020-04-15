@@ -10,6 +10,7 @@ echo "==========================================================================
 docker-compose up -d dbms-service oidc-service
 
 if [[ ${BUILD_PROJECT} == true ]]; then
+  MIGRATE_DATABASES=true
   echo "================================================================================"
   echo "Building project and generating docker images"
   echo "================================================================================"
@@ -18,28 +19,32 @@ if [[ ${BUILD_PROJECT} == true ]]; then
   cd localdeployment
 fi
 
-echo "================================================================================"
-echo "Migrating language database"
-echo "================================================================================"
-cd ..
-./mvnw \
-  --projects :flyway:migratedeployments.quarkus.microservices.language.impl \
-  flyway:migrate
-cd localdeployment
+if [[ ${BUILD_PROJECT} == true ]]; then
+  echo "================================================================================"
+  echo "Migrating language database"
+  echo "================================================================================"
+  cd ..
+  ./mvnw \
+    --projects :flyway:migratedeployments.quarkus.microservices.language.impl \
+    flyway:migrate
+  cd localdeployment
+fi
 
 echo "================================================================================"
 echo "Starting docker deployment: language-service"
 echo "================================================================================"
 docker-compose up -d language-service
 
-echo "================================================================================"
-echo "Migrating user database"
-echo "================================================================================"
-cd ..
-./mvnw \
-  --projects :untitled-rpg-webapp.backend.deployments.quarkus.microservices.user.impl \
-  flyway:migrate
-cd localdeployment
+if [[ ${BUILD_PROJECT} == true ]]; then
+  echo "================================================================================"
+  echo "Migrating user database"
+  echo "================================================================================"
+  cd ..
+  ./mvnw \
+    --projects :untitled-rpg-webapp.backend.deployments.quarkus.microservices.user.impl \
+    flyway:migrate
+  cd localdeployment
+fi
 
 echo "================================================================================"
 echo "Starting docker deployment: user-service"

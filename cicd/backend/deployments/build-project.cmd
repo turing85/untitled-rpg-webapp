@@ -1,6 +1,6 @@
 @ECHO off
 
-SETLOCAL
+SETLOCAL EnableDelayedExpansion
 SET FROM_PATH=%CD%
 SET FROM_DRIVE=%CD:~0,3%
 SET SCRIPT_PATH=%~dp0
@@ -17,6 +17,11 @@ CALL mvnw.cmd ^
   %MVN_CLI_OPTS% ^
   -DskipTests ^
   package
+IF !ERRORLEVEL! NEQ 0 (
+  CD /D %FROM_DRIVE%
+  CD %FROM_PATH%
+  exit /b !ERRORLEVEL!
+)
 CD cicd/backend/deployments
 ECHO --------------------------------------------------------------------------------
 ECHO The relevant build artifacts can be found in

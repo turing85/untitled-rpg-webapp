@@ -1,6 +1,6 @@
 @echo off
 
-SETLOCAL
+SETLOCAL EnableDelayedExpansion
 SET FROM_PATH=%CD%
 SET FROM_DRIVE=%CD:~0,3%
 SET SCRIPT_PATH=%~dp0
@@ -11,6 +11,11 @@ CD %SCRIPT_PATH%
 
 SET SERVICE=language
 CALL ../../helper/build-service.cmd
+IF !ERRORLEVEL! NEQ 0 (
+  CD /D %FROM_DRIVE%
+  CD %FROM_PATH%
+  exit /b !ERRORLEVEL!
+)
 
 CD /D %FROM_DRIVE%
 CD %FROM_PATH%
