@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 class FindUserByNameUseCaseBeanTest {
 
   @Test
-  @DisplayName("Should create a FindUserByNameInDatabaseUseCase with the expected repository.")
+  @DisplayName("Should create a FindUserByNameInDatabaseUseCase with the expected DAO.")
   void shouldCreateExpectedFindUserByNameUseCase() {
     // GIVEN
     UserDao dao = mock(UserDao.class);

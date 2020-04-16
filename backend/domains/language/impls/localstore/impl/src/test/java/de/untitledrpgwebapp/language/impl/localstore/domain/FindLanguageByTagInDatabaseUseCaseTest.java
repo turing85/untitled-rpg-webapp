@@ -22,8 +22,8 @@ import org.junit.jupiter.api.Test;
 class FindLanguageByTagInDatabaseUseCaseTest {
 
   @Test
-  @DisplayName("Should call the repository with expected parameters and return the expected "
-      + "response when everything is ok.")
+  @DisplayName("Should call the DAO with expected parameters and return the expected response when "
+      + "everything is ok.")
   void shouldCallRepositoryWithExpectedParametersWhenEverythingIsOk() {
     // GIVEN
     FindLanguageByTagRequest request = FindLanguageByTagRequest.builder()

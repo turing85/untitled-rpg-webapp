@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 class CreateLanguageUseCaseBeanTest {
 
   @Test
-  @DisplayName("Should create a CreateLanguageInDatabaseUseCase with the expected repository.")
+  @DisplayName("Should create a CreateLanguageInDatabaseUseCase with the expected DAO.")
   void shouldCreateExpectedCreateLanguageUseCase() {
     // GIVEN
     LanguageDao dao = mock(LanguageDao.class);

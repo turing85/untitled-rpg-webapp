@@ -7,6 +7,7 @@ import java.util.Objects;
  * An enum representing possible sort orders.
  */
 public enum OrderType {
+
   ASCENDING, DESCENDING;
 
   /**

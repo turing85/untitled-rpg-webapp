@@ -9,7 +9,7 @@ import javax.ws.rs.ext.Provider;
 public class DependencyNotFoundExceptionMapper
     implements BaseExceptionMapper<DependencyNotFoundException> {
 
-  public static final Status STATUS_TO_MAP_TO = Status.FORBIDDEN;
+  public static final Status STATUS_TO_MAP_TO = Status.CONFLICT;
 
   @Override
   public Response toResponse(DependencyNotFoundException exception) {

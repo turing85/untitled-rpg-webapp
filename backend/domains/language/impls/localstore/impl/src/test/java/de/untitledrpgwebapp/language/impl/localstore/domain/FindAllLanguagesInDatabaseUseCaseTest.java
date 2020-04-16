@@ -22,8 +22,8 @@ import org.junit.jupiter.api.Test;
 class FindAllLanguagesInDatabaseUseCaseTest {
 
   @Test
-  @DisplayName("Should call the repository with the expected parameter and return the expected "
-      + "response when everything is ok.")
+  @DisplayName("Should call the DAO with the expected parameter and return the expected response "
+      + "when everything is ok.")
   void shouldCallRepositoryWithExpectedParametersWhenEverythingIsOk() {
     // GIVEN
     PageAndSortConfig config = mock(PageAndSortConfig.class);

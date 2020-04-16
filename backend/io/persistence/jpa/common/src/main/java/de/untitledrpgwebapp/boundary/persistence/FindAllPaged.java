@@ -14,7 +14,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 
 /**
  * Performs find on database with pagination and sorting.
@@ -25,11 +24,9 @@ import lombok.Getter;
 @AllArgsConstructor
 public class FindAllPaged<E> {
 
-  private EntityManager manager;
-
-  private Supplier<CriteriaQuery<E>> queryProducer;
-
-  private Function<CriteriaQuery<E>, Root<E>> toRoot;
+  private final EntityManager manager;
+  private final Supplier<CriteriaQuery<E>> queryProducer;
+  private final Function<CriteriaQuery<E>, Root<E>> toRoot;
 
   /**
    * Finds all entries, obeying the pagination and sorting configuration.
@@ -54,13 +51,12 @@ public class FindAllPaged<E> {
       PageAndSortConfig config,
       CriteriaBuilder builder) {
     CriteriaQuery<E> query = queryProducer.get();
-    query = addOrderBy(
+    return addOrderBy(
         query,
         config.getOrderBy(),
         OrderType.fromString(config.getOrder()),
         toRoot.apply(query),
         builder);
-    return query;
   }
 
   private CriteriaQuery<E> addOrderBy(
@@ -70,21 +66,29 @@ public class FindAllPaged<E> {
       Root<E> root,
       CriteriaBuilder builder) {
     try {
-      if (Objects.nonNull(orderBy)) {
-        Path<Object> attributeExpression = root.get(orderBy);
-        if (oderType == OrderType.ASCENDING) {
-          query = query.orderBy(builder.asc(attributeExpression));
-        } else if (oderType == OrderType.DESCENDING) {
-          query = query.orderBy(builder.desc(attributeExpression));
-        }
-      }
-      return query;
+      return setOrder(query, orderBy, oderType, root, builder);
     } catch (IllegalArgumentException e) {
-      if (e.getMessage().startsWith("Unable to locate Attribute")) {
-        throw new NoSuchAttributeException(orderBy);
-      }
-      throw e;
+      throw new NoSuchAttributeException(orderBy);
     }
   }
 
+  private CriteriaQuery<E> setOrder(
+      CriteriaQuery<E> query,
+      String orderBy,
+      OrderType oderType,
+      Root<E> root,
+      CriteriaBuilder builder) {
+    if (Objects.isNull(orderBy)) {
+      return query;
+    }
+    Path<Object> attributeExpression = root.get(orderBy);
+    if (oderType == OrderType.ASCENDING) {
+      query = query.orderBy(builder.asc(attributeExpression));
+    } else if (oderType == OrderType.DESCENDING) {
+      query = query.orderBy(builder.desc(attributeExpression));
+    }
+    return query;
+  }
 }
+
+

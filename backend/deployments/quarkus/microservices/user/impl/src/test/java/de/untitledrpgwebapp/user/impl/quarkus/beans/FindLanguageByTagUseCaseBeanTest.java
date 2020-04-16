@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 class FindLanguageByTagUseCaseBeanTest {
 
   @Test
-  @DisplayName("Should create a FindLanguageByTagUseCase with the expected repository.")
+  @DisplayName("Should create a FindLanguageByTagUseCase with the expected DAO.")
   void shouldCreateExpectedFindLanguageByTagUseCase() {
     // GIVEN
     LanguageRestClient restClient = mock(LanguageRestClient.class);
