@@ -1,6 +1,7 @@
 package de.untitledrpgwebapp.user.impl.quarkus.boundary.endpoint;
 
 import de.untitledrpgwebapp.domain.exception.EntityNotFoundException;
+import de.untitledrpgwebapp.impl.quarkus.boundary.request.PageConfigDto;
 import de.untitledrpgwebapp.impl.quarkus.configuration.StaticConfig;
 import de.untitledrpgwebapp.user.boundary.request.FindAllUsersRequest;
 import de.untitledrpgwebapp.user.boundary.request.FindUserByNameRequest;
@@ -18,6 +19,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
@@ -54,9 +56,13 @@ public class UserEndpoint {
   @PermitAll
   @Produces(MediaType.APPLICATION_JSON)
   public Response findAll(
-      @HeaderParam(StaticConfig.CORRELATION_ID_HEADER_KEY) UUID correlationId) {
+      @HeaderParam(StaticConfig.CORRELATION_ID_HEADER_KEY) UUID correlationId,
+      @Valid @BeanParam PageConfigDto config) {
     Collection<UserResponse> responses =
-        findAllUsers.execute(FindAllUsersRequest.builder().correlationId(correlationId).build());
+        findAllUsers.execute(FindAllUsersRequest.builder()
+            .config(config)
+            .correlationId(correlationId)
+            .build());
     return Response.ok(mapper.responsesToDtos(responses))
         .header(StaticConfig.CORRELATION_ID_HEADER_KEY, correlationId)
         .build();

@@ -1,6 +1,7 @@
 package de.untitledrpgwebapp.language.impl.quarkus.boundary.endpoint;
 
 import de.untitledrpgwebapp.domain.exception.EntityNotFoundException;
+import de.untitledrpgwebapp.impl.quarkus.boundary.request.PageConfigDto;
 import de.untitledrpgwebapp.impl.quarkus.configuration.StaticConfig;
 import de.untitledrpgwebapp.language.boundary.request.FindAllLanguagesRequest;
 import de.untitledrpgwebapp.language.boundary.request.FindLanguageByTagRequest;
@@ -18,6 +19,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
@@ -53,9 +55,12 @@ public class LanguageEndpoint {
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   @PermitAll
-  public Response findAll(@HeaderParam(StaticConfig.CORRELATION_ID_HEADER_KEY) UUID correlationId) {
+  public Response findAll(
+      @HeaderParam(StaticConfig.CORRELATION_ID_HEADER_KEY) UUID correlationId,
+      @Valid @BeanParam PageConfigDto config) {
     Collection<LanguageResponse> responses = findAllLanguages.execute(
         FindAllLanguagesRequest.builder()
+            .config(config)
             .correlationId(correlationId)
             .build());
     return Response

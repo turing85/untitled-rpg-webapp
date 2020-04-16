@@ -18,6 +18,11 @@
     <!-- Sibling modules -->
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
+      <artifactId>untitled-rpg-webapp.backend.common</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>de.nextrpgdevs</groupId>
       <artifactId>untitled-rpg-webapp.backend.domains.user.api</artifactId>
       <version>${project.version}</version>
     </dependency>
@@ -51,6 +56,13 @@
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
       <artifactId>untitled-rpg-webapp.backend.domains.user.api</artifactId>
+      <version>${project.version}</version>
+      <type>test-jar</type>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>de.nextrpgdevs</groupId>
+      <artifactId>untitled-rpg-webapp.backend.deployments.quarkus.common</artifactId>
       <version>${project.version}</version>
       <type>test-jar</type>
       <scope>test</scope>

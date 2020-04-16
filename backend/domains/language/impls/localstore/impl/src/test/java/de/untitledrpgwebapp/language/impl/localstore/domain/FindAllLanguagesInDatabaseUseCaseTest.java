@@ -5,10 +5,12 @@ import static de.untitledrpgwebapp.language.testfixture.LanguageFixture.LANGUAGE
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import de.untitledrpgwebapp.boundary.PageAndSortConfig;
 import de.untitledrpgwebapp.language.boundary.request.FindAllLanguagesRequest;
 import de.untitledrpgwebapp.language.boundary.response.LanguageResponse;
 import de.untitledrpgwebapp.language.impl.localstore.boundary.LanguageRepository;
@@ -24,11 +26,12 @@ class FindAllLanguagesInDatabaseUseCaseTest {
       + "response when everything is ok.")
   void shouldCallRepositoryWithExpectedParametersWhenEverythingIsOk() {
     // GIVEN
+    PageAndSortConfig config = mock(PageAndSortConfig.class);
     FindAllLanguagesRequest request =
-        FindAllLanguagesRequest.builder().correlationId(CORRELATION_ID).build();
+        FindAllLanguagesRequest.builder().correlationId(CORRELATION_ID).config(config).build();
 
     LanguageRepository repository = mock(LanguageRepository.class);
-    when(repository.findAll()).thenReturn(LANGUAGE_RESPONSES);
+    when(repository.findAll(any())).thenReturn(LANGUAGE_RESPONSES);
 
     // WHEN
     Collection<LanguageResponse> actual =
@@ -40,6 +43,6 @@ class FindAllLanguagesInDatabaseUseCaseTest {
       assertThat(entry.getCorrelationId(), is(CORRELATION_ID));
     }
 
-    verify(repository).findAll();
+    verify(repository).findAll(config);
   }
 }

@@ -1,5 +1,6 @@
 package de.untitledrpgwebapp.user.boundary;
 
+import de.untitledrpgwebapp.boundary.PageAndSortConfig;
 import de.untitledrpgwebapp.user.boundary.request.CreateUserRequest;
 import de.untitledrpgwebapp.user.boundary.response.UserResponse;
 import java.util.Collection;
@@ -11,5 +12,5 @@ public interface UserRepository {
 
   Optional<UserResponse> findByName(String name);
 
-  Collection<UserResponse> findAll();
+  Collection<UserResponse> findAll(PageAndSortConfig config);
 }

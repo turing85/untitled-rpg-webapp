@@ -1,5 +1,6 @@
 package de.untitledrpgwebapp.language.boundary.spi.boundary;
 
+import static de.untitledrpgwebapp.impl.quarkus.testfixture.PageConfigDtoFixture.PAGE_CONFIG_DTO;
 import static de.untitledrpgwebapp.language.boundary.spi.testfixture.LanguageEntityFixture.LANGUAGE_ENTITES;
 import static de.untitledrpgwebapp.language.boundary.spi.testfixture.LanguageEntityFixture.LANGUAGE_ONE_ENTITY;
 import static de.untitledrpgwebapp.language.boundary.spi.testfixture.LanguageEntityFixture.LANGUAGE_TWO_ENTITY;
@@ -17,29 +18,39 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import de.untitledrpgwebapp.impl.quarkus.boundary.mapper.PageRequestMapper;
 import de.untitledrpgwebapp.language.boundary.request.CreateLanguageRequest;
 import de.untitledrpgwebapp.language.boundary.response.LanguageResponse;
+import de.untitledrpgwebapp.language.boundary.spi.entity.JpaLanguageEntity;
 import de.untitledrpgwebapp.language.boundary.spi.mapper.LanguageMapper;
 import java.util.Collection;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 @DisplayName("Tests for LanguageRepositoryProxy unit.")
 class LanguageRepositoryProxyTest {
 
   final JpaLanguageRepository repository = mock(JpaLanguageRepository.class);
-  final LanguageMapper mapper = mock(LanguageMapper.class);
+  final LanguageMapper languageMapper = mock(LanguageMapper.class);
+  final PageRequestMapper pageableMapper = mock(PageRequestMapper.class);
 
-  final LanguageRepositoryProxy uut = new LanguageRepositoryProxy(repository, mapper);
+  final LanguageRepositoryProxy uut =
+      new LanguageRepositoryProxy(repository, languageMapper, pageableMapper);
 
   @BeforeEach
   void setup() {
-    when(mapper.entityToResponse(eq(LANGUAGE_ONE_ENTITY))).thenReturn(LANGUAGE_ONE_RESPONSE);
-    when(mapper.entityToResponse(eq(LANGUAGE_TWO_ENTITY))).thenReturn(LANGUAGE_TWO_RESPONSE);
+    when(languageMapper.entityToResponse(eq(LANGUAGE_ONE_ENTITY)))
+        .thenReturn(LANGUAGE_ONE_RESPONSE);
+    when(languageMapper.entityToResponse(eq(LANGUAGE_TWO_ENTITY)))
+        .thenReturn(LANGUAGE_TWO_RESPONSE);
   }
 
   @Test
@@ -47,14 +58,24 @@ class LanguageRepositoryProxyTest {
       + "response when findAll is called.")
   void shouldCallDependenciesWithExpectedParametersAndReturnExpectedResultWhenFindAllIsCalled() {
     // GIVEN
-    when(repository.findAll()).thenReturn(LANGUAGE_ENTITES);
+    @SuppressWarnings("unchecked")
+    Page<JpaLanguageEntity> page = (Page<JpaLanguageEntity>) mock(Page.class);
+
+    when(page.spliterator()).thenReturn(LANGUAGE_ENTITES.spliterator());
+    when(repository.findAll(any(Pageable.class))).thenReturn(page);
+
+    PageRequest pageable = mock(PageRequest.class);
+    when(pageableMapper.configToPageable(any())).thenReturn(pageable);
 
     // WHEN
-    Collection<LanguageResponse> actual = uut.findAll();
+    Collection<LanguageResponse> actual = uut.findAll(PAGE_CONFIG_DTO);
 
     // THEN
     assertThat(actual, hasSize(LANGUAGE_TAGS.size()));
     assertThat(actual, containsInAnyOrder(LANGUAGE_RESPONSES.toArray()));
+
+    verify(pageableMapper).configToPageable(PAGE_CONFIG_DTO);
+    verify(repository).findAll(pageable);
   }
 
   @Test

@@ -17,7 +17,7 @@ public class FindAllUsersInDatabaseUseCase implements FindAllUsersUseCase {
 
   @Override
   public Collection<UserResponse> execute(FindAllUsersRequest request) {
-    return repository.findAll()
+    return repository.findAll(request.getConfig())
         .stream()
         .map(response -> response.toBuilder().correlationId(request.getCorrelationId()).build())
         .collect(Collectors.toList());

@@ -23,6 +23,11 @@
     </dependency>
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
+      <artifactId>untitled-rpg-webapp.backend.deployments.quarkus.common</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>de.nextrpgdevs</groupId>
       <artifactId>untitled-rpg-webapp.backend.domains.user.impls.localstore.spi</artifactId>
       <version>${project.version}</version>
     </dependency>

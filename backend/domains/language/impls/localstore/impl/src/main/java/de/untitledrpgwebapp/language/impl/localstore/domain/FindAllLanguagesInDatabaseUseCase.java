@@ -17,7 +17,7 @@ public class FindAllLanguagesInDatabaseUseCase implements FindAllLanguagesUseCas
 
   @Override
   public Collection<LanguageResponse> execute(FindAllLanguagesRequest request) {
-    return repository.findAll()
+    return repository.findAll(request.getConfig())
         .stream()
         .map(language -> language.toBuilder().correlationId(request.getCorrelationId()).build())
         .collect(Collectors.toList());

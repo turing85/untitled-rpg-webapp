@@ -15,6 +15,7 @@
   <artifactId>untitled-rpg-webapp.backend.deployments.quarkus.microservices.language.api</artifactId>
 
   <dependencies>
+    <!-- Test fixture -->
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
       <artifactId>untitled-rpg-webapp.backend.domains.language.api</artifactId>

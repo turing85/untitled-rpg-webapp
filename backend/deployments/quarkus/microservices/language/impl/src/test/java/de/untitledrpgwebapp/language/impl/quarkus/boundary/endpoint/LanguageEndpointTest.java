@@ -1,5 +1,6 @@
 package de.untitledrpgwebapp.language.impl.quarkus.boundary.endpoint;
 
+import static de.untitledrpgwebapp.impl.quarkus.testfixture.PageConfigDtoFixture.PAGE_CONFIG_DTO;
 import static de.untitledrpgwebapp.language.impl.quarkus.boundary.testfixture.LanguageDtoFixture.DTOS;
 import static de.untitledrpgwebapp.language.testfixture.LanguageFixture.CORRELATION_ID;
 import static de.untitledrpgwebapp.language.testfixture.LanguageFixture.LANGUAGE_ONE_RESPONSE;
@@ -58,17 +59,19 @@ class LanguageEndpointTest {
       + "response object.")
   void shouldCallFindAllLanguagesWithExpectedParameterAndReturnExpectedResultWhenFindAllIsCalled() {
     // GIVEN
+
     when(findAllLanguages.execute(any())).thenReturn(LANGUAGE_RESPONSES);
     when(mapper.responsesToDtos(anyList())).thenReturn(DTOS);
 
     // WHEN
-    Response response = uut.findAll(CORRELATION_ID);
+    Response response = uut.findAll(CORRELATION_ID, PAGE_CONFIG_DTO);
 
     // THEN
     assertCollectionResponseIsAsExpected(response);
 
     verify(findAllLanguages).execute(argThat(r -> {
       assertThat(r.getCorrelationId(), is(CORRELATION_ID));
+      assertThat(r.getConfig(), is(PAGE_CONFIG_DTO));
       return true;
     }));
     verify(mapper).responsesToDtos(LANGUAGE_RESPONSES);

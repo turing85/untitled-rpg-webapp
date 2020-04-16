@@ -22,6 +22,12 @@
       <version>${project.version}</version>
     </dependency>
     <dependency>
+      <groupId>de.nextrpgdevs</groupId>
+      <artifactId>untitled-rpg-webapp.backend.deployments.quarkus.common</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
+    <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-spring-data-jpa</artifactId>
     </dependency>
@@ -30,6 +36,13 @@
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
       <artifactId>untitled-rpg-webapp.backend.domains.language.api</artifactId>
+      <version>${project.version}</version>
+      <type>test-jar</type>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>de.nextrpgdevs</groupId>
+      <artifactId>untitled-rpg-webapp.backend.deployments.quarkus.common</artifactId>
       <version>${project.version}</version>
       <type>test-jar</type>
       <scope>test</scope>

@@ -26,13 +26,6 @@
   </properties>
 
   <dependencies>
-    <!-- Sibling modules -->
-    <dependency>
-      <groupId>de.nextrpgdevs</groupId>
-      <artifactId>untitled-rpg-webapp.backend.deployments.quarkus.common</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-
     <!-- Quarkus -->
     <!-- YAML config files -->
     <dependency>

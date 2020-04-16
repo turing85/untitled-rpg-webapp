@@ -1,5 +1,6 @@
 package de.untitledrpgwebapp.user.impl.quarkus.boundary.endpoint;
 
+import static de.untitledrpgwebapp.impl.quarkus.testfixture.PageConfigDtoFixture.PAGE_CONFIG_DTO;
 import static de.untitledrpgwebapp.user.impl.quarkus.boundary.testfixture.UserDtoFixture.DTOS;
 import static de.untitledrpgwebapp.user.testfixture.UserFixture.CORRELATION_ID;
 import static de.untitledrpgwebapp.user.testfixture.UserFixture.USER_NAMES;
@@ -7,6 +8,7 @@ import static de.untitledrpgwebapp.user.testfixture.UserFixture.USER_ONE_NAME;
 import static de.untitledrpgwebapp.user.testfixture.UserFixture.USER_RESPONSES;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
@@ -73,15 +75,16 @@ class UserEndpointTest {
   @DisplayName("Should call findAllUsers with the expected parameters and return the expected "
       + "response object.")
   void shouldCallFindAllUsersWithExpectedParameterAndReturnExpectedResultWhenFindAllIsCalled() {
-    // GIVEN: defaults
+    // GIVEN
 
     // WHEN
-    Response response = uut.findAll(CORRELATION_ID);
+    Response response = uut.findAll(CORRELATION_ID, PAGE_CONFIG_DTO);
 
     // THEN
     assertCollectionResponseIsAsExpected(response);
 
     verify(findAllUsers).execute(argThat(r -> {
+      assertThat(r.getConfig(), sameInstance(PAGE_CONFIG_DTO));
       assertThat(r.getCorrelationId(), is(CORRELATION_ID));
       return true;
     }));
