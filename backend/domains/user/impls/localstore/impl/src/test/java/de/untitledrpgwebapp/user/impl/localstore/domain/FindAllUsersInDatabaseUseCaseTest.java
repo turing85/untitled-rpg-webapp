@@ -11,7 +11,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import de.untitledrpgwebapp.boundary.PageAndSortConfig;
-import de.untitledrpgwebapp.user.boundary.UserRepository;
+import de.untitledrpgwebapp.user.boundary.UserDao;
 import de.untitledrpgwebapp.user.boundary.request.FindAllUsersRequest;
 import de.untitledrpgwebapp.user.boundary.response.UserResponse;
 import java.util.Collection;
@@ -29,12 +29,12 @@ class FindAllUsersInDatabaseUseCaseTest {
     PageAndSortConfig config = mock(PageAndSortConfig.class);
     FindAllUsersRequest request =
         FindAllUsersRequest.builder().config(config).correlationId(CORRELATION_ID).build();
-    UserRepository repository = mock(UserRepository.class);
-    when(repository.findAll(any())).thenReturn(USER_RESPONSES);
+    UserDao dao = mock(UserDao.class);
+    when(dao.findAll(any())).thenReturn(USER_RESPONSES);
 
     // WHEN
     Collection<UserResponse> actual =
-        new FindAllUsersInDatabaseUseCase(repository).execute(request);
+        new FindAllUsersInDatabaseUseCase(dao).execute(request);
 
     // THEN
     assertThat(actual, hasSize(USER_RESPONSES.size()));
@@ -42,6 +42,6 @@ class FindAllUsersInDatabaseUseCaseTest {
       assertThat(response.getCorrelationId(), is(CORRELATION_ID));
     }
 
-    verify(repository).findAll(config);
+    verify(dao).findAll(config);
   }
 }

@@ -13,7 +13,7 @@ import static org.mockito.Mockito.when;
 
 import de.untitledrpgwebapp.language.boundary.request.FindLanguageByTagRequest;
 import de.untitledrpgwebapp.language.boundary.response.LanguageResponse;
-import de.untitledrpgwebapp.language.impl.localstore.boundary.LanguageRepository;
+import de.untitledrpgwebapp.language.impl.localstore.boundary.LanguageDao;
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,17 +31,17 @@ class FindLanguageByTagInDatabaseUseCaseTest {
         .correlationId(CORRELATION_ID)
         .build();
 
-    LanguageRepository repository = mock(LanguageRepository.class);
-    when(repository.findByTag(any())).thenReturn(Optional.of(LANGUAGE_ONE_RESPONSE));
+    LanguageDao dao = mock(LanguageDao.class);
+    when(dao.findByTag(any())).thenReturn(Optional.of(LANGUAGE_ONE_RESPONSE));
 
     // WHEN
     Optional<LanguageResponse> fetched =
-        new FindLanguageByTagInDatabaseUseCase(repository).execute(request);
+        new FindLanguageByTagInDatabaseUseCase(dao).execute(request);
 
     // THEN
     assertTrue(fetched.isPresent());
     assertThat(fetched.get().getCorrelationId(), is(CORRELATION_ID));
 
-    verify(repository).findByTag(LANGUAGE_ONE_TAG);
+    verify(dao).findByTag(LANGUAGE_ONE_TAG);
   }
 }

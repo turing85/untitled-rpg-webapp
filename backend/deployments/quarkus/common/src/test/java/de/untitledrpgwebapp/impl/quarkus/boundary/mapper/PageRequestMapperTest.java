@@ -27,9 +27,9 @@ class PageRequestMapperTest {
     // GIVEN
     String orderName = "ASC";
     PageConfigDto config = PageConfigDto.builder()
-        .page(PAGE)
-        .size(SIZE)
-        .sortBy(SORT_BY)
+        .offset(PAGE)
+        .limit(SIZE)
+        .orderBy(SORT_BY)
         .order(orderName)
         .build();
 
@@ -57,9 +57,9 @@ class PageRequestMapperTest {
     // GIVEN
     String orderName = "DESC";
     PageConfigDto config = PageConfigDto.builder()
-        .page(PAGE)
-        .size(SIZE)
-        .sortBy(SORT_BY)
+        .offset(PAGE)
+        .limit(SIZE)
+        .orderBy(SORT_BY)
         .order(orderName)
         .build();
 
@@ -81,9 +81,9 @@ class PageRequestMapperTest {
     // GIVEN
     String order = "DESC";
     PageConfigDto config = PageConfigDto.builder()
-        .page(PAGE)
-        .size(SIZE)
-        .sortBy(null)
+        .offset(PAGE)
+        .limit(SIZE)
+        .orderBy(null)
         .order(order)
         .build();
 

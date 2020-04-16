@@ -6,7 +6,7 @@ import static org.hamcrest.Matchers.sameInstance;
 import static org.mockito.Mockito.mock;
 
 import de.untitledrpgwebapp.language.domain.FindAllLanguagesUseCase;
-import de.untitledrpgwebapp.language.impl.localstore.boundary.LanguageRepository;
+import de.untitledrpgwebapp.language.impl.localstore.boundary.LanguageDao;
 import de.untitledrpgwebapp.language.impl.localstore.domain.FindAllLanguagesInDatabaseUseCase;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,15 +17,15 @@ class FindAllLanguagesUseCaseBeanTest {
   @Test
   void shouldCreateExpectedFindAllLanguagesUseCase() {
     // GIVEN
-    LanguageRepository repository = mock(LanguageRepository.class);
+    LanguageDao dao = mock(LanguageDao.class);
 
     // WHEN
     FindAllLanguagesUseCase created =
-        new FindAllLanguagesUseCaseBean().findAllLanguages(repository);
+        new FindAllLanguagesUseCaseBean().findAllLanguages(dao);
 
     // THEN
     assertThat(created, instanceOf(FindAllLanguagesInDatabaseUseCase.class));
     FindAllLanguagesInDatabaseUseCase actual = (FindAllLanguagesInDatabaseUseCase) created;
-    assertThat(actual.getRepository(), sameInstance(repository));
+    assertThat(actual.getDao(), sameInstance(dao));
   }
 }

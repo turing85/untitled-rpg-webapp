@@ -2,7 +2,7 @@ package de.untitledrpgwebapp.user.impl.quarkus.beans;
 
 import de.untitledrpgwebapp.language.domain.FindLanguageByTagUseCase;
 import de.untitledrpgwebapp.oauth2.domain.CreateAccountUseCase;
-import de.untitledrpgwebapp.user.boundary.UserRepository;
+import de.untitledrpgwebapp.user.boundary.UserDao;
 import de.untitledrpgwebapp.user.domain.CreateUserUseCase;
 import de.untitledrpgwebapp.user.impl.localstore.boundary.mapper.UserMapper;
 import de.untitledrpgwebapp.user.impl.localstore.domain.CreateUserInDatabaseUseCase;
@@ -16,8 +16,8 @@ public class CreateUserUseCaseBean {
   /**
    * Produces the CreateUserUseCase bean.
    *
-   * @param repository
-   *     the UserRepository used by this bean.
+   * @param dao
+   *     the UserDao used by this bean.
    * @param createAccount
    *     the link CreateAccountUseCase used by this bean.
    * @param findLanguage
@@ -27,12 +27,12 @@ public class CreateUserUseCaseBean {
    */
   @Produces
   public CreateUserUseCase createUser(
-      UserRepository repository,
+      UserDao dao,
       CreateAccountUseCase createAccount,
       FindLanguageByTagUseCase findLanguage) {
     return new CreateUserInDatabaseUseCase(
         Mappers.getMapper(UserMapper.class),
-        repository,
+        dao,
         findLanguage,
         createAccount);
   }

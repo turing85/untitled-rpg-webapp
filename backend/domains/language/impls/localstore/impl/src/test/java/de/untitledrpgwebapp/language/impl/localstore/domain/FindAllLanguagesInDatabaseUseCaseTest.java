@@ -13,7 +13,7 @@ import static org.mockito.Mockito.when;
 import de.untitledrpgwebapp.boundary.PageAndSortConfig;
 import de.untitledrpgwebapp.language.boundary.request.FindAllLanguagesRequest;
 import de.untitledrpgwebapp.language.boundary.response.LanguageResponse;
-import de.untitledrpgwebapp.language.impl.localstore.boundary.LanguageRepository;
+import de.untitledrpgwebapp.language.impl.localstore.boundary.LanguageDao;
 import java.util.Collection;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,12 +30,12 @@ class FindAllLanguagesInDatabaseUseCaseTest {
     FindAllLanguagesRequest request =
         FindAllLanguagesRequest.builder().correlationId(CORRELATION_ID).config(config).build();
 
-    LanguageRepository repository = mock(LanguageRepository.class);
-    when(repository.findAll(any())).thenReturn(LANGUAGE_RESPONSES);
+    LanguageDao dao = mock(LanguageDao.class);
+    when(dao.findAll(any())).thenReturn(LANGUAGE_RESPONSES);
 
     // WHEN
     Collection<LanguageResponse> actual =
-        new FindAllLanguagesInDatabaseUseCase(repository).execute(request);
+        new FindAllLanguagesInDatabaseUseCase(dao).execute(request);
 
     // THEN
     assertThat(actual, hasSize(LANGUAGE_RESPONSES.size()));
@@ -43,6 +43,6 @@ class FindAllLanguagesInDatabaseUseCaseTest {
       assertThat(entry.getCorrelationId(), is(CORRELATION_ID));
     }
 
-    verify(repository).findAll(config);
+    verify(dao).findAll(config);
   }
 }

@@ -1,6 +1,6 @@
 package de.untitledrpgwebapp.user.impl.quarkus.beans;
 
-import de.untitledrpgwebapp.user.boundary.UserRepository;
+import de.untitledrpgwebapp.user.boundary.UserDao;
 import de.untitledrpgwebapp.user.domain.FindAllUsersUseCase;
 import de.untitledrpgwebapp.user.impl.localstore.domain.FindAllUsersInDatabaseUseCase;
 import javax.enterprise.context.ApplicationScoped;
@@ -10,7 +10,7 @@ import javax.enterprise.inject.Produces;
 public class FindAllUsersUseCaseBean {
 
   @Produces
-  public FindAllUsersUseCase findAllUsers(UserRepository repository) {
-    return new FindAllUsersInDatabaseUseCase(repository);
+  public FindAllUsersUseCase findAllUsers(UserDao dao) {
+    return new FindAllUsersInDatabaseUseCase(dao);
   }
 }

@@ -13,7 +13,7 @@ public final class StaticConfig {
   public static final List<String> BODY_ATTRIBUTES_TO_OBFUSCATE =
       List.of("password", "(?:[^\"]*_token)", "credentials");
   public static final String OBFUSCATION_VALUE = "<redacted>";
-  public static final String DEFAULT_PAGINATION_SIZE = "20";
+  public static final String DEFAULT_PAGINATION_LIMIT = "20";
   public static final String DEFAULT_PAGINATION_ORDER = "ASC";
 
   private StaticConfig() {

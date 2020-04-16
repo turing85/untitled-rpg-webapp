@@ -1,6 +1,6 @@
 package de.untitledrpgwebapp.user.impl.localstore.domain;
 
-import de.untitledrpgwebapp.user.boundary.UserRepository;
+import de.untitledrpgwebapp.user.boundary.UserDao;
 import de.untitledrpgwebapp.user.boundary.request.FindUserByNameRequest;
 import de.untitledrpgwebapp.user.boundary.response.UserResponse;
 import de.untitledrpgwebapp.user.domain.FindUserByNameUseCase;
@@ -12,11 +12,11 @@ import lombok.Getter;
 @AllArgsConstructor
 public class FindUserByNameInDatabaseUseCase implements FindUserByNameUseCase {
 
-  private final UserRepository repository;
+  private final UserDao dao;
 
   @Override
   public Optional<UserResponse> execute(FindUserByNameRequest request) {
-    return repository.findByName(request.getName())
+    return dao.findByName(request.getName())
         .map(response -> response.toBuilder().correlationId(request.getCorrelationId())
         .build());
   }

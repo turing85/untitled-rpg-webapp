@@ -10,7 +10,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import de.untitledrpgwebapp.user.boundary.UserRepository;
+import de.untitledrpgwebapp.user.boundary.UserDao;
 import de.untitledrpgwebapp.user.boundary.request.FindUserByNameRequest;
 import de.untitledrpgwebapp.user.boundary.response.UserResponse;
 import java.util.Optional;
@@ -31,17 +31,17 @@ class FindUserByNameInDatabaseUseCaseTest {
         .build();
     UserResponse response = UserResponse.builder().build();
 
-    UserRepository repository = mock(UserRepository.class);
-    when(repository.findByName(any())).thenReturn(Optional.of(response));
+    UserDao dao = mock(UserDao.class);
+    when(dao.findByName(any())).thenReturn(Optional.of(response));
     
     // WHEN
     Optional<UserResponse> result =
-        new FindUserByNameInDatabaseUseCase(repository).execute(request);
+        new FindUserByNameInDatabaseUseCase(dao).execute(request);
 
     // THEN
     assertTrue(result.isPresent());
     assertThat(result.get().getCorrelationId(), is(CORRELATION_ID));
 
-    verify(repository).findByName(USER_ONE_NAME);
+    verify(dao).findByName(USER_ONE_NAME);
   }
 }

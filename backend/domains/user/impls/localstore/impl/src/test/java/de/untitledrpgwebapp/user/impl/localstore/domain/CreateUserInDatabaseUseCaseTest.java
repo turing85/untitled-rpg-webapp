@@ -20,7 +20,7 @@ import de.untitledrpgwebapp.domain.exception.DependencyNotFoundException;
 import de.untitledrpgwebapp.language.domain.FindLanguageByTagUseCase;
 import de.untitledrpgwebapp.oauth2.boundary.request.CreateAccountRequest;
 import de.untitledrpgwebapp.oauth2.domain.CreateAccountUseCase;
-import de.untitledrpgwebapp.user.boundary.UserRepository;
+import de.untitledrpgwebapp.user.boundary.UserDao;
 import de.untitledrpgwebapp.user.boundary.request.CreateUserRequest;
 import de.untitledrpgwebapp.user.boundary.response.UserResponse;
 import de.untitledrpgwebapp.user.impl.localstore.boundary.mapper.UserMapper;
@@ -37,7 +37,7 @@ class CreateUserInDatabaseUseCaseTest {
       .correlationId(CORRELATION_ID)
       .build();
 
-  private final UserRepository repository = mock(UserRepository.class);
+  private final UserDao dao = mock(UserDao.class);
   private final FindLanguageByTagUseCase findLanguageByTag = mock(FindLanguageByTagUseCase.class);
 
   private final CreateAccountRequest createAccountRequest = CreateAccountRequest.builder().build();
@@ -45,7 +45,7 @@ class CreateUserInDatabaseUseCaseTest {
   private final UserMapper mapper = mock(UserMapper.class);
 
   private final CreateUserInDatabaseUseCase uut
-      = new CreateUserInDatabaseUseCase(mapper, repository, findLanguageByTag, createAccount);
+      = new CreateUserInDatabaseUseCase(mapper, dao, findLanguageByTag, createAccount);
 
   @BeforeEach
   void setup() {
@@ -53,7 +53,7 @@ class CreateUserInDatabaseUseCaseTest {
 
     when(mapper.requestToRequest(any())).thenReturn(createAccountRequest);
 
-    when(repository.save(any())).thenReturn(USER_RESPONSE_ONE);
+    when(dao.save(any())).thenReturn(USER_RESPONSE_ONE);
   }
 
   @Test
@@ -70,7 +70,7 @@ class CreateUserInDatabaseUseCaseTest {
 
     verifyFindLanguageByCalledWasCalledWithExpectedParameters();
     verify(createAccount).execute(createAccountRequest);
-    verify(repository).save(request);
+    verify(dao).save(request);
   }
 
   @Test

@@ -5,7 +5,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.mockito.Mockito.mock;
 
-import de.untitledrpgwebapp.user.boundary.UserRepository;
+import de.untitledrpgwebapp.user.boundary.UserDao;
 import de.untitledrpgwebapp.user.domain.FindAllUsersUseCase;
 import de.untitledrpgwebapp.user.impl.localstore.domain.FindAllUsersInDatabaseUseCase;
 import org.junit.jupiter.api.DisplayName;
@@ -18,14 +18,14 @@ class FindAllUsersUseCaseBeanTest {
   @DisplayName("Should create a FindAllUsersInDatabaseUseCase with the expected repository.")
   void shouldCreateExpectedFindAllUsersUseCase() {
     // GIVEN
-    UserRepository repository = mock(UserRepository.class);
+    UserDao dao = mock(UserDao.class);
 
     // WHEN
-    FindAllUsersUseCase created = new FindAllUsersUseCaseBean().findAllUsers(repository);
+    FindAllUsersUseCase created = new FindAllUsersUseCaseBean().findAllUsers(dao);
 
     // THEN
     assertThat(created, instanceOf(FindAllUsersInDatabaseUseCase.class));
     FindAllUsersInDatabaseUseCase actual = (FindAllUsersInDatabaseUseCase) created;
-    assertThat(actual.getRepository(), sameInstance(repository));
+    assertThat(actual.getDao(), sameInstance(dao));
   }
 }

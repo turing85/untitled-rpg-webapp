@@ -6,7 +6,7 @@ import de.untitledrpgwebapp.language.boundary.response.LanguageResponse;
 import de.untitledrpgwebapp.language.domain.FindLanguageByTagUseCase;
 import de.untitledrpgwebapp.oauth2.boundary.request.CreateAccountRequest;
 import de.untitledrpgwebapp.oauth2.domain.CreateAccountUseCase;
-import de.untitledrpgwebapp.user.boundary.UserRepository;
+import de.untitledrpgwebapp.user.boundary.UserDao;
 import de.untitledrpgwebapp.user.boundary.request.CreateUserRequest;
 import de.untitledrpgwebapp.user.boundary.response.UserResponse;
 import de.untitledrpgwebapp.user.domain.CreateUserUseCase;
@@ -21,7 +21,7 @@ import lombok.Getter;
 public class CreateUserInDatabaseUseCase implements CreateUserUseCase {
 
   private final UserMapper mapper;
-  private final UserRepository repository;
+  private final UserDao dao;
   private final FindLanguageByTagUseCase findLanguage;
   private final CreateAccountUseCase createAccount;
 
@@ -35,7 +35,7 @@ public class CreateUserInDatabaseUseCase implements CreateUserUseCase {
     }
     CreateAccountRequest createAccountRequest = mapper.requestToRequest(request);
     createAccount.execute(createAccountRequest);
-    return repository.save(request).toBuilder()
+    return dao.save(request).toBuilder()
         .correlationId(request.getCorrelationId())
         .build();
   }

@@ -6,21 +6,21 @@ package de.untitledrpgwebapp.boundary;
 public interface PageAndSortConfig {
 
   /**
-   * Return the page (a {@code long >= 0}).
+   * Return the offset (a {@code long >= 0}).
    */
-  int getPage();
+  int getOffset();
 
   /**
-   * Returns the size  (Q {@code int >= 0}).
+   * Returns the limit  (Q {@code int >= 1}).
    */
-  int getSize();
+  int getLimit();
 
   /**
-   * Returns the attribute to sort by (Optional, may return {@code null}).
+   * Returns the attribute to order by (Optional, may return {@code null}).
    *
-   * @return the attribute to sort by.
+   * @return the attribute to order by.
    */
-  String getSortBy();
+  String getOrderBy();
 
   /**
    * Returns the explicit order for the attribute to sort by. This must be on of (ignoring cases):

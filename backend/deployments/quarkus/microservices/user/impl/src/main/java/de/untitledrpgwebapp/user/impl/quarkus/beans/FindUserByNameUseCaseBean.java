@@ -1,6 +1,6 @@
 package de.untitledrpgwebapp.user.impl.quarkus.beans;
 
-import de.untitledrpgwebapp.user.boundary.UserRepository;
+import de.untitledrpgwebapp.user.boundary.UserDao;
 import de.untitledrpgwebapp.user.domain.FindUserByNameUseCase;
 import de.untitledrpgwebapp.user.impl.localstore.domain.FindUserByNameInDatabaseUseCase;
 import javax.enterprise.context.ApplicationScoped;
@@ -10,7 +10,7 @@ import javax.enterprise.inject.Produces;
 public class FindUserByNameUseCaseBean {
 
   @Produces
-  public FindUserByNameUseCase findUser(UserRepository repository) {
-    return new FindUserByNameInDatabaseUseCase(repository);
+  public FindUserByNameUseCase findUser(UserDao dao) {
+    return new FindUserByNameInDatabaseUseCase(dao);
   }
 }

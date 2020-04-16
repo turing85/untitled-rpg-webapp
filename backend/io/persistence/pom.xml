@@ -16,8 +16,7 @@
 
   <packaging>pom</packaging>
   <modules>
-    <module>language</module>
-    <module>user</module>
+    <module>jpa</module>
   </modules>
 
 </project>

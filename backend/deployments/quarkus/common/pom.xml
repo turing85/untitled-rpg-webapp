@@ -21,6 +21,11 @@
       <artifactId>untitled-rpg-webapp.backend.common</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <dependency>
+      <groupId>de.nextrpgdevs</groupId>
+      <artifactId>untitled-rpg-webapp.backend.io.persistence.jpa.common</artifactId>
+      <version>${project.version}</version>
+    </dependency>
 
     <!-- JAX-RS annotations used by Quarkus -->
     <dependency>

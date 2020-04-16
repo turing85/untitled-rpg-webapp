@@ -1,6 +1,6 @@
 package de.untitledrpgwebapp.user.impl.localstore.domain;
 
-import de.untitledrpgwebapp.user.boundary.UserRepository;
+import de.untitledrpgwebapp.user.boundary.UserDao;
 import de.untitledrpgwebapp.user.boundary.request.FindAllUsersRequest;
 import de.untitledrpgwebapp.user.boundary.response.UserResponse;
 import de.untitledrpgwebapp.user.domain.FindAllUsersUseCase;
@@ -13,11 +13,11 @@ import lombok.Getter;
 @AllArgsConstructor
 public class FindAllUsersInDatabaseUseCase implements FindAllUsersUseCase {
 
-  private final UserRepository repository;
+  private final UserDao dao;
 
   @Override
   public Collection<UserResponse> execute(FindAllUsersRequest request) {
-    return repository.findAll(request.getConfig())
+    return dao.findAll(request.getConfig())
         .stream()
         .map(response -> response.toBuilder().correlationId(request.getCorrelationId()).build())
         .collect(Collectors.toList());

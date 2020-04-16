@@ -54,12 +54,12 @@
     <!-- io -->
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
-      <artifactId>untitled-rpg-webapp.backend.io.persistence.language.springdatajpa.impl</artifactId>
+      <artifactId>untitled-rpg-webapp.backend.io.persistence.jpa.language.impl</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
-      <artifactId>untitled-rpg-webapp.backend.io.persistence.user.springdatajpa.impl</artifactId>
+      <artifactId>untitled-rpg-webapp.backend.io.persistence.jpa.user.impl</artifactId>
       <version>${project.version}</version>
     </dependency>
 

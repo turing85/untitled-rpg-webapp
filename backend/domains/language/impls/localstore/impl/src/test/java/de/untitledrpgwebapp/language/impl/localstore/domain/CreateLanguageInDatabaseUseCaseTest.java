@@ -12,7 +12,7 @@ import static org.mockito.Mockito.when;
 
 import de.untitledrpgwebapp.language.boundary.request.CreateLanguageRequest;
 import de.untitledrpgwebapp.language.boundary.response.LanguageResponse;
-import de.untitledrpgwebapp.language.impl.localstore.boundary.LanguageRepository;
+import de.untitledrpgwebapp.language.impl.localstore.boundary.LanguageDao;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -28,16 +28,16 @@ class CreateLanguageInDatabaseUseCaseTest {
         .tag(LANGUAGE_ONE_TAG)
         .correlationId(CORRELATION_ID)
         .build();
-    LanguageRepository repository = mock(LanguageRepository.class);
-    when(repository.save(any())).thenReturn(LANGUAGE_ONE_RESPONSE);
+    LanguageDao dao = mock(LanguageDao.class);
+    when(dao.save(any())).thenReturn(LANGUAGE_ONE_RESPONSE);
 
     // WHEN
-    LanguageResponse actual = new CreateLanguageInDatabaseUseCase(repository).execute(request);
+    LanguageResponse actual = new CreateLanguageInDatabaseUseCase(dao).execute(request);
 
     // THEN
     assertThat(actual.getTag(), is(LANGUAGE_ONE_TAG));
     assertThat(actual.getCorrelationId(), is(CORRELATION_ID));
 
-    verify(repository).save(request);
+    verify(dao).save(request);
   }
 }

@@ -6,7 +6,7 @@ import static org.hamcrest.Matchers.sameInstance;
 import static org.mockito.Mockito.mock;
 
 import de.untitledrpgwebapp.language.domain.FindLanguageByTagUseCase;
-import de.untitledrpgwebapp.language.impl.localstore.boundary.LanguageRepository;
+import de.untitledrpgwebapp.language.impl.localstore.boundary.LanguageDao;
 import de.untitledrpgwebapp.language.impl.localstore.domain.FindLanguageByTagInDatabaseUseCase;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,14 +18,14 @@ class FindLanguageByTagUseCaseBeanTest {
   @DisplayName("Should create a FindLanguageByTagInDatabaseUseCase with the expected repository.")
   void shouldCreateExpectedFindLanguageByTagUseCase() {
     // GIVEN
-    final LanguageRepository repository = mock(LanguageRepository.class);
+    final LanguageDao dao = mock(LanguageDao.class);
 
     // WHEN
-    FindLanguageByTagUseCase created = new FindLanguageByTagUseCaseBean().findLanguage(repository);
+    FindLanguageByTagUseCase created = new FindLanguageByTagUseCaseBean().findLanguage(dao);
 
     // THEN
     assertThat(created, instanceOf(FindLanguageByTagInDatabaseUseCase.class));
     FindLanguageByTagInDatabaseUseCase actual = (FindLanguageByTagInDatabaseUseCase) created;
-    assertThat(actual.getRepository(), sameInstance(repository));
+    assertThat(actual.getDao(), sameInstance(dao));
   }
 }

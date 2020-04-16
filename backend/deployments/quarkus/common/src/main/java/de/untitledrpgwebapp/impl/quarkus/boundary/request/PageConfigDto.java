@@ -15,17 +15,17 @@ import lombok.experimental.SuperBuilder;
 public class PageConfigDto implements PageAndSortConfig {
 
   @Min(0)
-  @QueryParam("page")
+  @QueryParam("offset")
   @DefaultValue("0")
-  private int page;
+  private int offset;
 
   @Min(1)
-  @QueryParam("size")
-  @DefaultValue(StaticConfig.DEFAULT_PAGINATION_SIZE)
-  private int size;
+  @QueryParam("limit")
+  @DefaultValue(StaticConfig.DEFAULT_PAGINATION_LIMIT)
+  private int limit;
 
-  @QueryParam("sortBy")
-  private String sortBy;
+  @QueryParam("orderBy")
+  private String orderBy;
 
   @QueryParam("order")
   @DefaultValue(StaticConfig.DEFAULT_PAGINATION_ORDER)

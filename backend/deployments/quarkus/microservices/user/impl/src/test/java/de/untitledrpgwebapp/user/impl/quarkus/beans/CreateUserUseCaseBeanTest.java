@@ -7,7 +7,7 @@ import static org.mockito.Mockito.mock;
 
 import de.untitledrpgwebapp.language.domain.FindLanguageByTagUseCase;
 import de.untitledrpgwebapp.oauth2.domain.CreateAccountUseCase;
-import de.untitledrpgwebapp.user.boundary.UserRepository;
+import de.untitledrpgwebapp.user.boundary.UserDao;
 import de.untitledrpgwebapp.user.domain.CreateUserUseCase;
 import de.untitledrpgwebapp.user.impl.localstore.domain.CreateUserInDatabaseUseCase;
 import org.junit.jupiter.api.DisplayName;
@@ -20,18 +20,18 @@ class CreateUserUseCaseBeanTest {
   @DisplayName("Should create a CreateUserInDatabaseUseCase with the expected settings.")
   void shouldCreateExpectedCreateLanguageUseCase() {
     // GIVEN
-    UserRepository repository = mock(UserRepository.class);
+    UserDao dao = mock(UserDao.class);
     CreateAccountUseCase createAccount = mock(CreateAccountUseCase.class);
     FindLanguageByTagUseCase findLanguage = mock(FindLanguageByTagUseCase.class);
 
     // WHEN
     CreateUserUseCase created =
-        new CreateUserUseCaseBean().createUser(repository, createAccount, findLanguage);
+        new CreateUserUseCaseBean().createUser(dao, createAccount, findLanguage);
 
     // THEN
     assertThat(created, instanceOf(CreateUserInDatabaseUseCase.class));
     CreateUserInDatabaseUseCase actual = (CreateUserInDatabaseUseCase) created;
-    assertThat(actual.getRepository(), sameInstance(repository));
+    assertThat(actual.getDao(), sameInstance(dao));
     assertThat(actual.getCreateAccount(), sameInstance(createAccount));
     assertThat(actual.getFindLanguage(), sameInstance(findLanguage));
   }
