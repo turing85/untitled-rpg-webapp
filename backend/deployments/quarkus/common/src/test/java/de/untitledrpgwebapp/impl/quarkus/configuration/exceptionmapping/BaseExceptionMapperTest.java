@@ -21,6 +21,10 @@ public abstract class BaseExceptionMapperTest<
   public static final String MESSAGE = "message";
   public static final UUID CORRELATION_ID = UUID.randomUUID();
 
+  abstract M getUut();
+
+  abstract E getException();
+
   @Test
   @DisplayName("Should return a response with expected values when toResponse is called.")
   void shouldReturnResponseWithExpectedValues() {
@@ -34,10 +38,6 @@ public abstract class BaseExceptionMapperTest<
     assertThatResponseIsAsExpected(response, getUut().statusToMapTo());
     assertThatCorrelationIdHeaderIsSetToExpectedValue(response);
   }
-
-  abstract M getUut();
-
-  abstract E getException();
 
   static void assertThatResponseIsAsExpected(Response response, Status status) {
     assertThatResponseIsAsExpected(response, status, MESSAGE);
