@@ -33,26 +33,42 @@ import javax.ws.rs.core.NewCookie;
  */
 public class LogObfuscator {
 
+  public static final String JSON_MALFORMED_MESSAGE = "the Json String is malformed";
+
   private final ObjectMapper mapper;
   private final Pattern objectAttributePattern;
   private final Pattern inlineAttributePattern;
   private final Pattern findNextParenthesesPattern;
+  private final List<String> headerAttributesToObfuscate;
+  private final List<String> cookieAttributesToObfuscate;
+  private final String obfuscationValue;
 
   /**
-   * Constructor.
+   * Constructor.d
    */
   LogObfuscator() {
     this(
+        StaticConfig.HEADERS_TO_OBFUSCATE,
+        StaticConfig.COOKIES_TO_OBFUSCATE,
         StaticConfig.BODY_ATTRIBUTES_TO_OBFUSCATE,
+        StaticConfig.OBFUSCATION_VALUE,
         new ObjectMapper()
             .configure(SerializationFeature.WRITE_SINGLE_ELEM_ARRAYS_UNWRAPPED, true)
             .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
             .setSerializationInclusion(Include.NON_EMPTY));
   }
 
-  LogObfuscator(final List<String> attributesToObfuscate, ObjectMapper mapper) {
+  LogObfuscator(
+      List<String> headerAttributesToObfuscate,
+      List<String> cookieAttributesToObfuscate,
+      List<String> bodyAttributesToObfuscate,
+      String obfuscationValue,
+      ObjectMapper mapper) {
     this.mapper = mapper;
-    String attributeNameRegex = String.join("|", attributesToObfuscate);
+    this.headerAttributesToObfuscate = headerAttributesToObfuscate;
+    this.cookieAttributesToObfuscate = cookieAttributesToObfuscate;
+    this.obfuscationValue = obfuscationValue;
+    String attributeNameRegex = String.join("|", bodyAttributesToObfuscate);
     String attributeWithoutValueRegex = String.format("\"(:?%s)\"\\s*:\\s*", attributeNameRegex);
     objectAttributePattern =
         Pattern.compile(String.format("%s%s", attributeWithoutValueRegex, "(?![\\s\"<])"));
@@ -68,8 +84,8 @@ public class LogObfuscator {
     for (Map.Entry<String, List<String>> entry : headers.entrySet()) {
       String headerKey = entry.getKey();
       final List<String> headerValues = entry.getValue();
-      if (StaticConfig.HEADERS_TO_OBFUSCATE.contains(headerKey)) {
-        obfuscated.put(headerKey, List.of(StaticConfig.OBFUSCATION_VALUE));
+      if (headerAttributesToObfuscate.contains(headerKey)) {
+        obfuscated.put(headerKey, List.of(obfuscationValue));
       } else {
         obfuscated.put(headerKey, headerValues);
       }
@@ -81,7 +97,7 @@ public class LogObfuscator {
     List<Cookie> anonymize = new ArrayList<>();
     for (final Cookie cookie : cookies) {
       final String cookieName = cookie.getName();
-      if (StaticConfig.COOKIES_TO_OBFUSCATE.contains(cookieName)) {
+      if (cookieAttributesToObfuscate.contains(cookieName)) {
         anonymize.add(copyCookieWithObfuscatedValue(cookie));
       } else {
         anonymize.add(cookie);
@@ -93,9 +109,9 @@ public class LogObfuscator {
   private Cookie copyCookieWithObfuscatedValue(Cookie cookie) {
     return new Cookie(
         cookie.getName(),
-        StaticConfig.OBFUSCATION_VALUE,
-        StaticConfig.OBFUSCATION_VALUE,
-        StaticConfig.OBFUSCATION_VALUE,
+        obfuscationValue,
+        cookie.getPath(),
+        cookie.getDomain(),
         cookie.getVersion());
   }
 
@@ -103,7 +119,7 @@ public class LogObfuscator {
     List<NewCookie> obfuscated = new ArrayList<>();
     for (final NewCookie cookie : newCookies) {
       final String cookieName = cookie.getName();
-      if (StaticConfig.COOKIES_TO_OBFUSCATE.contains(cookieName)) {
+      if (cookieAttributesToObfuscate.contains(cookieName)) {
         obfuscated.add(constructNewCookieWithObfuscatedValue(cookie));
       } else {
         obfuscated.add(cookie);
@@ -115,11 +131,11 @@ public class LogObfuscator {
   private NewCookie constructNewCookieWithObfuscatedValue(NewCookie cookie) {
     return new NewCookie(
         cookie.getName(),
-        StaticConfig.OBFUSCATION_VALUE,
-        StaticConfig.OBFUSCATION_VALUE,
-        StaticConfig.OBFUSCATION_VALUE,
+        obfuscationValue,
+        cookie.getPath(),
+        cookie.getDomain(),
         cookie.getVersion(),
-        StaticConfig.OBFUSCATION_VALUE,
+        cookie.getComment(),
         cookie.getMaxAge(),
         cookie.getExpiry(),
         cookie.isSecure(),
@@ -128,7 +144,7 @@ public class LogObfuscator {
 
   String obfuscateEntityString(Object entity) throws IOException {
     String entityString = inlineAttributePattern.matcher(normalizeInput(entity))
-        .replaceAll(String.format("${notToReplace}%s", StaticConfig.OBFUSCATION_VALUE));
+        .replaceAll(String.format("${notToReplace}%s", obfuscationValue));
     Matcher matcher = objectAttributePattern.matcher(entityString);
     ArrayList<MatchInterval> intervals = findMatchIntervals(entityString, matcher);
     return replaceIntervalsWithObfuscation(entityString, intervals)
@@ -158,6 +174,7 @@ public class LogObfuscator {
       String rest = entityString.substring(matchEndsAt);
       MatchInterval interval = findInterval(matchEndsAt, rest);
       intervals.add(interval);
+      currentHighest = interval.getEnd();
     }
     intervals.sort(Comparator.comparingInt(MatchInterval::getStart).reversed());
     return intervals;
@@ -176,17 +193,11 @@ public class LogObfuscator {
             .build();
       }
     }
-    throw new IllegalStateException("the Json String is not properly formatted");
+    throw new IllegalArgumentException(JSON_MALFORMED_MESSAGE);
   }
 
   private void analyzeCharacter(char character, BalancedParenthesisParameters parameters) {
     switch (character) {
-      case '(':
-        parameters.incrementNumberOfUnclosedParenthesis();
-        break;
-      case ')':
-        parameters.decrementNumberOfUnclosedParenthesis();
-        break;
       case '[':
         parameters.incrementNumberOfUnclosedBrackets();
         break;
@@ -210,7 +221,7 @@ public class LogObfuscator {
     intervals.forEach(interval -> result.replace(
         interval.getStart(),
         interval.getEnd(),
-        String.format("%s", StaticConfig.OBFUSCATION_VALUE)));
+        String.format("%s", obfuscationValue)));
     return result.toString();
   }
 }

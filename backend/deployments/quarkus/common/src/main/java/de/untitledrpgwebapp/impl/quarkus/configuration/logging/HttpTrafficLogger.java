@@ -4,6 +4,8 @@ import de.untitledrpgwebapp.impl.quarkus.configuration.StaticConfig;
 import java.io.IOException;
 import java.util.Objects;
 import javax.ws.rs.core.Response;
+import lombok.AccessLevel;
+import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,7 +17,14 @@ import org.slf4j.LoggerFactory;
  *
  * @see LogObfuscator
  */
+@Getter(AccessLevel.PACKAGE)
 public class HttpTrafficLogger {
+
+  public static final String LOG_REQUEST_FORMAT_TEMPLATE =
+      "{} {} request {} {} with {} {}{}. Headers: {}. Cookies: {}. Body: {}";
+  public static final String LOG_RESPONSE_FORMAT_TEMPLATE =
+      "{} response {} ({}) with {} {}{} for {} request {} {} with {} {}. Headers: {}. Cookies: {}. "
+          + "Body: {}";
 
   final Logger logger;
   final LogObfuscator obfuscator;
@@ -32,7 +41,7 @@ public class HttpTrafficLogger {
   void logRequest(HttpTrafficLogObject logObject) throws IOException {
     if (logger.isInfoEnabled()) {
       logger.info(
-          "{} {} request {} {} with {} {}{}. Headers: {}. Cookies: {}. Body: {}",
+          LOG_REQUEST_FORMAT_TEMPLATE,
           logObject.getVerb(),
           logObject.getRequestMethod(),
           logObject.getAdjective(),
@@ -52,8 +61,7 @@ public class HttpTrafficLogger {
       Object requestCorrelationId = logObject.getRequestCorrelationId();
       int responseStatus = logObject.getResponseStatus();
       logger.info(
-          "{} response {} ({}) with {} {}{} for {} request {} {} with {} {}. Headers: {}. "
-              + "Cookies: {}. Body: {}",
+          LOG_RESPONSE_FORMAT_TEMPLATE,
           logObject.getVerb(),
           responseStatus,
           Response.Status.fromStatusCode(responseStatus),

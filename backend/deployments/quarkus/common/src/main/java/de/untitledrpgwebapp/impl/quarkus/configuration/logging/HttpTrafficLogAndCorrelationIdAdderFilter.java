@@ -158,19 +158,23 @@ public class HttpTrafficLogAndCorrelationIdAdderFilter
       boolean isResponseCorrelationIdCopied,
       ContainerRequestContext request,
       String requestCorrelationId) throws IOException {
-    logger.logResponse(HttpTrafficLogObject.builder()
-        .verb("Sending")
-        .responseStatus(response.getStatus())
-        .responseCorrelationId(response.getHeaders().getFirst(CORRELATION_ID_HEADER_KEY).toString())
-        .responseCorrelationIdCopied(isResponseCorrelationIdCopied)
-        .adjective("on")
-        .requestMethod(request.getMethod())
-        .requestUri(request.getUriInfo().getRequestUri())
-        .requestCorrelationId(requestCorrelationId)
-        .headers(convertToMapStringListOfString(response.getHeaders()))
-        .responseCookies(response.getCookies().values())
-        .entity(response.getEntity())
-        .build());
+    if (logger.isInfoEnabled()) {
+      logger.logResponse(HttpTrafficLogObject.builder()
+          .verb("Sending")
+          .responseStatus(response.getStatus())
+          .responseCorrelationId(response.getHeaders()
+              .getFirst(CORRELATION_ID_HEADER_KEY)
+              .toString())
+          .responseCorrelationIdCopied(isResponseCorrelationIdCopied)
+          .adjective("on")
+          .requestMethod(request.getMethod())
+          .requestUri(request.getUriInfo().getRequestUri())
+          .requestCorrelationId(requestCorrelationId)
+          .headers(convertToMapStringListOfString(response.getHeaders()))
+          .responseCookies(response.getCookies().values())
+          .entity(response.getEntity())
+          .build());
+    }
   }
 
   private Map<String, List<String>> convertToMapStringListOfString(Map<String, List<Object>> map) {
@@ -184,19 +188,22 @@ public class HttpTrafficLogAndCorrelationIdAdderFilter
 
   private void logRequestToBeSent(ClientRequestContext request, boolean correlationIdCreated)
       throws IOException {
-    logger.logRequest(HttpTrafficLogObject.builder()
-        .verb("Sending")
-        .requestCorrelationIdCreated(correlationIdCreated)
-        .requestMethod(request.getMethod())
-        .adjective("to")
-        .requestUri(request.getUri())
-        .requestCorrelationId(Optional.of(request.getHeaders().getFirst(CORRELATION_ID_HEADER_KEY))
-            .map(Object::toString)
-            .orElse(""))
-        .headers(convertToMapStringListOfString(request.getHeaders()))
-        .requestCookies(request.getCookies().values())
-        .entity(Optional.ofNullable(request.getEntity()).orElse(Collections.emptyList()))
-        .build());
+    if (logger.isInfoEnabled()) {
+      logger.logRequest(HttpTrafficLogObject.builder()
+          .verb("Sending")
+          .requestCorrelationIdCreated(correlationIdCreated)
+          .requestMethod(request.getMethod())
+          .adjective("to")
+          .requestUri(request.getUri())
+          .requestCorrelationId(Optional.of(request.getHeaders()
+              .getFirst(CORRELATION_ID_HEADER_KEY))
+              .map(Object::toString)
+              .orElse(""))
+          .headers(convertToMapStringListOfString(request.getHeaders()))
+          .requestCookies(request.getCookies().values())
+          .entity(Optional.ofNullable(request.getEntity()).orElse(Collections.emptyList()))
+          .build());
+    }
   }
 
   private void logResponseToBeReceived(
@@ -204,20 +211,22 @@ public class HttpTrafficLogAndCorrelationIdAdderFilter
       ClientResponseContext response,
       String requestCorrelationId,
       boolean responseCorrelationIdCopied) throws IOException {
-    logger.logResponse(HttpTrafficLogObject.builder()
-        .verb("Receiving")
-        .responseStatus(response.getStatus())
-        .responseCorrelationId(response.getHeaders().getFirst(CORRELATION_ID_HEADER_KEY))
-        .responseCorrelationIdCopied(responseCorrelationIdCopied)
-        .requestMethod(request.getMethod())
-        .adjective("to")
-        .requestUri(request.getUri())
-        .requestCorrelationId(requestCorrelationId)
-        .headers(response.getHeaders())
-        .responseCookies(response.getCookies().values())
-        .entity(extractEntityFromStreamAndResetStream(
-            response::getEntityStream,
-            response::setEntityStream))
-        .build());
+    if (logger.isInfoEnabled()) {
+      logger.logResponse(HttpTrafficLogObject.builder()
+          .verb("Receiving")
+          .responseStatus(response.getStatus())
+          .responseCorrelationId(response.getHeaders().getFirst(CORRELATION_ID_HEADER_KEY))
+          .responseCorrelationIdCopied(responseCorrelationIdCopied)
+          .requestMethod(request.getMethod())
+          .adjective("to")
+          .requestUri(request.getUri())
+          .requestCorrelationId(requestCorrelationId)
+          .headers(response.getHeaders())
+          .responseCookies(response.getCookies().values())
+          .entity(extractEntityFromStreamAndResetStream(
+              response::getEntityStream,
+              response::setEntityStream))
+          .build());
+    }
   }
 }
