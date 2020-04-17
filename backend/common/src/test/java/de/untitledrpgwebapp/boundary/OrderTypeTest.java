@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 class OrderTypeTest {
 
   @Test
-  @DisplayName("Should return ASCENDING when called with null")
+  @DisplayName("Should return ASCENDING when called with null.")
   void shouldReturnAscendingWhenCalledWithNull() {
     // GIVEN: nothing
 
@@ -23,7 +23,7 @@ class OrderTypeTest {
     assertThat(orderType, is(OrderType.ASCENDING));
   }
   @Test
-  @DisplayName("Should convert \"ASC\" and \"ASCENDING\" to ASCENDING")
+  @DisplayName("Should convert \"ASC\" and \"ASCENDING\" to ASCENDING.")
   void shouldConvertToAscending() {
     // GIVEN: nothing
 
@@ -41,7 +41,7 @@ class OrderTypeTest {
   }
 
   @Test
-  @DisplayName("Should convert \"DESC\" and \"DESCENDING\" to DESCENDING")
+  @DisplayName("Should convert \"DESC\" and \"DESCENDING\" to DESCENDING.")
   void shouldConvertToDescending() {
     // GIVEN: nothing
 
@@ -59,7 +59,7 @@ class OrderTypeTest {
   }
 
   @Test
-  @DisplayName("Should throw NoSuchOrderTypeException when no fitting OrderType is found")
+  @DisplayName("Should throw NoSuchOrderTypeException when no fitting OrderType is found.")
   void shouldThrowNoSuchOrderTypeExceptionWhenNoFittingOrderTypeIsFound() {
     // GIVEN: nothing
     String noOrderType = "noOrderType";

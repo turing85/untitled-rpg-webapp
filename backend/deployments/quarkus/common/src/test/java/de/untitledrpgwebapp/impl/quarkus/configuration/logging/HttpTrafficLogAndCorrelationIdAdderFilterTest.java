@@ -128,7 +128,8 @@ class HttpTrafficLogAndCorrelationIdAdderFilterTest {
   @Test
   @DisplayName("Should add correlation-id and call logger with the expected parameters when a "
       + "container request is logged.")
-  void shouldAddCorrelationIdCallLoggerWithExpectedParameterWhenContainerRequestIsLogged() throws IOException {
+  void shouldAddCorrelationIdCallLoggerWithExpectedParameterWhenContainerRequestIsLogged()
+      throws IOException {
     // GIVEN
     when(containerRequest.getHeaders()).thenReturn(containerRequestHeadersWithoutCorrelationId);
 
@@ -261,7 +262,8 @@ class HttpTrafficLogAndCorrelationIdAdderFilterTest {
   @Test
   @DisplayName("Should add correlation-id and call logger with the expected parameters when a "
       + "client request is logged.")
-  void shouldAddCorrelationIdCallLoggerWithExpectedParameterWhenClientRequestIsLogged() throws IOException {
+  void shouldAddCorrelationIdCallLoggerWithExpectedParameterWhenClientRequestIsLogged()
+      throws IOException {
     // GIVEN
     when(clientRequest.getHeaders()).thenReturn(clientRequestHeadersWithoutCorrelationId);
 

@@ -14,7 +14,8 @@ quarkus:
     database:
       generation: none
   http:
-    cors: true
+    cors:
+      ~: true
     port: ${HTTP_PORT:8080}
   log:
     level: INFO

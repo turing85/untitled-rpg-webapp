@@ -98,7 +98,7 @@ class LanguageEndpointTest {
 
   @Test
   @DisplayName("Should throw an EntityNotFoundException when findLanguage is called and no "
-      + "language is found")
+      + "language is found.")
   void shouldThrowEntityNotFoundExceptionWhenFindLanguageIsCalledAndNoLanguageIsFound() {
     // GIVEN
     when(findLanguage.execute(any())).thenReturn(Optional.empty());

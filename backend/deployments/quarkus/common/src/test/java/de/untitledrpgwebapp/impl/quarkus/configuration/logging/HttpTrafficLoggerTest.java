@@ -79,7 +79,7 @@ class HttpTrafficLoggerTest {
   }
 
   @Test
-  @DisplayName("Should initialize with correct logger when default constructor is called")
+  @DisplayName("Should initialize with correct logger when default constructor is called.")
   void shouldInitializeWithCorrectLoggerWhenDefaultConstructorIsCalled() {
     // GIVEN: nothing
 
@@ -94,7 +94,7 @@ class HttpTrafficLoggerTest {
   }
 
   @Test
-  @DisplayName("Should log expected message when logRequest is called")
+  @DisplayName("Should log expected message when logRequest is called.")
   void shouldLogExpectedMessageWhenLogRequestIsCalled() throws IOException {
     // GIVEN
     logObject.setRequestCorrelationIdCreated(false);
@@ -121,7 +121,7 @@ class HttpTrafficLoggerTest {
   }
 
   @Test
-  @DisplayName("Should log message with \"(created by filter)\" when logRequest is called")
+  @DisplayName("Should log message with \"(created by filter)\" when logRequest is called.")
   void shouldLogExpectedMessageWithCreatedByFilterWhenLogRequestIsCalled() throws IOException {
     // GIVEN
     logObject.setRequestCorrelationIdCreated(true);
@@ -148,7 +148,7 @@ class HttpTrafficLoggerTest {
   }
 
   @Test
-  @DisplayName("should not log any request when info is not enabled")
+  @DisplayName("should not log any request when info is not enabled.")
   void shouldNotLogRequestsWhenInfoIsNotEnabled() throws IOException {
     // GIVEN
     when(logger.isInfoEnabled()).thenReturn(false);
@@ -164,7 +164,7 @@ class HttpTrafficLoggerTest {
   }
 
   @Test
-  @DisplayName("Should log with correlationId and request with correlationId")
+  @DisplayName("Should log with correlationId and request with correlationId.")
   void shouldLogResponseWithCorrelationIdAndRequestWithCorrelationId() throws IOException {
     // GIVEN
     logObject.setResponseCorrelationIdCopied(false);
@@ -195,7 +195,7 @@ class HttpTrafficLoggerTest {
   }
 
   @Test
-  @DisplayName("Should log with no correlationId and request with correlationId")
+  @DisplayName("Should log with no correlationId and request with correlationId.")
   void shouldLogResponseWithNoCorrelationIdAndRequestWithCorrelationId() throws IOException {
     // GIVEN
     logObject.setResponseCorrelationId(null);
@@ -226,7 +226,7 @@ class HttpTrafficLoggerTest {
   }
 
   @Test
-  @DisplayName("Should log with copied correlationId and request with no correlationId")
+  @DisplayName("Should log with copied correlationId and request with no correlationId.")
   void shouldLogResponseWithCopiedCorrelationIdAndRequestWithCorrelationId() throws IOException {
     // GIVEN
     logObject.setResponseCorrelationIdCopied(true);
@@ -257,7 +257,7 @@ class HttpTrafficLoggerTest {
   }
 
   @Test
-  @DisplayName("Should log with correlationId and request with no correlationId")
+  @DisplayName("Should log with correlationId and request with no correlationId.")
   void shouldLogResponseWithCorrelationIdAndRequestWithNoCorrelationId() throws IOException {
     // GIVEN
     logObject.setResponseCorrelationIdCopied(false);
@@ -289,7 +289,7 @@ class HttpTrafficLoggerTest {
   }
 
   @Test
-  @DisplayName("should not log any responses when info is not enabled")
+  @DisplayName("should not log any responses when info is not enabled.")
   void shouldNotLogResponsesWhenInfoIsNotEnabled() throws IOException {
     // GIVEN
     when(logger.isInfoEnabled()).thenReturn(false);

@@ -5,7 +5,6 @@ import static org.hamcrest.Matchers.sameInstance;
 
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
-import org.jboss.resteasy.spi.DefaultOptionsMethodException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +12,7 @@ import org.junit.jupiter.api.Test;
 class ForwardWebApplicationExceptionMapperTest {
 
   @Test
-  @DisplayName("Should return the Response form the exception when toResponse is called")
+  @DisplayName("Should return the Response form the exception when toResponse is called.")
   void shouldReturnResponseOfExceptionWhenToResponseIsCalled() {
     // GIVEN
     Response response = Response.ok().build();

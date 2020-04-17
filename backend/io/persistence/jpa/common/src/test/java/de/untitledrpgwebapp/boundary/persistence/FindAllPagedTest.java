@@ -85,7 +85,7 @@ class FindAllPagedTest {
 
   @Test
   @DisplayName("Should call dependencies with expected parameters and return the expected result"
-      + "with ascending order sorting when findAll is called")
+      + "with ascending order sorting when findAll is called.")
   void shouldCallDependenciesWithExpectedParametersAndReturnExpectedResultWhenFindAllIsCalledWithAscendingOrder() {
     // GIVEN:
     when(config.getOrder()).thenReturn("ASC");
@@ -103,7 +103,7 @@ class FindAllPagedTest {
 
   @Test
   @DisplayName("Should call dependencies with expected parameters and return the expected result"
-      + "with descending order sorting when findAll is called")
+      + "with descending order sorting when findAll is called.")
   void shouldCallDependenciesWithExpectedParametersAndReturnExpectedResultWhenFindAllIsCalledWithDescendingOrder() {
     // GIVEN:
     when(config.getOrder()).thenReturn("DESC");

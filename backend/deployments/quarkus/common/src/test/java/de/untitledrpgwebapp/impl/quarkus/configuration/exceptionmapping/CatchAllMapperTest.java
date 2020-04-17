@@ -18,7 +18,7 @@ class CatchAllMapperTest {
 
   @Test
   @DisplayName("Should create CatchAllMapper with correct logger when default constructor is "
-      + "called")
+      + "called.")
   void shouldCreateExpectedMapperWhenDefaultConstructorIsCalled() {
     // GIVEN: nothing
 
