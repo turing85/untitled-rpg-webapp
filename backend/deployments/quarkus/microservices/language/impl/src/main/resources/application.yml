@@ -9,8 +9,6 @@ quarkus:
       min-size: ${DB_MIN_SIZE:2}
       max-size: ${DB_MAX_SIZE:8}
   hibernate-orm:
-    log:
-      sql: true
     database:
       generation: none
   http:
