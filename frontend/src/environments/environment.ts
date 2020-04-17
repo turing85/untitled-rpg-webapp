@@ -5,11 +5,10 @@
 import { KeycloakConfig } from 'keycloak-angular';
 
 // Add here your keycloak setup infos
-const keycloakConfig:KeycloakConfig= {
+const keycloakConfig: KeycloakConfig = {
   url: 'http://localhost:8090/auth',
   realm: 'test',
   clientId: 'test',
-
 };
 
 export const environment = {

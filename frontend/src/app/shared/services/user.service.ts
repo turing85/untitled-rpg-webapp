@@ -9,7 +9,7 @@ import { PlatformLocation } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 
 
-type LanguageTag = 'en-GB' | 'de-DE';
+export type LanguageTag = 'en-GB' | 'de-DE';
 
 const USERS_URL = "http://localhost:8081/users"
 
@@ -36,7 +36,7 @@ export class UserService {
     this.keycloakAngular.logout(landingPageUrl);
   }
 
-  register(name: string, email: string, password: string, preferredLanguageTag: LanguageTag): Observable<unknown> {
-    return this.httpService.post(USERS_URL, { name, email, password, preferredLanguageTag });
+  register(name: string, email: string, password: string, preferredLanguageTag: LanguageTag): Observable<User> {
+    return this.httpService.post<User>(USERS_URL, { name, email, password, preferredLanguageTag });
   }
 }

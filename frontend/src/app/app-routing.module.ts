@@ -1,12 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LandingPageComponent } from './pages/landing-page/landing-page.component';
 import { AppAuthGuard } from './core/guards/app-auth-guard.guard';
 import { DashboardPageModule } from './pages/dashboard-page/dashboard-page.module';
 import { LandingPageModule } from './pages/landing-page/landing-page.module';
 import { ForbiddenPageModule } from './pages/forbidden-page/forbidden-page.module';
 import { RegisterPageModule } from './pages/register-page/register-page.module';
-import { ForbiddenPageComponent } from './pages/forbidden-page/forbidden-page.component';
 
 const routes: Routes = [
   {

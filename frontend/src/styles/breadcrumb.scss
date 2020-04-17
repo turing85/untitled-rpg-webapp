@@ -1,22 +1,21 @@
 /* Style the list */
 
 ul {
-  &.breadcrumb {
-    list-style: none;
-    li {
-      display: inline;
-      font-size: 18px;
-      + li:before {
-        padding: 8px;
-        content: '>';
-      }
-      a {
-        text-decoration: none;
-        &:hover {
-          text-decoration: underline;
+    &.breadcrumb {
+        list-style: none;
+        li {
+            display: inline;
+            font-size: 18px;
+            +li:before {
+                padding: 8px;
+                content: '>';
+            }
+            a {
+                text-decoration: none;
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
         }
-      }
     }
-  }
 }
-

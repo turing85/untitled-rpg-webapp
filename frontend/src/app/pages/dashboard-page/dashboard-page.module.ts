@@ -18,6 +18,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     SidebarFooterComponent,
     SidebarHeaderComponent
   ],
-  imports: [CommonModule, DashboardRoutingModule, SharedModule]
+  imports: [CommonModule, DashboardRoutingModule, SharedModule],
+  exports: [DashboardPageComponent]
 })
 export class DashboardPageModule {}
