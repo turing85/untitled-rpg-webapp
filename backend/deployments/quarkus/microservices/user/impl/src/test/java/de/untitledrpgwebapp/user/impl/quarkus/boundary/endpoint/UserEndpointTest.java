@@ -1,9 +1,9 @@
 package de.untitledrpgwebapp.user.impl.quarkus.boundary.endpoint;
 
 import static de.untitledrpgwebapp.impl.quarkus.testfixture.PageConfigDtoFixture.PAGE_CONFIG_DTO;
-import static de.untitledrpgwebapp.user.impl.quarkus.boundary.testfixture.UserDtoFixture.DTOS;
+import static de.untitledrpgwebapp.user.impl.quarkus.boundary.testfixture.UserDtoFixture.USER_DTOS;
+import static de.untitledrpgwebapp.user.impl.quarkus.boundary.testfixture.UserDtoFixture.USER_DTO_ONE;
 import static de.untitledrpgwebapp.user.testfixture.UserFixture.CORRELATION_ID;
-import static de.untitledrpgwebapp.user.testfixture.UserFixture.USER_NAMES;
 import static de.untitledrpgwebapp.user.testfixture.UserFixture.USER_ONE_NAME;
 import static de.untitledrpgwebapp.user.testfixture.UserFixture.USER_RESPONSES;
 import static org.hamcrest.CoreMatchers.instanceOf;
@@ -17,6 +17,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -31,11 +32,12 @@ import de.untitledrpgwebapp.user.impl.quarkus.boundary.dto.CreateUserDto;
 import de.untitledrpgwebapp.user.impl.quarkus.boundary.dto.UserDto;
 import de.untitledrpgwebapp.user.impl.quarkus.boundary.mapper.UserMapper;
 import java.net.URI;
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
+import javax.ws.rs.core.SecurityContext;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -65,15 +67,15 @@ class UserEndpointTest {
         .thenReturn(UserResponse.builder().name(USER_ONE_NAME).build());
 
     mapper = mock(UserMapper.class);
-    when(mapper.responsesToDtos(anyList())).thenReturn(DTOS);
-    when(mapper.responseToDto(any())).thenReturn(UserDto.builder().name(USER_ONE_NAME).build());
+    when(mapper.responsesToDtos(anyList())).thenReturn(USER_DTOS);
+    when(mapper.responseToDto(any())).thenReturn(USER_DTO_ONE);
 
     uut = new UserEndpoint(findAllUsers, findUser, createUser, mapper);
   }
 
   @Test
   @DisplayName("Should call findAllUsers with the expected parameters and return the expected "
-      + "response object.")
+      + "response object when findAll is called.")
   void shouldCallFindAllUsersWithExpectedParameterAndReturnExpectedResultWhenFindAllIsCalled() {
     // GIVEN
 
@@ -93,7 +95,7 @@ class UserEndpointTest {
 
   @Test
   @DisplayName("Should call findUser with the expected parameters and return the expected response "
-      + "object.")
+      + "object when findByName is called.")
   void shouldCallFindUserWithExpectedParameterAndReturnExpectedResultWhenFindByNameIsCalled() {
     // GIVEN: defaults
 
@@ -110,8 +112,8 @@ class UserEndpointTest {
   }
 
   @Test
-  @DisplayName("Should throw an EntityNotFoundException if no user with the given name is "
-      + "found.")
+  @DisplayName("Should throw an EntityNotFoundException when findByName is called and no user with "
+      + "the given name is found.")
   void shouldThrowDependencyNotFoundExceptionWhenLanguageIsNotFound() {
     // GIVEN
     when(findUser.execute(any())).thenReturn(Optional.empty());
@@ -130,7 +132,7 @@ class UserEndpointTest {
 
   @Test
   @DisplayName("Should call createUser with the expected parameters and return the expected "
-      + "response object.")
+      + "response object when createUser is called.")
   void shouldCallCreateUserWithExpectedParameterAndReturnExpectedResultWhenCreateUserIsCalled() {
     // GIVEN:
     CreateUserRequest request = CreateUserRequest.builder().name(USER_ONE_NAME).build();
@@ -146,6 +148,29 @@ class UserEndpointTest {
     verify(createUser).execute(request);
   }
 
+  @Test
+  @DisplayName("Should call findUser with the expected parameters and return the expected response "
+      + "when getMe is called.")
+  void shouldCallFindUserWithExpectedParametersAndReturnExpectedResultWhenGetMeIsCalled() {
+    // GIVEN
+    Principal userPrincipal = mock(Principal.class);
+    when(userPrincipal.getName()).thenReturn(USER_ONE_NAME);
+    SecurityContext context = mock(SecurityContext.class);
+    when(context.getUserPrincipal()).thenReturn(userPrincipal);
+
+    // WHEN
+    Response actual = uut.findCurrentUser(context, CORRELATION_ID);
+
+    // THEN
+    assertResponseIsAsExpected(actual);
+
+    verify(findUser).execute(argThat(request -> {
+      assertThat(request.getName(), is(USER_ONE_NAME));
+      assertThat(request.getCorrelationId(), is(CORRELATION_ID));
+      return true;
+    }));
+  }
+
   private void assertResponseIsAsExpected(Response response) {
     assertResponseIsAsExpected(response, Status.OK);
   }
@@ -156,10 +181,7 @@ class UserEndpointTest {
         response.getHeaders().get(StaticConfig.CORRELATION_ID_HEADER_KEY);
     assertThat(correlationIdHeaders, hasSize(1));
     assertThat(correlationIdHeaders.get(0), is(CORRELATION_ID));
-    Object entity = response.getEntity();
-    assertThat(entity, instanceOf(UserDto.class));
-    UserDto actual = (UserDto) entity;
-    assertThat(actual.getName(), is(USER_ONE_NAME));
+    assertThat(response.getEntity(), is(USER_DTO_ONE));
   }
 
   private void assertCollectionResponseIsAsExpected(Response response) {
@@ -173,9 +195,7 @@ class UserEndpointTest {
     @SuppressWarnings("unchecked")
     List<UserDto> actual = (List<UserDto>) entity;
     assertThat(actual, hasSize(USER_RESPONSES.size()));
-    assertThat(
-        actual.stream().map(UserDto::getName).collect(Collectors.toList()),
-        containsInAnyOrder(USER_NAMES.toArray()));
+    assertThat(actual, is(USER_DTOS));
   }
 
   private void assertCreateUserResponseIsAsExpected(Response response) {
