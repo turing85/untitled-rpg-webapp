@@ -123,6 +123,16 @@ public class UserEndpoint {
         .build();
   }
 
+  /**
+   * Returns information of the currently logged-in user.
+   *
+   * @param context
+   *     The {@code SecurityContext} holding the user-principal describing the logged-in user
+   * @param correlationId
+   *     the correlation-id for the process.
+   *
+   * @return the user corresponding to the user described in the principal.
+   */
   @GET
   @Path("/me")
   @Authenticated
