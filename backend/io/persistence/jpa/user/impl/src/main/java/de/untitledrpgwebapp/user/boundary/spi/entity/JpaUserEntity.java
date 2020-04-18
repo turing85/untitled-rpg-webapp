@@ -1,7 +1,10 @@
 package de.untitledrpgwebapp.user.boundary.spi.entity;
 
+import de.untitledrpgwebapp.user.boundary.spi.converter.MapToJsonConverter;
 import java.time.LocalDate;
+import java.util.Map;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -50,4 +53,8 @@ public class JpaUserEntity {
 
   @Column(name = "avatar")
   private byte[] avatar;
+
+  @Column(name = "preferences")
+  @Convert(converter = MapToJsonConverter.class)
+  private Map<String, Object> preferences;
 }

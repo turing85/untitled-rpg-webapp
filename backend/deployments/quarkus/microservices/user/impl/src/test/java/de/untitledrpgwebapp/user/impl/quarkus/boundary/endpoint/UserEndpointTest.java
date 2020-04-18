@@ -125,7 +125,7 @@ class UserEndpointTest {
 
     // WHEN
     Response response =
-        uut.createUser(new CreateUserDto().setName(USER_ONE_NAME), CORRELATION_ID);
+        uut.createUser(CreateUserDto.builder().name(USER_ONE_NAME).build(), CORRELATION_ID);
 
     // THEN
     UserResponseValidator.assertCreateUserResponseIsAsExpected(response);
@@ -141,10 +141,10 @@ class UserEndpointTest {
     when(findUser.execute(any()))
         .thenReturn(Optional.of(UserResponse.builder().name(USER_ONE_NAME).build()));
     when(mapper.responseToDto(any())).thenReturn(USER_DTO_ONE);
-    Principal principal = mock(Principal.class);
-    when(principal.getName()).thenReturn(USER_ONE_NAME);
+    Principal userPrincipal = mock(Principal.class);
+    when(userPrincipal.getName()).thenReturn(USER_ONE_NAME);
     SecurityContext context = mock(SecurityContext.class);
-    when(context.getUserPrincipal()).thenReturn(principal);
+    when(context.getUserPrincipal()).thenReturn(userPrincipal);
 
     // WHEN
     Response actual = uut.findCurrentUser(context, CORRELATION_ID);
@@ -152,6 +152,8 @@ class UserEndpointTest {
     // THEN
     UserResponseValidator.assertResponseIsAsExpected(actual);
 
+    verify(context).getUserPrincipal();
+    verify(userPrincipal).getName();
     verify(findUser).execute(argThat(request -> {
       assertThat(request.getName(), is(USER_ONE_NAME));
       assertThat(request.getCorrelationId(), is(CORRELATION_ID));

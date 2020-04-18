@@ -7,7 +7,8 @@ CREATE TABLE public.user (
   preferred_language_tag VARCHAR(5) NOT NULL DEFAULT 'en-US',
   birth_date DATE,
   bio TEXT,
-  avatar BYTEA
+  avatar BYTEA,
+  preferences TEXT
 );
 
 CREATE SEQUENCE user_seq_id OWNED BY public.user.id;

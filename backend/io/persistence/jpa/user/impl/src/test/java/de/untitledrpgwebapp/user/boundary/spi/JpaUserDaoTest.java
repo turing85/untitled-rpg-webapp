@@ -12,6 +12,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
@@ -29,6 +30,7 @@ import de.untitledrpgwebapp.user.boundary.spi.entity.JpaUserEntity;
 import de.untitledrpgwebapp.user.boundary.spi.mapper.UserMapper;
 import java.util.Collection;
 import java.util.Optional;
+import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -48,6 +50,21 @@ class JpaUserDaoTest {
   void setup() {
     when(mapper.entityToResponse(eq(USER_ENTITY_ONE))).thenReturn(USER_RESPONSE_ONE);
     when(mapper.entityToResponse(eq(USER_ENTITY_TWO))).thenReturn(USER_RESPONSE_TWO);
+  }
+
+  @Test
+  @DisplayName("Should construct object with expected fields when constructor is called.")
+  void shouldConstructObjectWithExpectedFieldsWhenConstructorIsCalled() {
+    // GIVEN
+    EntityManager manager = mock(EntityManager.class);
+
+    // WHEN
+    JpaUserDao actual = new JpaUserDao(repository, mapper, manager);
+
+    // THEN
+    assertThat(actual.getRepository(), is(repository));
+    assertThat(actual.getMapper(), is(mapper));
+    assertThat(actual.getFindAllPaged(), is(notNullValue()));
   }
 
   @Test

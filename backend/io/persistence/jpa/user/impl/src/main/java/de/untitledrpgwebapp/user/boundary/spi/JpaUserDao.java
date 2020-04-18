@@ -14,8 +14,10 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 @ApplicationScoped
+@Getter(AccessLevel.PACKAGE)
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 public class JpaUserDao implements UserDao {
 

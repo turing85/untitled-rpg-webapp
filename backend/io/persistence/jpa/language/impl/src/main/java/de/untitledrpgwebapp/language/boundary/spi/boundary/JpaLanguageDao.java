@@ -14,9 +14,11 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
-@AllArgsConstructor(access = AccessLevel.PACKAGE)
 @ApplicationScoped
+@Getter(AccessLevel.PACKAGE)
+@AllArgsConstructor(access = AccessLevel.PACKAGE)
 public class JpaLanguageDao implements LanguageDao {
 
   private final JpaLanguageRepository repository;
