@@ -6,7 +6,7 @@ import static org.hamcrest.Matchers.sameInstance;
 import static org.mockito.Mockito.mock;
 
 import de.untitledrpgwebapp.language.domain.FindLanguageByTagUseCase;
-import de.untitledrpgwebapp.oauth2.domain.CreateAccountUseCase;
+import de.untitledrpgwebapp.oidc.domain.CreateAccountUseCase;
 import de.untitledrpgwebapp.user.boundary.UserDao;
 import de.untitledrpgwebapp.user.domain.CreateUserUseCase;
 import de.untitledrpgwebapp.user.impl.localstore.domain.CreateUserInDatabaseUseCase;

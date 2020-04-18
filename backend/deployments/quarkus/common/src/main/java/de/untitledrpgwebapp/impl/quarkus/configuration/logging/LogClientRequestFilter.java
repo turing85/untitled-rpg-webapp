@@ -7,11 +7,9 @@ import java.util.Collections;
 import java.util.Optional;
 import javax.ws.rs.client.ClientRequestContext;
 import javax.ws.rs.client.ClientRequestFilter;
-import javax.ws.rs.container.PreMatching;
 import javax.ws.rs.ext.Provider;
 
 @Provider
-@PreMatching
 public class LogClientRequestFilter extends LogRequestFilter
     implements ClientRequestFilter {
 

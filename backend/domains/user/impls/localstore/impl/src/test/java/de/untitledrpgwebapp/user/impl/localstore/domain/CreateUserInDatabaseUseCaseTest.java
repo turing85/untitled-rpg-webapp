@@ -18,8 +18,8 @@ import static org.mockito.Mockito.when;
 
 import de.untitledrpgwebapp.domain.exception.DependencyNotFoundException;
 import de.untitledrpgwebapp.language.domain.FindLanguageByTagUseCase;
-import de.untitledrpgwebapp.oauth2.boundary.request.CreateAccountRequest;
-import de.untitledrpgwebapp.oauth2.domain.CreateAccountUseCase;
+import de.untitledrpgwebapp.oidc.boundary.request.CreateAccountRequest;
+import de.untitledrpgwebapp.oidc.domain.CreateAccountUseCase;
 import de.untitledrpgwebapp.user.boundary.UserDao;
 import de.untitledrpgwebapp.user.boundary.request.CreateUserRequest;
 import de.untitledrpgwebapp.user.boundary.response.UserResponse;

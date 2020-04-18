@@ -1,8 +1,8 @@
 package de.untitledrpgwebapp.user.impl.quarkus.beans;
 
-import de.untitledrpgwebapp.oauth2.domain.CreateAccountUseCase;
-import de.untitledrpgwebapp.ouath2.impl.keycloak.boundary.AccountMapper;
-import de.untitledrpgwebapp.ouath2.impl.keycloak.domain.KeycloakCreateAccountUseCase;
+import de.untitledrpgwebapp.oidc.domain.CreateAccountUseCase;
+import de.untitledrpgwebapp.oidc.impl.keycloak.boundary.AccountMapper;
+import de.untitledrpgwebapp.oidc.impl.keycloak.domain.KeycloakCreateAccountUseCase;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
@@ -29,7 +29,7 @@ public class CreateAccountUseCaseBean {
   @Produces
   CreateAccountUseCase createAccount(
       Keycloak keycloak,
-      @ConfigProperty(name = "oauth2.realm.name") String realmName) {
+      @ConfigProperty(name = "keycloak.realm-name") String realmName) {
     return new KeycloakCreateAccountUseCase(
         keycloak,
         realmName,
@@ -55,10 +55,10 @@ public class CreateAccountUseCaseBean {
   @Produces
   Keycloak keycloak(
       KeycloakBuilder builder,
-      @ConfigProperty(name = "oauth2.server-url") String serverUrl,
-      @ConfigProperty(name = "oauth2.realm.name") String realmName,
-      @ConfigProperty(name = "oauth2.admin-cli.id") String adminCliId,
-      @ConfigProperty(name = "oauth2.admin-cli.secret") String adminCliSecret) {
+      @ConfigProperty(name = "keycloak.server-url") String serverUrl,
+      @ConfigProperty(name = "keycloak.realm-name") String realmName,
+      @ConfigProperty(name = "keycloak.admin-cli-id") String adminCliId,
+      @ConfigProperty(name = "keycloak.admin-cli-secret") String adminCliSecret) {
     return builder
         .serverUrl(serverUrl)
         .realm(realmName)

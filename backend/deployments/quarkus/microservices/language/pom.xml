@@ -20,4 +20,12 @@
     <module>api</module>
   </modules>
 
+  <dependencies>
+    <!-- JWT RBAC -->
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-smallrye-jwt</artifactId>
+    </dependency>
+  </dependencies>
+
 </project>

@@ -6,38 +6,27 @@ import static de.untitledrpgwebapp.user.impl.quarkus.boundary.testfixture.UserDt
 import static de.untitledrpgwebapp.user.testfixture.UserFixture.CORRELATION_ID;
 import static de.untitledrpgwebapp.user.testfixture.UserFixture.USER_ONE_NAME;
 import static de.untitledrpgwebapp.user.testfixture.UserFixture.USER_RESPONSES;
-import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import de.untitledrpgwebapp.domain.exception.EntityNotFoundException;
-import de.untitledrpgwebapp.impl.quarkus.configuration.StaticConfig;
 import de.untitledrpgwebapp.user.boundary.request.CreateUserRequest;
 import de.untitledrpgwebapp.user.boundary.response.UserResponse;
 import de.untitledrpgwebapp.user.domain.CreateUserUseCase;
 import de.untitledrpgwebapp.user.domain.FindAllUsersUseCase;
 import de.untitledrpgwebapp.user.domain.FindUserByNameUseCase;
 import de.untitledrpgwebapp.user.impl.quarkus.boundary.dto.CreateUserDto;
-import de.untitledrpgwebapp.user.impl.quarkus.boundary.dto.UserDto;
 import de.untitledrpgwebapp.user.impl.quarkus.boundary.mapper.UserMapper;
-import java.net.URI;
-import java.security.Principal;
-import java.util.List;
 import java.util.Optional;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
-import javax.ws.rs.core.SecurityContext;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -45,28 +34,22 @@ import org.junit.jupiter.api.Test;
 @DisplayName("Tests for UserEndpoint unit.")
 class UserEndpointTest {
 
-  private FindAllUsersUseCase findAllUsers;
-  private FindUserByNameUseCase findUser;
-  private CreateUserUseCase createUser;
-  private UserMapper mapper;
+  private FindAllUsersUseCase findAllUsers = mock(FindAllUsersUseCase.class);
+  private FindUserByNameUseCase findUser = mock(FindUserByNameUseCase.class);
+  private CreateUserUseCase createUser = mock(CreateUserUseCase.class);
+  private UserMapper mapper = mock(UserMapper.class);
 
   private UserEndpoint uut;
 
   @BeforeEach
   void setup() {
-    findAllUsers = mock(FindAllUsersUseCase.class);
-    findUser = mock(FindUserByNameUseCase.class);
-
-    createUser = mock(CreateUserUseCase.class);
     when(findAllUsers.execute(any())).thenReturn(USER_RESPONSES);
 
-    findUser = mock(FindUserByNameUseCase.class);
     when(findUser.execute(any()))
         .thenReturn(Optional.of(UserResponse.builder().name(USER_ONE_NAME).build()));
     when(createUser.execute(any()))
         .thenReturn(UserResponse.builder().name(USER_ONE_NAME).build());
 
-    mapper = mock(UserMapper.class);
     when(mapper.responsesToDtos(anyList())).thenReturn(USER_DTOS);
     when(mapper.responseToDto(any())).thenReturn(USER_DTO_ONE);
 
@@ -83,7 +66,7 @@ class UserEndpointTest {
     Response response = uut.findAll(CORRELATION_ID, PAGE_CONFIG_DTO);
 
     // THEN
-    assertCollectionResponseIsAsExpected(response);
+    UserResponseValidator.assertCollectionResponseIsAsExpected(response);
 
     verify(findAllUsers).execute(argThat(r -> {
       assertThat(r.getConfig(), sameInstance(PAGE_CONFIG_DTO));
@@ -103,7 +86,7 @@ class UserEndpointTest {
     Response response = uut.findByName(USER_ONE_NAME, CORRELATION_ID);
 
     // THEN
-    assertResponseIsAsExpected(response);
+    UserResponseValidator.assertResponseIsAsExpected(response);
 
     verify(findUser).execute(argThat(r -> {
       assertThat(r.getCorrelationId(), is(CORRELATION_ID));
@@ -143,67 +126,8 @@ class UserEndpointTest {
         uut.createUser(new CreateUserDto().setName(USER_ONE_NAME), CORRELATION_ID);
 
     // THEN
-    assertCreateUserResponseIsAsExpected(response);
+    UserResponseValidator.assertCreateUserResponseIsAsExpected(response);
 
     verify(createUser).execute(request);
-  }
-
-  @Test
-  @DisplayName("Should call findUser with the expected parameters and return the expected response "
-      + "when getMe is called.")
-  void shouldCallFindUserWithExpectedParametersAndReturnExpectedResultWhenGetMeIsCalled() {
-    // GIVEN
-    Principal userPrincipal = mock(Principal.class);
-    when(userPrincipal.getName()).thenReturn(USER_ONE_NAME);
-    SecurityContext context = mock(SecurityContext.class);
-    when(context.getUserPrincipal()).thenReturn(userPrincipal);
-
-    // WHEN
-    Response actual = uut.findCurrentUser(context, CORRELATION_ID);
-
-    // THEN
-    assertResponseIsAsExpected(actual);
-
-    verify(findUser).execute(argThat(request -> {
-      assertThat(request.getName(), is(USER_ONE_NAME));
-      assertThat(request.getCorrelationId(), is(CORRELATION_ID));
-      return true;
-    }));
-  }
-
-  private void assertResponseIsAsExpected(Response response) {
-    assertResponseIsAsExpected(response, Status.OK);
-  }
-
-  private void assertResponseIsAsExpected(Response response, Status status) {
-    assertThat(response.getStatus(), is(status.getStatusCode()));
-    List<Object> correlationIdHeaders =
-        response.getHeaders().get(StaticConfig.CORRELATION_ID_HEADER_KEY);
-    assertThat(correlationIdHeaders, hasSize(1));
-    assertThat(correlationIdHeaders.get(0), is(CORRELATION_ID));
-    assertThat(response.getEntity(), is(USER_DTO_ONE));
-  }
-
-  private void assertCollectionResponseIsAsExpected(Response response) {
-    assertThat(response.getStatus(), is(Status.OK.getStatusCode()));
-    List<Object> correlationIdHeaders =
-        response.getHeaders().get(StaticConfig.CORRELATION_ID_HEADER_KEY);
-    assertThat(correlationIdHeaders, hasSize(1));
-    assertThat(correlationIdHeaders.get(0), is(CORRELATION_ID));
-    Object entity = response.getEntity();
-    assertThat(entity, instanceOf(List.class));
-    @SuppressWarnings("unchecked")
-    List<UserDto> actual = (List<UserDto>) entity;
-    assertThat(actual, hasSize(USER_RESPONSES.size()));
-    assertThat(actual, is(USER_DTOS));
-  }
-
-  private void assertCreateUserResponseIsAsExpected(Response response) {
-    assertResponseIsAsExpected(response, Status.CREATED);
-    List<Object> locationHeaders = response.getHeaders().get("LOCATION");
-    assertThat(locationHeaders, hasSize(1));
-    assertThat(
-        locationHeaders.get(0),
-        is(URI.create(String.format(UserEndpoint.GET_ONE_PATH_TEMPLATE, USER_ONE_NAME))));
   }
 }

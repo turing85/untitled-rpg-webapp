@@ -33,10 +33,10 @@
       <artifactId>quarkus-config-yaml</artifactId>
     </dependency>
 
-    <!-- JWT RBAC -->
+    <!-- oidc -->
     <dependency>
       <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-smallrye-jwt</artifactId>
+      <artifactId>quarkus-oidc</artifactId>
     </dependency>
 
     <!-- JSON mapping -->

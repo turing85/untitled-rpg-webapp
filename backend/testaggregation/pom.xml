@@ -88,12 +88,12 @@
     <!-- oauth2 -->
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
-      <artifactId>untitled-rpg-webapp.backend.domains.oauth2.api</artifactId>
+      <artifactId>untitled-rpg-webapp.backend.domains.oidc.api</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
-      <artifactId>untitled-rpg-webapp.backend.domains.oauth2.impls.keycloak.impl</artifactId>
+      <artifactId>untitled-rpg-webapp.backend.domains.oidc.impls.keycloak.impl</artifactId>
       <version>${project.version}</version>
     </dependency>
 

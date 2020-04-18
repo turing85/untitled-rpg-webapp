@@ -15,24 +15,38 @@ quarkus:
     cors:
       ~: true
     port: ${HTTP_PORT:8080}
+  oidc:
+    enabled: true
+    application-type: service
+    auth-server-url: ${OIDC_SERVER_URL:http://localhost:8090/auth}/realms/${OIDC_REALM_NAME:test}
+    client-id: ${OIDC_LANGUAGE_SERVICE_CLIENT_ID:language-service-client}
+    introspection-path: /protocol/openid-connect/userinfo
+    jwks-path: /protocol/openid-connect/certs
+    token:
+      audience: ${LANGUAGE_SERVICE_AUDIENCE:test}
+      principal-claim: preferred_username
+    credentials:
+      secret: ${OIDC_LANGUAGE_SERVICE_CLIENT_SECRET:53574baa-7a35-4ebd-88e1-3fd258ae89c4}
+  smallrye-jwt:
+    enabled: false
   log:
     level: INFO
     console:
       format: "%d{yyyy-MM-dd'T'HH:mm:ss.sss}Z %p [%h@%C.%M] %m%n"
   package:
     uber-jar: true
-oauth2:
-  server-url: ${OAUTH2_SERVER_URL:http://localhost:8090/auth}
+keycloak:
+  server-url: ${OIDC_SERVER_URL:http://localhost:8090/auth}
   realm:
-    name: ${OAUTH2_REALM_NAME:test}
+    name: ${OIDC_REALM_NAME:test}
   admin-cli:
-    id: ${OAUTH2_ADMIN_CLI_ID:admin-cli}
-    secret: ${OAUTH2_ADMIN_CLI_SECRET:e436557b-2eed-4182-a928-dd370320e3ad}
+    id: ${OIDC_ADMIN_CLI_ID:admin-cli}
+    secret: ${OIDC_ADMIN_CLI_SECRET:e436557b-2eed-4182-a928-dd370320e3ad}
   client:
-    id: ${OAUTH2_CLIENT_ID:test}
-    secret: ${OAUTH2_CLIENT_SECRET:cb5a84e8-a676-4610-b526-7e0c0798dc1a}
+    id: ${OIDC_CLIENT_ID:test}
+    secret: ${OIDC_CLIENT_SECRET:cb5a84e8-a676-4610-b526-7e0c0798dc1a}
 mp:
   jwt:
     verify:
       publickey:
-        location: ${OAUTH2_PUBLICKEY_URL:${oauth2.server-url}/realms/${oauth2.realm.name}/protocol/openid-connect/certs}
+        location: ${OIDC_PUBLICKEY_URL:${oauth2.server-url}/realms/${oauth2.realm.name}/protocol/openid-connect/certs}

@@ -48,7 +48,7 @@
     </dependency>
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
-      <artifactId>untitled-rpg-webapp.backend.domains.oauth2.impls.keycloak.impl</artifactId>
+      <artifactId>untitled-rpg-webapp.backend.domains.oidc.impls.keycloak.impl</artifactId>
       <version>${project.version}</version>
     </dependency>
 
@@ -80,6 +80,7 @@
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-jdbc-postgresql</artifactId>
     </dependency>
+
   </dependencies>
 
   <build>

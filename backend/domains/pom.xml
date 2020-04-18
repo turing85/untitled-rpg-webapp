@@ -17,7 +17,7 @@
   <packaging>pom</packaging>
   <modules>
     <module>language</module>
-    <module>oauth2</module>
+    <module>oidc</module>
     <module>user</module>
   </modules>
 

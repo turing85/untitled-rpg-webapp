@@ -15,8 +15,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import de.untitledrpgwebapp.oauth2.domain.CreateAccountUseCase;
-import de.untitledrpgwebapp.ouath2.impl.keycloak.domain.KeycloakCreateAccountUseCase;
+import de.untitledrpgwebapp.oidc.domain.CreateAccountUseCase;
+import de.untitledrpgwebapp.oidc.impl.keycloak.domain.KeycloakCreateAccountUseCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
