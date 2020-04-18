@@ -20,7 +20,7 @@ import static org.mockito.Mockito.when;
 
 import de.untitledrpgwebapp.oidc.boundary.request.CreateAccountRequest;
 import de.untitledrpgwebapp.oidc.boundary.response.AccountResponse;
-import de.untitledrpgwebapp.oidc.impl.keycloak.boundary.AccountMapper;
+import de.untitledrpgwebapp.oidc.impl.keycloak.boundary.mapper.AccountMapper;
 import de.untitledrpgwebapp.oidc.impl.keycloak.domain.exception.KeycloakException;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;

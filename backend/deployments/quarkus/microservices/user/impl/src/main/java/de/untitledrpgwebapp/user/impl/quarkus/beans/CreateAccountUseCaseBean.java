@@ -1,7 +1,7 @@
 package de.untitledrpgwebapp.user.impl.quarkus.beans;
 
 import de.untitledrpgwebapp.oidc.domain.CreateAccountUseCase;
-import de.untitledrpgwebapp.oidc.impl.keycloak.boundary.AccountMapper;
+import de.untitledrpgwebapp.oidc.impl.keycloak.boundary.mapper.AccountMapper;
 import de.untitledrpgwebapp.oidc.impl.keycloak.domain.KeycloakCreateAccountUseCase;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;

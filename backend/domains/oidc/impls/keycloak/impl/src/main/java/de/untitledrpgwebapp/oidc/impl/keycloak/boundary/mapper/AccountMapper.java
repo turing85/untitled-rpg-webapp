@@ -1,4 +1,4 @@
-package de.untitledrpgwebapp.oidc.impl.keycloak.boundary;
+package de.untitledrpgwebapp.oidc.impl.keycloak.boundary.mapper;
 
 import de.untitledrpgwebapp.oidc.boundary.request.CreateAccountRequest;
 import de.untitledrpgwebapp.oidc.boundary.response.AccountResponse;

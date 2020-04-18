@@ -4,7 +4,7 @@ import com.google.common.base.Objects;
 import de.untitledrpgwebapp.oidc.boundary.request.CreateAccountRequest;
 import de.untitledrpgwebapp.oidc.boundary.response.AccountResponse;
 import de.untitledrpgwebapp.oidc.domain.CreateAccountUseCase;
-import de.untitledrpgwebapp.oidc.impl.keycloak.boundary.AccountMapper;
+import de.untitledrpgwebapp.oidc.impl.keycloak.boundary.mapper.AccountMapper;
 import de.untitledrpgwebapp.oidc.impl.keycloak.domain.exception.KeycloakException;
 import java.io.IOException;
 import java.io.InputStream;
