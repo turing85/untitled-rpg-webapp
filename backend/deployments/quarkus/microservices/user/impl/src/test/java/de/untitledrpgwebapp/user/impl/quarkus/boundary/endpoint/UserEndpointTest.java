@@ -25,8 +25,10 @@ import de.untitledrpgwebapp.user.domain.FindAllUsersUseCase;
 import de.untitledrpgwebapp.user.domain.FindUserByNameUseCase;
 import de.untitledrpgwebapp.user.impl.quarkus.boundary.dto.CreateUserDto;
 import de.untitledrpgwebapp.user.impl.quarkus.boundary.mapper.UserMapper;
+import java.security.Principal;
 import java.util.Optional;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -129,5 +131,31 @@ class UserEndpointTest {
     UserResponseValidator.assertCreateUserResponseIsAsExpected(response);
 
     verify(createUser).execute(request);
+  }
+
+  @Test
+  @DisplayName("Should call findUser with the expected parameters and return the expected response "
+      + "when getMe is called.")
+  void shouldCallFindUserWithExpectedParametersAndReturnExpectedResultWhenGetMeIsCalled() {
+    // GIVEN
+    when(findUser.execute(any()))
+        .thenReturn(Optional.of(UserResponse.builder().name(USER_ONE_NAME).build()));
+    when(mapper.responseToDto(any())).thenReturn(USER_DTO_ONE);
+    Principal principal = mock(Principal.class);
+    when(principal.getName()).thenReturn(USER_ONE_NAME);
+    SecurityContext context = mock(SecurityContext.class);
+    when(context.getUserPrincipal()).thenReturn(principal);
+
+    // WHEN
+    Response actual = uut.findCurrentUser(context, CORRELATION_ID);
+
+    // THEN
+    UserResponseValidator.assertResponseIsAsExpected(actual);
+
+    verify(findUser).execute(argThat(request -> {
+      assertThat(request.getName(), is(USER_ONE_NAME));
+      assertThat(request.getCorrelationId(), is(CORRELATION_ID));
+      return true;
+    }));
   }
 }

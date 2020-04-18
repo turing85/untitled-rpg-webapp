@@ -11,6 +11,7 @@ import de.untitledrpgwebapp.user.domain.FindAllUsersUseCase;
 import de.untitledrpgwebapp.user.domain.FindUserByNameUseCase;
 import de.untitledrpgwebapp.user.impl.quarkus.boundary.dto.CreateUserDto;
 import de.untitledrpgwebapp.user.impl.quarkus.boundary.mapper.UserMapper;
+import io.quarkus.security.Authenticated;
 import java.net.URI;
 import java.util.Collection;
 import java.util.UUID;
@@ -27,8 +28,10 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 import lombok.AllArgsConstructor;
 
 @ApplicationScoped
@@ -115,6 +118,34 @@ public class UserEndpoint {
     return Response
         .created(URI.create(String.format(GET_ONE_PATH_TEMPLATE, response.getName())))
         .entity(mapper.responseToDto(response))
+        .header(StaticConfig.CORRELATION_ID_HEADER_KEY, correlationId)
+        .build();
+  }
+
+  /**
+   * Returns information of the currently logged-in user.
+   *
+   * @param context
+   *    the security context, holding a reference to the user principal.
+   * @param correlationId
+   *     the correlation-id for the process.
+   *
+   * @return the user corresponding to the user described in the principal.
+   */
+  @GET
+  @Path("/me")
+  @Authenticated
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response findCurrentUser(
+      @Context SecurityContext context,
+      @HeaderParam(StaticConfig.CORRELATION_ID_HEADER_KEY) UUID correlationId) {
+    String userName = context.getUserPrincipal().getName();
+    UserResponse user =
+        findUser.execute(FindUserByNameRequest.builder()
+            .name(userName)
+            .correlationId(correlationId).build()
+        ).orElseThrow(() -> EntityNotFoundException.userWithName(userName, correlationId));
+    return Response.ok(mapper.responseToDto(user))
         .header(StaticConfig.CORRELATION_ID_HEADER_KEY, correlationId)
         .build();
   }
