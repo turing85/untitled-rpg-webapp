@@ -1,6 +1,6 @@
 package de.untitledrpgwebapp.user.testfixture;
 
-import static de.untitledrpgwebapp.language.testfixture.LanguageFixture.*;
+import static de.untitledrpgwebapp.language.testfixture.LanguageFixture.LANGUAGE_ONE_TAG;
 
 import de.untitledrpgwebapp.user.boundary.response.UserResponse;
 import java.util.List;

@@ -1,6 +1,6 @@
 package de.untitledrpgwebapp.user.boundary;
 
-import de.untitledrpgwebapp.boundary.PageAndSortConfig;
+import de.untitledrpgwebapp.common.boundary.PageAndSortConfig;
 import de.untitledrpgwebapp.user.boundary.request.CreateUserRequest;
 import de.untitledrpgwebapp.user.boundary.response.UserResponse;
 import java.util.Collection;

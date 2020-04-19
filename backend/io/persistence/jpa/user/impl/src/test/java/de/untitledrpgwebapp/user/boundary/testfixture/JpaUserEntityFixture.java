@@ -5,7 +5,7 @@ import static de.untitledrpgwebapp.user.testfixture.UserFixture.USER_ONE_NAME;
 import static de.untitledrpgwebapp.user.testfixture.UserFixture.USER_TWO_EMAIL;
 import static de.untitledrpgwebapp.user.testfixture.UserFixture.USER_TWO_NAME;
 
-import de.untitledrpgwebapp.user.boundary.spi.entity.JpaUserEntity;
+import de.untitledrpgwebapp.user.boundary.entity.JpaUserEntity;
 import java.util.List;
 
 public class JpaUserEntityFixture {

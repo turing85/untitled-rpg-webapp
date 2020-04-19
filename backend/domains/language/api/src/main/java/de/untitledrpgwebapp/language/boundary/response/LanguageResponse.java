@@ -1,6 +1,6 @@
 package de.untitledrpgwebapp.language.boundary.response;
 
-import de.untitledrpgwebapp.boundary.Correlated;
+import de.untitledrpgwebapp.common.boundary.Correlated;
 import java.util.UUID;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
