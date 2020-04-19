@@ -9,12 +9,8 @@ import de.untitledrpgwebapp.oidc.boundary.request.CreateAccountRequest;
 import de.untitledrpgwebapp.oidc.domain.CreateAccountUseCase;
 import de.untitledrpgwebapp.user.boundary.UserDao;
 import de.untitledrpgwebapp.user.boundary.request.CreateUserRequest;
-import de.untitledrpgwebapp.user.boundary.request.FindUserByEmailRequest;
-import de.untitledrpgwebapp.user.boundary.request.FindUserByNameRequest;
 import de.untitledrpgwebapp.user.boundary.response.UserResponse;
 import de.untitledrpgwebapp.user.domain.CreateUserUseCase;
-import de.untitledrpgwebapp.user.domain.FindUserByEmailUseCase;
-import de.untitledrpgwebapp.user.domain.FindUserByNameUseCase;
 import de.untitledrpgwebapp.user.impl.localstore.boundary.mapper.UserMapper;
 import java.util.Optional;
 import java.util.UUID;
@@ -28,8 +24,6 @@ public class CreateUserInDatabaseUseCase implements CreateUserUseCase {
 
   private final UserMapper mapper;
   private final UserDao dao;
-  private final FindUserByNameUseCase findByName;
-  private final FindUserByEmailUseCase findByEmail;
   private final FindLanguageByTagUseCase findLanguage;
   private final CreateAccountUseCase createAccount;
 
@@ -52,21 +46,10 @@ public class CreateUserInDatabaseUseCase implements CreateUserUseCase {
   }
 
   private void verifyNameAndEmailAreAvailable(String name, String email, UUID correlationId) {
-    boolean userWithNameIsPresent = findByName.execute(FindUserByNameRequest.builder()
-        .name(name)
-        .correlationId(correlationId)
-        .build()
-    ).isPresent();
-    if (userWithNameIsPresent) {
+    if (dao.findByName(name).isPresent()) {
       throw EntityAlreadyExistsException.userWithName(name, correlationId);
     }
-
-    boolean userWithEmailIsPresent = findByEmail.execute(FindUserByEmailRequest.builder()
-        .email(email)
-        .correlationId(correlationId)
-        .build()
-    ).isPresent();
-    if (userWithEmailIsPresent) {
+    if (dao.findByEmail(email).isPresent()) {
       throw EntityAlreadyExistsException.userWithEmail(email, correlationId);
     }
   }

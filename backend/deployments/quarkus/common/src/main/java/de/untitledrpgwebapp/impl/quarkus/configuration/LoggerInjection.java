@@ -1,6 +1,5 @@
 package de.untitledrpgwebapp.impl.quarkus.configuration;
 
-import java.util.Optional;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
@@ -20,8 +19,6 @@ public class LoggerInjection {
    */
   @Produces
   public Logger logger(InjectionPoint injectionPoint) {
-    return LoggerFactory.getLogger(Optional.ofNullable(
-        injectionPoint.getMember().getDeclaringClass().getName())
-        .orElseThrow(IllegalArgumentException::new));
+    return LoggerFactory.getLogger(injectionPoint.getMember().getDeclaringClass().getName());
   }
 }

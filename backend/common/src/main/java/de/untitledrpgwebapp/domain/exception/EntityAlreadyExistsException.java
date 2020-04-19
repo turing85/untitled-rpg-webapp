@@ -21,7 +21,7 @@ public class EntityAlreadyExistsException extends BusinessException {
     return new EntityAlreadyExistsException("user", "email", email, correlationId);
   }
 
-  public static EntityAlreadyExistsException tagWithLanguage(String tag, UUID correlationId) {
+  public static EntityAlreadyExistsException languageWithTag(String tag, UUID correlationId) {
     return new EntityAlreadyExistsException("language", "tag", tag, correlationId);
   }
 }

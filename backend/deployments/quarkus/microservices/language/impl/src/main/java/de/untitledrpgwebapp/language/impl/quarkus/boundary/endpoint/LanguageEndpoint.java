@@ -88,7 +88,7 @@ public class LanguageEndpoint {
       @HeaderParam(StaticConfig.CORRELATION_ID_HEADER_KEY) UUID correlationId) {
     LanguageResponse response = findLanguage
         .execute(FindLanguageByTagRequest.builder().tag(tag).correlationId(correlationId).build())
-        .orElseThrow(() -> EntityNotFoundException.tagWithLanguage(tag, correlationId));
+        .orElseThrow(() -> EntityNotFoundException.languageWithTag(tag, correlationId));
     return Response
         .ok(mapper.responseToDto(response))
         .header(StaticConfig.CORRELATION_ID_HEADER_KEY, correlationId)

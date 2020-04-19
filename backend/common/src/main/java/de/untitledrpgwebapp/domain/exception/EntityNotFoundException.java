@@ -17,7 +17,7 @@ public class EntityNotFoundException extends BusinessException {
     return new EntityNotFoundException("user", "name", name, correlationId);
   }
 
-  public static EntityNotFoundException tagWithLanguage(String tag, UUID correlationId) {
+  public static EntityNotFoundException languageWithTag(String tag, UUID correlationId) {
     return new EntityNotFoundException("language", "tag", tag, correlationId);
   }
 }

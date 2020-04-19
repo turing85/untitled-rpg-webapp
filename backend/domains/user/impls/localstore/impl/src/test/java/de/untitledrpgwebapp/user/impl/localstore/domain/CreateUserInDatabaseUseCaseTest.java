@@ -24,8 +24,6 @@ import de.untitledrpgwebapp.oidc.domain.CreateAccountUseCase;
 import de.untitledrpgwebapp.user.boundary.UserDao;
 import de.untitledrpgwebapp.user.boundary.request.CreateUserRequest;
 import de.untitledrpgwebapp.user.boundary.response.UserResponse;
-import de.untitledrpgwebapp.user.domain.FindUserByEmailUseCase;
-import de.untitledrpgwebapp.user.domain.FindUserByNameUseCase;
 import de.untitledrpgwebapp.user.impl.localstore.boundary.mapper.UserMapper;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
@@ -49,20 +47,16 @@ class CreateUserInDatabaseUseCaseTest {
   private final CreateAccountUseCase createAccount = mock(CreateAccountUseCase.class);
   private final UserMapper mapper = mock(UserMapper.class);
 
-  private final FindUserByNameUseCase findByName = mock(FindUserByNameUseCase.class);
-  private final FindUserByEmailUseCase findByEmail = mock(FindUserByEmailUseCase.class);
   private final CreateUserInDatabaseUseCase uut = new CreateUserInDatabaseUseCase(
       mapper,
       dao,
-      findByName,
-      findByEmail,
       findLanguageByTag,
       createAccount);
 
   @BeforeEach
   void setup() {
-    when(findByName.execute(any())).thenReturn(Optional.empty());
-    when(findByEmail.execute(any())).thenReturn(Optional.empty());
+    when(dao.findByName(any())).thenReturn(Optional.empty());
+    when(dao.findByEmail(any())).thenReturn(Optional.empty());
     when(findLanguageByTag.execute(any())).thenReturn(Optional.of(LANGUAGE_ONE_RESPONSE));
     when(mapper.requestToRequest(any())).thenReturn(createAccountRequest);
     when(dao.save(any())).thenReturn(USER_RESPONSE_ONE);
@@ -116,16 +110,8 @@ class CreateUserInDatabaseUseCaseTest {
   }
 
   private void verifyFindByUseCasesWereCalledWithExpectedParameters() {
-    verify(findByName).execute(argThat(request -> {
-      assertThat(request.getName(), is(USER_ONE_NAME));
-      assertThat(request.getCorrelationId(), is(CORRELATION_ID));
-      return true;
-    }));
-    verify(findByEmail).execute(argThat(request -> {
-      assertThat(request.getEmail(), is(USER_ONE_EMAIL));
-      assertThat(request.getCorrelationId(), is(CORRELATION_ID));
-      return true;
-    }));
+    verify(dao).findByName(USER_ONE_NAME);
+    verify(dao).findByEmail(USER_ONE_EMAIL);
     verify(findLanguageByTag).execute(argThat(request -> {
       assertThat(request.getCorrelationId(), is(CORRELATION_ID));
       assertThat(request.getTag(), is(LANGUAGE_ONE_TAG));
@@ -134,9 +120,11 @@ class CreateUserInDatabaseUseCaseTest {
   }
 
   @Test
+  @DisplayName("Should throw an EntityAlreadyExistsException when an user with this name already "
+      + "exists.")
   void shouldThrowEntityAlreadyExistsExceptionWithExpectedMessageWhenUserWithNameAlreadyExists() {
     // GIVEN
-    when(findByName.execute(any())).thenReturn(Optional.of(USER_RESPONSE_ONE));
+    when(dao.findByName(any())).thenReturn(Optional.of(USER_RESPONSE_ONE));
 
     String expectedMessage = String.format(
         EntityAlreadyExistsException.MESSAGE_FORMAT,
@@ -154,9 +142,11 @@ class CreateUserInDatabaseUseCaseTest {
   }
 
   @Test
+  @DisplayName("Should throw an EntityAlreadyExistsException when an user with this email already "
+      + "exists.")
   void shouldThrowEntityAlreadyExistsExceptionWithExpectedMessageWhenUserWithEmailAlreadyExists() {
     // GIVEN
-    when(findByEmail.execute(any())).thenReturn(Optional.of(USER_RESPONSE_ONE));
+    when(dao.findByEmail(any())).thenReturn(Optional.of(USER_RESPONSE_ONE));
 
     String expectedMessage = String.format(
         EntityAlreadyExistsException.MESSAGE_FORMAT,
