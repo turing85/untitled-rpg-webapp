@@ -18,6 +18,7 @@ import de.untitledrpgwebapp.user.domain.FindUserByNameUseCase;
 import de.untitledrpgwebapp.user.impl.localstore.boundary.mapper.UserMapper;
 import java.util.Optional;
 import java.util.UUID;
+import javax.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -32,29 +33,12 @@ public class CreateUserInDatabaseUseCase implements CreateUserUseCase {
   private final FindLanguageByTagUseCase findLanguage;
   private final CreateAccountUseCase createAccount;
 
+  @Transactional
   @Override
   public UserResponse execute(CreateUserRequest request) {
     UUID correlationId = request.getCorrelationId();
 
-    String name = request.getName();
-    boolean userWithNameIsPresent = findByName.execute(FindUserByNameRequest.builder()
-        .name(name)
-        .correlationId(correlationId)
-        .build()
-    ).isPresent();
-    if (userWithNameIsPresent) {
-      throw EntityAlreadyExistsException.userWithName(name, correlationId);
-    }
-
-    String email = request.getEmail();
-    boolean userWithEmailIsPresent = findByEmail.execute(FindUserByEmailRequest.builder()
-        .email(email)
-        .correlationId(correlationId)
-        .build()
-    ).isPresent();
-    if (userWithEmailIsPresent) {
-      throw EntityAlreadyExistsException.userWithEmail(email, correlationId);
-    }
+    verifyNameAndEmailAreAvailable(request.getName(), request.getEmail(), correlationId);
 
     String preferredLanguageTag = request.getPreferredLanguageTag();
     if (findLanguageByTag(preferredLanguageTag, correlationId).isEmpty()) {
@@ -65,6 +49,26 @@ public class CreateUserInDatabaseUseCase implements CreateUserUseCase {
     return dao.save(request).toBuilder()
         .correlationId(request.getCorrelationId())
         .build();
+  }
+
+  private void verifyNameAndEmailAreAvailable(String name, String email, UUID correlationId) {
+    boolean userWithNameIsPresent = findByName.execute(FindUserByNameRequest.builder()
+        .name(name)
+        .correlationId(correlationId)
+        .build()
+    ).isPresent();
+    if (userWithNameIsPresent) {
+      throw EntityAlreadyExistsException.userWithName(name, correlationId);
+    }
+
+    boolean userWithEmailIsPresent = findByEmail.execute(FindUserByEmailRequest.builder()
+        .email(email)
+        .correlationId(correlationId)
+        .build()
+    ).isPresent();
+    if (userWithEmailIsPresent) {
+      throw EntityAlreadyExistsException.userWithEmail(email, correlationId);
+    }
   }
 
   private Optional<String> findLanguageByTag(String languageTag, UUID correlationId) {

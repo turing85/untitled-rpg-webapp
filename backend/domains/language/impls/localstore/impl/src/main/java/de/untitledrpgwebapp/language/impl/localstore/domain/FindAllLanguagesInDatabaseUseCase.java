@@ -6,6 +6,7 @@ import de.untitledrpgwebapp.language.domain.FindAllLanguagesUseCase;
 import de.untitledrpgwebapp.language.impl.localstore.boundary.LanguageDao;
 import java.util.Collection;
 import java.util.stream.Collectors;
+import javax.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -15,6 +16,7 @@ public class FindAllLanguagesInDatabaseUseCase implements FindAllLanguagesUseCas
 
   private final LanguageDao dao;
 
+  @Transactional
   @Override
   public Collection<LanguageResponse> execute(FindAllLanguagesRequest request) {
     return dao.findAll(request.getConfig())

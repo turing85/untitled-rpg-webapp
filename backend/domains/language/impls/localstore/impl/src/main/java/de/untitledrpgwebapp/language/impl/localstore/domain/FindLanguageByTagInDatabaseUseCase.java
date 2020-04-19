@@ -5,6 +5,7 @@ import de.untitledrpgwebapp.language.boundary.response.LanguageResponse;
 import de.untitledrpgwebapp.language.domain.FindLanguageByTagUseCase;
 import de.untitledrpgwebapp.language.impl.localstore.boundary.LanguageDao;
 import java.util.Optional;
+import javax.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -14,6 +15,7 @@ public class FindLanguageByTagInDatabaseUseCase implements FindLanguageByTagUseC
 
   private final LanguageDao dao;
 
+  @Transactional
   @Override
   public Optional<LanguageResponse> execute(FindLanguageByTagRequest request) {
     return dao.findByTag(request.getTag())

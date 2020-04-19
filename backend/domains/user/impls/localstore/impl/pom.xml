@@ -32,6 +32,11 @@
       <version>${project.version}</version>
     </dependency>
 
+    <dependency>
+      <groupId>jakarta.transaction</groupId>
+      <artifactId>jakarta.transaction-api</artifactId>
+    </dependency>
+
     <!-- Test fixtures -->
     <dependency>
       <groupId>de.nextrpgdevs</groupId>

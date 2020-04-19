@@ -5,6 +5,7 @@ import de.untitledrpgwebapp.user.boundary.request.FindUserByEmailRequest;
 import de.untitledrpgwebapp.user.boundary.response.UserResponse;
 import de.untitledrpgwebapp.user.domain.FindUserByEmailUseCase;
 import java.util.Optional;
+import javax.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -14,6 +15,7 @@ public class FindUserByEmailInDatabaseUseCase implements FindUserByEmailUseCase 
 
   private final UserDao dao;
 
+  @Transactional
   @Override
   public Optional<UserResponse> execute(FindUserByEmailRequest request) {
     return dao.findByEmail(request.getEmail())
