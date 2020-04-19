@@ -16,6 +16,7 @@ public class CreateLanguageInDatabaseUseCase implements CreateLanguageUseCase {
 
   private final LanguageDao dao;
 
+
   @Transactional
   @Override
   public LanguageResponse execute(CreateLanguageRequest request) {
@@ -28,7 +29,7 @@ public class CreateLanguageInDatabaseUseCase implements CreateLanguageUseCase {
         .build();
   }
 
-  public void verifyTagIsAvailable(String tag, UUID correlationId) {
+  private void verifyTagIsAvailable(String tag, UUID correlationId) {
     if (dao.findByTag(tag).isPresent()) {
       throw EntityAlreadyExistsException.languageWithTag(tag, correlationId);
     }
