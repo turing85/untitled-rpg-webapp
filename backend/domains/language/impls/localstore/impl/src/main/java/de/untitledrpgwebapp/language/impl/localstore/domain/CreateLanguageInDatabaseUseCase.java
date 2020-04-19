@@ -20,14 +20,17 @@ public class CreateLanguageInDatabaseUseCase implements CreateLanguageUseCase {
   @Override
   public LanguageResponse execute(CreateLanguageRequest request) {
     UUID correlationId = request.getCorrelationId();
-    String tag = request.getTag();
 
-    if (dao.findByTag(request.getTag()).isPresent()) {
-      throw EntityAlreadyExistsException.languageWithTag(tag, correlationId);
-    }
+    verifyTagIsAvailable(request.getTag(), correlationId);
 
     return dao.save(request).toBuilder()
         .correlationId(request.getCorrelationId())
         .build();
+  }
+
+  public void verifyTagIsAvailable(String tag, UUID correlationId) {
+    if (dao.findByTag(tag).isPresent()) {
+      throw EntityAlreadyExistsException.languageWithTag(tag, correlationId);
+    }
   }
 }
