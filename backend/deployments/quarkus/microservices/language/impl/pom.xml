@@ -25,7 +25,8 @@
     </dependency>
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
-      <artifactId>untitled-rpg-webapp.backend.deployments.quarkus.microservices.language.api</artifactId>
+      <artifactId>untitled-rpg-webapp.backend.deployments.quarkus.microservices.language.api
+      </artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
@@ -57,7 +58,9 @@
 
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
-      <artifactId>untitled-rpg-webapp.backend.deployments.quarkus.microservices.language.api</artifactId>
+      <artifactId>
+        untitled-rpg-webapp.backend.deployments.quarkus.microservices.language.api
+      </artifactId>
       <version>${project.version}</version>
       <type>test-jar</type>
       <scope>test</scope>
@@ -117,6 +120,10 @@
                   <name>rpg/language-service</name>
                   <build>
                     <dockerFileDir>${basedir}</dockerFileDir>
+                    <tags>
+                      <tag>latest</tag>
+                      <tag>${git.commit.id.describe-short}</tag>
+                    </tags>
                   </build>
                 </image>
               </images>

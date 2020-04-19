@@ -28,7 +28,9 @@
     </dependency>
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
-      <artifactId>untitled-rpg-webapp.backend.deployments.quarkus.microservices.user.api</artifactId>
+      <artifactId>
+        untitled-rpg-webapp.backend.deployments.quarkus.microservices.user.api
+      </artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
@@ -43,7 +45,9 @@
     </dependency>
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
-      <artifactId>untitled-rpg-webapp.backend.domains.language.impls.quarkusrestclient.impl</artifactId>
+      <artifactId>
+        untitled-rpg-webapp.backend.domains.language.impls.quarkusrestclient.impl
+      </artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
@@ -69,7 +73,9 @@
     </dependency>
     <dependency>
       <groupId>de.nextrpgdevs</groupId>
-      <artifactId>untitled-rpg-webapp.backend.deployments.quarkus.microservices.user.api</artifactId>
+      <artifactId>
+        untitled-rpg-webapp.backend.deployments.quarkus.microservices.user.api
+      </artifactId>
       <version>0.0.1-SNAPSHOT</version>
       <type>test-jar</type>
       <scope>test</scope>
@@ -130,6 +136,10 @@
                   <name>rpg/user-service</name>
                   <build>
                     <dockerFileDir>${basedir}</dockerFileDir>
+                    <tags>
+                      <tag>latest</tag>
+                      <tag>${git.commit.id.describe-short}</tag>
+                    </tags>
                   </build>
                 </image>
               </images>

@@ -47,6 +47,7 @@
 
     <!-- maven plugins -->
     <checkstyle.version>8.25</checkstyle.version>
+    <git-commit-id-plugin.version>4.0.0</git-commit-id-plugin.version>
     <io.fabric8.version>0.32.0</io.fabric8.version>
     <jacoco.maven.plugin.version>0.8.4</jacoco.maven.plugin.version>
     <maven.checkstyle.plugin.version>3.1.0</maven.checkstyle.plugin.version>
@@ -276,6 +277,30 @@
                 </configuration>
               </execution>
             </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>docker</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>pl.project13.maven</groupId>
+            <artifactId>git-commit-id-plugin</artifactId>
+            <version>${git-commit-id-plugin.version}</version>
+            <executions>
+              <execution>
+                <id>get-the-git-infos</id>
+                <goals>
+                  <goal>revision</goal>
+                </goals>
+                <phase>package</phase>
+              </execution>
+            </executions>
+            <configuration>
+              <dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
+            </configuration>
           </plugin>
         </plugins>
       </build>
