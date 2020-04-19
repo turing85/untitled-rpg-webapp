@@ -11,5 +11,5 @@ import lombok.experimental.SuperBuilder;
 public class FindAllLanguagesRequest implements Correlated {
 
   private final UUID correlationId;
-  private PageAndSortConfig config;
+  private final PageAndSortConfig config;
 }

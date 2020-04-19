@@ -7,4 +7,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 public interface JpaUserRepository extends PagingAndSortingRepository<JpaUserEntity, Long> {
 
   Optional<JpaUserEntity> findByName(String name);
+
+  Optional<JpaUserEntity> findByEmail(String email);
 }

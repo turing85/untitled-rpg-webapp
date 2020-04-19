@@ -12,5 +12,7 @@ public interface UserDao {
 
   Optional<UserResponse> findByName(String name);
 
+  Optional<UserResponse> findByEmail(String email);
+
   Collection<UserResponse> findAll(PageAndSortConfig config);
 }

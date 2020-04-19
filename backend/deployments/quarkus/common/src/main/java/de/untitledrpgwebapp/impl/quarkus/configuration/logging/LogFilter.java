@@ -19,7 +19,7 @@ import lombok.Getter;
 @Getter(AccessLevel.PROTECTED)
 public abstract class LogFilter {
 
-  private HttpTrafficLogger logger;
+  private final HttpTrafficLogger logger;
 
   protected LogFilter(HttpTrafficLogger logger) {
     this.logger = logger;

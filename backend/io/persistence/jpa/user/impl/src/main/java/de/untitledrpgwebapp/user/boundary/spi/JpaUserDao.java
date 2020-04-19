@@ -53,8 +53,12 @@ public class JpaUserDao implements UserDao {
 
   @Override
   public Optional<UserResponse> findByName(String name) {
-    return repository.findByName(name)
-        .map(mapper::entityToResponse);
+    return repository.findByName(name).map(mapper::entityToResponse);
+  }
+
+  @Override
+  public Optional<UserResponse> findByEmail(String email) {
+    return repository.findByEmail(email).map(mapper::entityToResponse);
   }
 
   @Override

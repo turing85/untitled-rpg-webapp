@@ -4,6 +4,7 @@ import static de.untitledrpgwebapp.user.boundary.testfixture.JpaUserEntityFixtur
 import static de.untitledrpgwebapp.user.boundary.testfixture.JpaUserEntityFixture.USER_ENTITY_ONE;
 import static de.untitledrpgwebapp.user.boundary.testfixture.JpaUserEntityFixture.USER_ENTITY_TWO;
 import static de.untitledrpgwebapp.user.testfixture.UserFixture.USER_NAMES;
+import static de.untitledrpgwebapp.user.testfixture.UserFixture.USER_ONE_EMAIL;
 import static de.untitledrpgwebapp.user.testfixture.UserFixture.USER_ONE_NAME;
 import static de.untitledrpgwebapp.user.testfixture.UserFixture.USER_RESPONSES;
 import static de.untitledrpgwebapp.user.testfixture.UserFixture.USER_RESPONSE_ONE;
@@ -103,6 +104,24 @@ class JpaUserDaoTest {
     assertThat(actual.getName(), is(USER_ONE_NAME));
 
     verify(repository).findByName(USER_ONE_NAME);
+  }
+
+  @Test
+  @DisplayName("Should call all dependencies with the expected parameters and return the expected "
+      + "response when findByEmail is called.")
+  void shouldCallDependenciesWithExpectedParametersAndReturnExpectedResultWhenFindByEmailIsCalled() {
+    // GIVEN: defaults
+    when(repository.findByEmail(anyString())).thenReturn(Optional.of(USER_ENTITY_ONE));
+
+    // WHEN:
+    Optional<UserResponse> fetched = uut.findByEmail(USER_ONE_EMAIL);
+
+    // THEN
+    assertTrue(fetched.isPresent());
+    UserResponse actual = fetched.get();
+    assertThat(actual.getName(), is(USER_ONE_NAME));
+
+    verify(repository).findByEmail(USER_ONE_EMAIL);
   }
 
   @Test

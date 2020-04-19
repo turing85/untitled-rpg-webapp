@@ -16,8 +16,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public class FindLanguageByTagViaRestUseCase implements FindLanguageByTagUseCase {
 
-  private LanguageRestClient client;
-  private LanguageMapper mapper;
+  private final LanguageRestClient client;
+  private final LanguageMapper mapper;
 
   @Override
   public Optional<LanguageResponse> execute(
