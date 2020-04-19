@@ -19,7 +19,6 @@ quarkus:
   jaeger:
     enabled: true
     endpoint: ${TRACING_ENDPOINT:http://localhost:14268/api/traces}
-    reporter-log-spans: true
     sampler-type: const
     sampler-param: 1
     service-name: user-service
