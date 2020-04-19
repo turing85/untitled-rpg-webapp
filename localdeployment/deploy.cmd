@@ -13,9 +13,9 @@ CD /D %SCRIPT_DRIVE%
 CD %SCRIPT_PATH%
 
 ECHO ================================================================================
-ECHO Starting docker deployments: postgres and keycloak
+ECHO Starting docker deployments: jaeger, postgres and keycloak
 ECHO ================================================================================
-CALL docker-compose up -d dbms-service oidc-service
+CALL docker-compose up -d tracing-service dbms-service oidc-service
 IF !ERRORLEVEL! NEQ 0 (
   CD /D %FROM_DRIVE%
   CD %FROM_PATH%

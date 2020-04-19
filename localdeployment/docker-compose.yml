@@ -1,5 +1,10 @@
 version: '3.7'
 services:
+  tracing-service:
+    image: jaegertracing/all-in-one@sha256:aa49be5a3c80f540aa25b26073f70da2bbd71a57dcaff8765c818e712d271ccf
+    ports:
+      - '14268:14268'
+      - '16686:16686'
   dbms-service:
     image: postgres:12.2@sha256:c52d4eac43883c53113cee0ebd1ce0fe53ef0604708822901ecca6655968fa9a
     volumes:
@@ -34,6 +39,8 @@ services:
     environment:
       - JAVA_TOOL_OPTIONS='-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5000'
       - DB_HOST=dbms-service
+      - ENABLE_TRACING=false
+      - TRACING_ENDPOINT=http://tracing-service:14268/api/traces
       - HTTP_PORT=8080
       - OIDC_SERVER_URL=http://oidc-service:8080/auth
     ports:
@@ -47,6 +54,8 @@ services:
     environment:
       - JAVA_TOOL_OPTIONS='-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5000'
       - DB_HOST=dbms-service
+      - ENABLE_TRACING=false
+      - TRACING_ENDPOINT=http://tracing-service:14268/api/traces
       - HTTP_PORT=8080
       - OIDC_SERVER_URL=http://oidc-service:8080/auth
       - LANGUAGE_SERVICE_URL=http://language-service:8080

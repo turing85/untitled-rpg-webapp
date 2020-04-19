@@ -5,9 +5,9 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 cd "${SCRIPT_DIR}"
 
 echo "================================================================================"
-echo "Starting docker deployments: postgres and keycloak"
+echo "Starting docker deployments: jaeger, postgres and keycloak"
 echo "================================================================================"
-docker-compose up -d dbms-service oidc-service
+docker-compose up -d tracing-service dbms-service oidc-service
 
 if [[ ${BUILD_PROJECT} == true ]]; then
   MIGRATE_DATABASES=true
