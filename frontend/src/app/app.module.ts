@@ -18,7 +18,6 @@ import { environment } from '../environments/environment'; // Angular CLI enviro
     AppRoutingModule,
     KeycloakAngularModule,
     HttpClientModule,
-
     StoreModule.forRoot({ user: userReducer }),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states

@@ -3,3 +3,19 @@ $grey-2: #323234;
 $grey-3: #2a2a2e;
 $primary-color-1: #d08222;
 $text-color: #f9f9fa;
+$alert-color-1: #ef5350;
+.primary {
+    background-color: $primary-color-1 !important
+}
+
+.primary-text {
+    color: $primary-color-1 !important
+}
+
+.alert {
+    background-color: $alert-color-1 !important
+}
+
+.alert-text {
+    color: $alert-color-1 !important
+}

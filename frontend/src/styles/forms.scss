@@ -1,0 +1,19 @@
+@import 'colors';
+input:not([type]),
+input[type=text]:not(.browser-default),
+input[type=password]:not(.browser-default),
+input[type=email]:not(.browser-default),
+input[type=url]:not(.browser-default),
+input[type=time]:not(.browser-default),
+input[type=date]:not(.browser-default),
+input[type=datetime]:not(.browser-default),
+input[type=datetime-local]:not(.browser-default),
+input[type=tel]:not(.browser-default),
+input[type=number]:not(.browser-default),
+input[type=search]:not(.browser-default),
+textarea.materialize-textarea {
+    &:focus:not([readonly]) {
+        border-bottom: 1px solid $primary-color-1;
+        box-shadow: 0 1px 0 0 $primary-color-1;
+    }
+}

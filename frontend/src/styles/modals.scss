@@ -1,0 +1,11 @@
+@import 'colors';
+.modal {
+    margin-top: 10vh;
+    margin-left: 30vw;
+    height: calc( 80vh - 40px);
+    width: calc( 40vw - 40px);
+    display: flex;
+    padding: 20px;
+    flex-direction: column;
+    background-color: $grey-2;
+}

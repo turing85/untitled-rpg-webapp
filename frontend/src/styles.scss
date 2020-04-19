@@ -1,13 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
 
+@import 'styles/materialize/materialize.css';
 @import 'styles/colors';
 @import 'styles/sidebar';
 @import 'styles/debug';
 @import 'styles/breadcrumb';
 @import 'styles/content-header';
-
-/* mobile */
-
+@import 'styles/modals';
+@import 'styles/forms';
+@import 'styles/register';
 @import 'styles/mobile/main';
 body {
     margin: 0px;
@@ -25,6 +26,10 @@ p {
     margin: 0px;
     padding-top: 16px;
     padding-bottom: 16px;
+}
+
+h1 {
+    padding: 10px;
 }
 
 .main-page {
