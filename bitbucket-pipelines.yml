@@ -39,7 +39,7 @@ definitions:
         caches:
           - maven
         script:
-          - mvn $MAVEN_CLI_OPTS -Punit-test-coverage -P!docker verify
+          - mvn $MAVEN_CLI_OPTS -Punit-test-coverage -P!docker jacoco:prepare-agent verify
         artifacts:
           - "**/target/**"
     - step: &analyze-with-sonar
