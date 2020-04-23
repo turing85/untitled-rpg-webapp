@@ -11,16 +11,16 @@ definitions:
           - maven
           - sonar
         script:
-          - /bin/sh mvnw clean install
-          - /bin/sh mvnw jacoco:prepare-agent verify
-          - /bin/sh mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.java.libraries=**/*.jar
+          - /bin/sh mvn clean install
+          - /bin/sh mvn jacoco:prepare-agent verify
+          - /bin/sh mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.java.libraries=**/*.jar
     - step: &build-java
         name: Build Java source code
         image: adoptopenjdk/maven-openjdk11@sha256:fd7ca81dc66b2d42907d2259ac179058bb26d8ce909116e1a8a3b539292cc988
         caches:
           - maven
         script:
-          - /bin/sh mvnw -P!unit-test-coverage -P!docker -DskipTests package
+          - /bin/sh mvn -P!unit-test-coverage -P!docker -DskipTests package
         artifacts:
           - "**/target/**"
     - step: &unit-test-java
@@ -29,14 +29,14 @@ definitions:
         caches:
           - maven
         script:
-          - /bin/s mvnw -P!unit-test-coverage -P!docker test
+          - /bin/s mvn -P!unit-test-coverage -P!docker test
     - step: &unit-test-java-coverage
         name: Exeucte Java unit tests with coverage
         image: adoptopenjdk/maven-openjdk11@sha256:fd7ca81dc66b2d42907d2259ac179058bb26d8ce909116e1a8a3b539292cc988
         caches:
           - maven
         script:
-          - /bin/s mvnw -Punit-test-coverage -P!docker verify
+          - /bin/s mvn -Punit-test-coverage -P!docker verify
         artifacts:
           - "backend/testaggregation/target/**"
     - step: &analyze-with-sonar
@@ -46,7 +46,7 @@ definitions:
           - maven
           - sonar
         script:
-          - /bin/sh mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.java.libraries=**/*.jar
+          - /bin/sh mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.java.libraries=**/*.jar
         artifacts:
           - "**/target/**"
 
