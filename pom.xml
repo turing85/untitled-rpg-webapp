@@ -13,7 +13,6 @@
   <packaging>pom</packaging>
   <modules>
     <module>backend</module>
-    <module>testaggregation</module>
   </modules>
 
   <properties>
@@ -62,6 +61,13 @@
                 <configuration>
                   <propertyName>failsafeArgLine</propertyName>
                 </configuration>
+              </execution>
+              <execution>
+                <id>jacoco-site</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>report</goal>
+                </goals>
               </execution>
             </executions>
           </plugin>

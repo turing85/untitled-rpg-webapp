@@ -20,6 +20,7 @@
     <module>deployments</module>
     <module>domains</module>
     <module>io</module>
+    <module>testaggregation</module>
   </modules>
 
   <properties>

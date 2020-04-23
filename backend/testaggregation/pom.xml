@@ -8,7 +8,7 @@
 
   <parent>
     <groupId>de.nextrpgdevs</groupId>
-    <artifactId>untitled-rpg-webapp</artifactId>
+    <artifactId>untitled-rpg-webapp.backend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
 

@@ -14,17 +14,17 @@ definitions:
           - maven
           - sonar
         script:
-          - cd backend
           - mvn $MAVEN_CLI_OPTS clean install
           - mvn $MAVEN_CLI_OPTS jacoco:prepare-agent verify
-          - mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.java.libraries=**/*.jar
+          - mvn \
+              -Dsonar.java.libraries=**/*.jar \
+              org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
     - step: &build-java
         name: Build Java source code
         image: adoptopenjdk/maven-openjdk11@sha256:fd7ca81dc66b2d42907d2259ac179058bb26d8ce909116e1a8a3b539292cc988
         caches:
           - maven
         script:
-          - cd backend
           - mvn $MAVEN_CLI_OPTS -P!unit-test-coverage -P!docker -DskipTests package
         artifacts:
           - "**/target/**"
@@ -34,7 +34,6 @@ definitions:
         caches:
           - maven
         script:
-          - cd backend
           - mvn $MAVEN_CLI_OPTS -P!unit-test-coverage -P!docker test
     - step: &unit-test-java-coverage
         name: Exeucte Java unit tests with coverage
@@ -42,7 +41,6 @@ definitions:
         caches:
           - maven
         script:
-          - cd backend
           - mvn $MAVEN_CLI_OPTS -Punit-test-coverage -P!docker jacoco:prepare-agent verify
         artifacts:
           - "**/target/**"
@@ -53,10 +51,9 @@ definitions:
           - maven
           - sonar
         script:
-          - cd backend
-          - mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+          - mvn \
               -Dsonar.java.libraries=**/*.jar \
-              -Dsonar.coverage.jacoco.xmlReportPaths=**/target/site/jacoco-aggregate-ut/jacoco.xml
+              org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
         artifacts:
           - "**/target/**"
 
