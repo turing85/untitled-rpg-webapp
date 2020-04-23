@@ -54,10 +54,9 @@ definitions:
           - sonar
         script:
           - cd backend
-          - mvn \
+          - mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
               -Dsonar.java.libraries=**/*.jar \
-              -Dsonar.coverage.jacoco.xmlReportPaths=**/target/site/jacoco-aggregate-ut/jacoco.xml \
-            org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
+              -Dsonar.coverage.jacoco.xmlReportPaths=**/target/site/jacoco-aggregate-ut/jacoco.xml
         artifacts:
           - "**/target/**"
 
