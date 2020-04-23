@@ -1,7 +1,5 @@
 @ECHO off
 
-SET ERRORLEVEL=
-
 SETLOCAL EnableDelayedExpansion
 
 SET FROM_PATH=%CD%
@@ -28,7 +26,7 @@ IF "%BUILD_PROJECT%" == "true" (
   ECHO ================================================================================
   SET MIGRATE_DATABASES=true
   CD ..
-  CALL mvnw.cmd -Pdocker -P!unit-test-coverage -DskipTests install
+  CALL mvnw.cmd -Pdocker -P!unit-test-coverage -DskipTests clean install
   IF !ERRORLEVEL! NEQ 0 (
     CD /D %FROM_DRIVE%
     CD %FROM_PATH%

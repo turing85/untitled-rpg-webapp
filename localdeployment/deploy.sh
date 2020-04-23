@@ -15,7 +15,7 @@ if [[ ${BUILD_PROJECT} == true ]]; then
   echo "Building project and generating docker images"
   echo "================================================================================"
   cd ../
-  ./mvnw -Pdocker -P!unit-test-coverage -DskipTests install
+  ./mvnw -Pdocker -P!unit-test-coverage -DskipTests clean install
   cd localdeployment
 fi
 
