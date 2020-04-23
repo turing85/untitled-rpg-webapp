@@ -1,9 +1,6 @@
 clone:
   depth: full              # SonarCloud scanner needs the full history to assign issues properly
 
-variables:
-  MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true"
-
 definitions:
   caches:
     sonar: ~/.sonar/cache  # Caching SonarCloud artifacts will speed up your build
@@ -23,7 +20,7 @@ definitions:
         caches:
           - maven
         script:
-          - /bin/sh mvnw $MAVEN_CLI_OPTS -P!unit-test-coverage -P!docker -DskipTests package
+          - /bin/sh mvnw -P!unit-test-coverage -P!docker -DskipTests package
         artifacts:
           - "**/target/**"
     - step: &unit-test-java
@@ -32,14 +29,14 @@ definitions:
         caches:
           - maven
         script:
-          - /bin/s mvnw $MAVEN_CLI_OPTS -P!unit-test-coverage -P!docker test
+          - /bin/s mvnw -P!unit-test-coverage -P!docker test
     - step: &unit-test-java-coverage
         name: Exeucte Java unit tests with coverage
         image: adoptopenjdk/maven-openjdk11@sha256:fd7ca81dc66b2d42907d2259ac179058bb26d8ce909116e1a8a3b539292cc988
         caches:
           - maven
         script:
-          - /bin/s mvnw $MAVEN_CLI_OPTS -Punit-test-coverage -P!docker verify
+          - /bin/s mvnw -Punit-test-coverage -P!docker verify
         artifacts:
           - "backend/testaggregation/target/**"
     - step: &analyze-with-sonar
