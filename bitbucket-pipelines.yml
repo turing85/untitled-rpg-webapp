@@ -1,6 +1,9 @@
 clone:
   depth: full              # SonarCloud scanner needs the full history to assign issues properly
 
+variables:
+  MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true"
+
 definitions:
   caches:
     sonar: ~/.sonar/cache  # Caching SonarCloud artifacts will speed up your build
@@ -11,8 +14,8 @@ definitions:
           - maven
           - sonar
         script:
-          - mvn clean install
-          - mvn jacoco:prepare-agent verify
+          - mvn $MAVEN_CLI_OPTS clean install
+          - mvn $MAVEN_CLI_OPTS jacoco:prepare-agent verify
           - mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.java.libraries=**/*.jar
     - step: &build-java
         name: Build Java source code
@@ -20,7 +23,7 @@ definitions:
         caches:
           - maven
         script:
-          - mvn -P!unit-test-coverage -P!docker -DskipTests package
+          - mvn $MAVEN_CLI_OPTS -P!unit-test-coverage -P!docker -DskipTests package
         artifacts:
           - "**/target/**"
     - step: &unit-test-java
@@ -29,16 +32,16 @@ definitions:
         caches:
           - maven
         script:
-          - mvn -P!unit-test-coverage -P!docker test
+          - mvn $MAVEN_CLI_OPTS -P!unit-test-coverage -P!docker test
     - step: &unit-test-java-coverage
         name: Exeucte Java unit tests with coverage
         image: adoptopenjdk/maven-openjdk11@sha256:fd7ca81dc66b2d42907d2259ac179058bb26d8ce909116e1a8a3b539292cc988
         caches:
           - maven
         script:
-          - mvn -Punit-test-coverage -P!docker verify
+          - mvn $MAVEN_CLI_OPTS -Punit-test-coverage -P!docker verify
         artifacts:
-          - "backend/testaggregation/target/**"
+          - "**/target/**"
     - step: &analyze-with-sonar
         name: Analyze with Sonar
         image: adoptopenjdk/maven-openjdk11@sha256:fd7ca81dc66b2d42907d2259ac179058bb26d8ce909116e1a8a3b539292cc988
@@ -58,10 +61,12 @@ pipelines:
     feature/*:
       - step: *build-java
       - step: *unit-test-java
-      - step: *unit-test-java-coverage
-        trigger: manual
-      - step: *analyze-with-sonar
-        trigger: manual
+      - step:
+          <<: *unit-test-java-coverage
+          trigger: manual
+      - step:
+          <<: *analyze-with-sonar
+          trigger: manual
     develop:
       - step: *build-java
       - step: *unit-test-java-coverage
