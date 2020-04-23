@@ -43,15 +43,15 @@ definitions:
         artifacts:
           - "backend/testaggregation/target/**"
     - step: &analyze-with-sonar
-      name: Analyze with Sonar
-      image: adoptopenjdk/maven-openjdk11@sha256:fd7ca81dc66b2d42907d2259ac179058bb26d8ce909116e1a8a3b539292cc988
-      caches:
-        - maven
-        - sonar
-      script:
-        - - /bin/sh mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.java.libraries=**/*.jar
-      artifacts:
-        - "**/target/**"
+        name: Analyze with Sonar
+        image: adoptopenjdk/maven-openjdk11@sha256:fd7ca81dc66b2d42907d2259ac179058bb26d8ce909116e1a8a3b539292cc988
+        caches:
+          - maven
+          - sonar
+        script:
+          - /bin/sh mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.java.libraries=**/*.jar
+        artifacts:
+          - "**/target/**"
 
 pipelines:
   custom:
