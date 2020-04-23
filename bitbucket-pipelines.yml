@@ -1,0 +1,80 @@
+clone:
+  depth: full              # SonarCloud scanner needs the full history to assign issues properly
+
+variables:
+  MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true"
+
+definitions:
+  caches:
+    sonar: ~/.sonar/cache  # Caching SonarCloud artifacts will speed up your build
+  steps:
+    - step: &populate-caches
+        name: Populate .m2 repository-cache and sonar-cache
+        caches:
+          - maven
+          - sonar
+        script:
+          - /bin/sh mvnw clean install
+          - /bin/sh mvnw jacoco:prepare-agent verify
+          - /bin/sh mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.java.libraries=**/*.jar
+    - step: &build-java
+        name: Build Java source code
+        image: adoptopenjdk/maven-openjdk11@sha256:fd7ca81dc66b2d42907d2259ac179058bb26d8ce909116e1a8a3b539292cc988
+        caches:
+          - maven
+        script:
+          - /bin/sh mvnw $MAVEN_CLI_OPTS -P!unit-test-coverage -P!docker -DskipTests package
+        artifacts:
+          - "**/target/**"
+    - step: &unit-test-java
+        name: Execute Java unit tests
+        image: adoptopenjdk/maven-openjdk11@sha256:fd7ca81dc66b2d42907d2259ac179058bb26d8ce909116e1a8a3b539292cc988
+        caches:
+          - maven
+        script:
+          - /bin/s mvnw $MAVEN_CLI_OPTS -P!unit-test-coverage -P!docker test
+    - step: &unit-test-java-coverage
+        name: Exeucte Java unit tests with coverage
+        image: adoptopenjdk/maven-openjdk11@sha256:fd7ca81dc66b2d42907d2259ac179058bb26d8ce909116e1a8a3b539292cc988
+        caches:
+          - maven
+        script:
+          - /bin/s mvnw $MAVEN_CLI_OPTS -Punit-test-coverage -P!docker verify
+        artifacts:
+          - "backend/testaggregation/target/**"
+    - step: &analyze-with-sonar
+      name: Analyze with Sonar
+      image: adoptopenjdk/maven-openjdk11@sha256:fd7ca81dc66b2d42907d2259ac179058bb26d8ce909116e1a8a3b539292cc988
+      caches:
+        - maven
+        - sonar
+      script:
+        - - /bin/sh mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.java.libraries=**/*.jar
+      artifacts:
+        - "**/target/**"
+
+pipelines:
+  custom:
+    populate-caches:
+      - step: *populate-caches
+  branches:
+    feature/*:
+      - step: *build-java
+      - step: *unit-test-java
+      - step: *unit-test-java-coverage
+        trigger: manual
+      - step: *analyze-with-sonar
+        trigger: manual
+    develop:
+      - step: *build-java
+      - step: *unit-test-java-coverage
+      - step: *analyze-with-sonar
+    master:
+      - step: *build-java
+      - step: *unit-test-java-coverage
+      - step: *analyze-with-sonar
+  pull-requests:
+    "**":
+      - step: *build-java
+      - step: *unit-test-java-coverage
+      - step: *analyze-with-sonar
