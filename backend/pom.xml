@@ -20,15 +20,9 @@
     <module>deployments</module>
     <module>domains</module>
     <module>io</module>
-    <module>testaggregation</module>
   </modules>
 
   <properties>
-    <!-- project settings -->
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <java.version>11</java.version>
-
     <!-- libraries -->
     <!-- Annotation processors -->
     <org.projectlombok.version>1.18.12</org.projectlombok.version>
@@ -49,16 +43,11 @@
     <checkstyle.version>8.25</checkstyle.version>
     <git-commit-id-plugin.version>4.0.0</git-commit-id-plugin.version>
     <io.fabric8.version>0.32.0</io.fabric8.version>
-    <jacoco.maven.plugin.version>0.8.4</jacoco.maven.plugin.version>
     <maven.checkstyle.plugin.version>3.1.0</maven.checkstyle.plugin.version>
     <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
     <maven.jar.plugin.version>3.2.0</maven.jar.plugin.version>
     <maven.surefire.plugin.version>2.22.2</maven.surefire.plugin.version>
 
-    <!-- Jacoco exclusions -->
-    <jacoco.exclusions>
-      **/*MapperImpl.class
-    </jacoco.exclusions>
   </properties>
 
   <dependencyManagement>
@@ -246,41 +235,6 @@
   </build>
 
   <profiles>
-    <profile>
-      <id>unit-test-coverage</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.jacoco</groupId>
-            <artifactId>jacoco-maven-plugin</artifactId>
-            <version>${jacoco.maven.plugin.version}</version>
-            <executions>
-              <execution>
-                <goals>
-                  <goal>prepare-agent</goal>
-                </goals>
-                <configuration>
-                  <skip>${skipTests}</skip>
-                  <propertyName>surefireArgLine</propertyName>
-                </configuration>
-              </execution>
-              <execution>
-                <id>prepare-agent-integration</id>
-                <goals>
-                  <goal>prepare-agent-integration</goal>
-                </goals>
-                <configuration>
-                  <propertyName>failsafeArgLine</propertyName>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
     <profile>
       <id>docker</id>
       <build>

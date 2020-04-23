@@ -8,7 +8,7 @@
 
   <parent>
     <groupId>de.nextrpgdevs</groupId>
-    <artifactId>untitled-rpg-webapp.backend</artifactId>
+    <artifactId>untitled-rpg-webapp</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
 
@@ -133,7 +133,7 @@
                 <configuration>
                   <skip>${skipTests}</skip>
                   <outputDirectory>
-                    ${project.reporting.outputDirectory}/jacoco-aggregate-ut
+                    target/site/jacoco-aggregate-ut
                   </outputDirectory>
                   <dataFileExcludes>
                     <dataFileExclude>**/target/jacoco-it.exec</dataFileExclude>
