@@ -16,8 +16,7 @@ definitions:
         script:
           - mvn $MAVEN_CLI_OPTS clean install
           - mvn $MAVEN_CLI_OPTS jacoco:prepare-agent verify
-          - mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
-              -Dsonar.java.libraries=**/*.jar
+          - mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.java.libraries=**/*.jar
     - step: &build-java
         name: Build Java source code
         image: adoptopenjdk/maven-openjdk11@sha256:fd7ca81dc66b2d42907d2259ac179058bb26d8ce909116e1a8a3b539292cc988
@@ -50,8 +49,7 @@ definitions:
           - maven
           - sonar
         script:
-          - mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
-              -Dsonar.java.libraries=**/*.jar
+          - mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.java.libraries=**/*.jar
         artifacts:
           - "**/target/**"
 
