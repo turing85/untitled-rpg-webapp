@@ -15,7 +15,11 @@ if [[ ${BUILD_PROJECT} == true ]]; then
   echo "Building project and generating docker images"
   echo "================================================================================"
   cd ../
-  ./mvnw -Pdocker -P!unit-test-coverage -DskipTests clean install
+  ./mvnw \
+    --activate-profiles docker,!unit-test-coverage \
+    -DskipTests \
+    -Dquarkus.package.uber-jar=true \
+    clean install
   cd localdeployment
 fi
 

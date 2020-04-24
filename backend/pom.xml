@@ -260,6 +260,27 @@
         </plugins>
       </build>
     </profile>
+    <profile>
+      <id>cicd</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>${maven.surefire.plugin.version}</version>
+            <configuration>
+              <reportsDirectory>
+                ${maven.multiModuleProjectDirectory}/backend/target/surefire-reports
+              </reportsDirectory>
+              <argLine>${surefireArgLine}</argLine>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
   </profiles>
 
 </project>

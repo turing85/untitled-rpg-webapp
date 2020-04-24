@@ -10,17 +10,24 @@ CD /D %SCRIPT_DRIVE%
 CD %SCRIPT_PATH%
 
 ECHO ================================================================================
-ECHO Cleaning the project
+ECHO Building and packaging the backend submodules
 ECHO ================================================================================
-CD ../../..
+CD ../..
 CALL mvnw.cmd ^
   %MVN_CLI_OPTS% ^
-  clean
+  --activate-profiles cicd ^
+  -Dquarkus.package.uber-jar=false ^
+  -DskipTests ^
+  package
 IF !ERRORLEVEL! NEQ 0 (
   CD /D %FROM_DRIVE%
   CD %FROM_PATH%
   exit /b !ERRORLEVEL!
 )
+ECHO --------------------------------------------------------------------------------
+ECHO The relevant build artifacts are available at:
+ECHO     %CD%backend\target
+ECHO --------------------------------------------------------------------------------
 CD cicd/backend/deployments
 
 CD %FROM_DRIVE%

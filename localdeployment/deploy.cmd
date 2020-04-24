@@ -26,7 +26,11 @@ IF "%BUILD_PROJECT%" == "true" (
   ECHO ================================================================================
   SET MIGRATE_DATABASES=true
   CD ..
-  CALL mvnw.cmd -Pdocker -P!unit-test-coverage -DskipTests clean install
+  CALL mvnw.cmd ^
+    --activate-profiles docker,!unit-test-coverage ^
+    -DskipTests ^
+    -Dquarkus.package.uber-jar=true ^
+    clean install
   IF !ERRORLEVEL! NEQ 0 (
     CD /D %FROM_DRIVE%
     CD %FROM_PATH%

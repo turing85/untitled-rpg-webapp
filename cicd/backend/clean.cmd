@@ -10,23 +10,19 @@ CD /D %SCRIPT_DRIVE%
 CD %SCRIPT_PATH%
 
 ECHO ================================================================================
-ECHO Building the project
+ECHO Cleaning the backend submodules
 ECHO ================================================================================
-CD ../../..
+CD ../..
 CALL mvnw.cmd ^
   %MVN_CLI_OPTS% ^
-  -DskipTests ^
-  package
+  --activate-profiles cicd ^
+  clean
 IF !ERRORLEVEL! NEQ 0 (
   CD /D %FROM_DRIVE%
   CD %FROM_PATH%
   exit /b !ERRORLEVEL!
 )
 CD cicd/backend/deployments
-ECHO --------------------------------------------------------------------------------
-ECHO The relevant build artifacts can be found in
-ECHO     %CD%backend\target
-ECHO --------------------------------------------------------------------------------
 
 CD %FROM_DRIVE%
 CD %FROM_PATH%

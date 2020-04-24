@@ -13,7 +13,7 @@ cd ../../..
 echo "================================================================================"
 echo "Building service ${SERVICE} with GraalVM natively"
 echo "================================================================================"
-./mvnw \
+mvn \
   ${MVN_CLI_OPTS} \
   -Pnative \
   -P!unit-test-coverage \

@@ -5,15 +5,17 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 cd "${SCRIPT_DIR}"
 
 echo "================================================================================"
-echo "Building the project"
+echo "Building the backend standalone uber-jars"
 echo "================================================================================"
-cd ../../..
-./mvnw \
+cd ../..
+mvn \
   ${MVN_CLI_OPTS} \
+  --activate-profiles cicd \
   -DskipTests \
+  -Dquarkus.package.uber-jar=true \
   package
-cd cicd/backend/deployments
 echo "--------------------------------------------------------------------------------"
-echo "The relevant build artifacts can be found in"
+echo "The relevant build artifacts are available at:"
 echo "    ${PWD}/backend/target"
 echo "--------------------------------------------------------------------------------"
+cd cicd/backend/deployments

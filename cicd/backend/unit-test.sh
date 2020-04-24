@@ -5,16 +5,16 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 cd "${SCRIPT_DIR}"
 
 echo "================================================================================"
-echo "Running unit tests with coverage report for the project"
+echo "Running unit tests for the backend submodules"
 echo "================================================================================"
-cd ../../..
-./mvnw \
+cd ../..
+mvn \
   ${MVN_CLI_OPTS} \
+  --activate-profiles cicd,!unit-test-coverage \
   -DskipTests=false \
-  --activate-profiles unit-test-coverage \
-  verify
+  test
+echo "--------------------------------------------------------------------------------"
+echo "Surefire test reports for the backend submodules are available at:"
+echo "    ${PWD}/target/surefire-reports"
+echo "--------------------------------------------------------------------------------"
 cd cicd/backend/deployments
-echo "--------------------------------------------------------------------------------"
-echo "Test reports for the backend are available at:"
-echo "    ${PWD}/backend/testaggregation/target/site/jacoco-aggregate-ut/index.html"
-echo "--------------------------------------------------------------------------------"

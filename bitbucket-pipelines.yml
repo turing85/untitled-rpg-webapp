@@ -2,7 +2,7 @@ clone:
   depth: full              # SonarCloud scanner needs the full history to assign issues properly
 
 variables:
-  MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true"
+  MAVEN_CLI_OPTS: '--batch-mode --errors --fail-at-end --show-version -Pcicd'
 
 definitions:
   caches:
@@ -10,20 +10,22 @@ definitions:
   steps:
     - step: &populate-caches
         name: Populate .m2 repository-cache and sonar-cache
+        image: adoptopenjdk/maven-openjdk11@sha256:fd7ca81dc66b2d42907d2259ac179058bb26d8ce909116e1a8a3b539292cc988
         caches:
           - maven
           - sonar
         script:
-          - mvn $MAVEN_CLI_OPTS clean install
-          - mvn $MAVEN_CLI_OPTS jacoco:prepare-agent verify
+          - cicd/backend/unit-test-with-coverage.sh
+          - cicd/backend/install.sh
           - mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.java.libraries=**/*.jar
+          - cicd/backend/build-uber-jars.sh
     - step: &build-java
         name: Build Java source code
         image: adoptopenjdk/maven-openjdk11@sha256:fd7ca81dc66b2d42907d2259ac179058bb26d8ce909116e1a8a3b539292cc988
         caches:
           - maven
         script:
-          - mvn $MAVEN_CLI_OPTS -P!unit-test-coverage -P!docker -DskipTests package
+          - cicd/backend/build.sh
         artifacts:
           - "**/target/**"
     - step: &unit-test-java
@@ -32,16 +34,16 @@ definitions:
         caches:
           - maven
         script:
-          - mvn $MAVEN_CLI_OPTS -P!unit-test-coverage -P!docker test
+          - cicd/backend/unit-test.sh
     - step: &unit-test-java-coverage
-        name: Exeucte Java unit tests with coverage
+        name: Exeucte Java unit tests with coverage and package project
         image: adoptopenjdk/maven-openjdk11@sha256:fd7ca81dc66b2d42907d2259ac179058bb26d8ce909116e1a8a3b539292cc988
         caches:
           - maven
         script:
-          - mvn $MAVEN_CLI_OPTS -Punit-test-coverage -P!docker jacoco:prepare-agent verify
+          - cicd/backend/unit-test-with-coverage.sh
         artifacts:
-          - "**/target/site/jacoco/jacoco.xml"
+          - "**/target/**"
     - step: &analyze-with-sonar
         name: Analyze with Sonar
         image: adoptopenjdk/maven-openjdk11@sha256:fd7ca81dc66b2d42907d2259ac179058bb26d8ce909116e1a8a3b539292cc988

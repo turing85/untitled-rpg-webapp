@@ -13,7 +13,7 @@ cd ../../..
 echo "================================================================================"
 echo "Building service ${SERVICE}"
 echo "================================================================================"
-./mvnw \
+mvn \
   ${MVN_CLI_OPTS} \
   -DskipTests \
   --projects :untitled-rpg-webapp.backend.deployments.quarkus.microservices."${SERVICE}".impl \

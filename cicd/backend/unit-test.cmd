@@ -10,18 +10,23 @@ CD /D %SCRIPT_DRIVE%
 CD %SCRIPT_PATH%
 
 ECHO ================================================================================
-ECHO Installing the project
+ECHO Executing unit tests for the backend submodules
 ECHO ================================================================================
-CD ../../..
+CD ../..
 CALL mvnw.cmd ^
   %MVN_CLI_OPTS% ^
-  -DskipTests ^
-  install
+  --activate-profiles cicd,!unit-test-coverage ^
+  -DskipTests=false ^
+  test
 IF !ERRORLEVEL! NEQ 0 (
   CD /D %FROM_DRIVE%
   CD %FROM_PATH%
   exit /b !ERRORLEVEL!
 )
+ECHO --------------------------------------------------------------------------------
+ECHO Surefire test reports for the backend submodules are available at:
+ECHO     %CD%\target\surefire-reports
+ECHO --------------------------------------------------------------------------------
 CD cicd/backend/deployments
 
 CD %FROM_DRIVE%
