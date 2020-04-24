@@ -31,6 +31,7 @@ definitions:
           - "**/target/generated-sources/**"
           - "**/target/generated-test-sources/**"
           - "**/target/test-classes/**"
+          - "**/maven-status/*+"
           - "**/target/*.jar"
     - step: &unit-test-java
         name: Execute Java unit tests
