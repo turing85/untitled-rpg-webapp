@@ -27,7 +27,11 @@ definitions:
         script:
           - cicd/backend/build.sh
         artifacts:
-          - "**/target/!(lib/)**"
+          - "**/target/classes/**"
+          - "**/target/generated-sources/**"
+          - "**/target/generated-test-sources/**"
+          - "**/target/test-classes/**"
+          - "**/target/*.jar"
     - step: &unit-test-java
         name: Execute Java unit tests
         image: adoptopenjdk/maven-openjdk11@sha256:fd7ca81dc66b2d42907d2259ac179058bb26d8ce909116e1a8a3b539292cc988
@@ -36,7 +40,7 @@ definitions:
         script:
           - cicd/backend/unit-test.sh
     - step: &unit-test-java-coverage
-        name: Exeucte Java unit tests with coverage and package project
+        name: Exeucte Java unit tests with coverage
         image: adoptopenjdk/maven-openjdk11@sha256:fd7ca81dc66b2d42907d2259ac179058bb26d8ce909116e1a8a3b539292cc988
         caches:
           - maven
