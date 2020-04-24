@@ -41,7 +41,7 @@ definitions:
         script:
           - mvn $MAVEN_CLI_OPTS -Punit-test-coverage -P!docker jacoco:prepare-agent verify
         artifacts:
-          - "**/target/**"
+          - "**/target/site/jacoco/jacoco.xml"
     - step: &analyze-with-sonar
         name: Analyze with Sonar
         image: adoptopenjdk/maven-openjdk11@sha256:fd7ca81dc66b2d42907d2259ac179058bb26d8ce909116e1a8a3b539292cc988
@@ -50,8 +50,6 @@ definitions:
           - sonar
         script:
           - mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.java.libraries=**/*.jar
-        artifacts:
-          - "**/target/**"
 
 pipelines:
   custom:
