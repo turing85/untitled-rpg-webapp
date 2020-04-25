@@ -35,4 +35,8 @@ public class ThreadLocalContext {
     }
     return THREAD_LOCAL_CONTEXT.get();
   }
+
+  public static void remove() {
+    THREAD_LOCAL_CONTEXT.remove();
+  }
 }

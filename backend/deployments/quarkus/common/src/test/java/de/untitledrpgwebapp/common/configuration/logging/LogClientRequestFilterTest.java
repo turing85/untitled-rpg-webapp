@@ -10,7 +10,6 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import de.untitledrpgwebapp.common.configuration.StaticConfig;
-import de.untitledrpgwebapp.common.configuration.ThreadLocalContext;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
@@ -37,7 +36,6 @@ class LogClientRequestFilterTest extends LoggerTestData {
     when(clientRequest.getUri()).thenReturn(REQUEST_URI);
     when(clientRequest.getCookies()).thenReturn(requestCookies);
     when(clientRequest.getEntityStream()).thenReturn(new ByteArrayOutputStream());
-    ThreadLocalContext.get().setCorrelationId(null);
   }
 
   @Test
@@ -62,7 +60,6 @@ class LogClientRequestFilterTest extends LoggerTestData {
       assertThat(logObject.isRequestCorrelationIdCreated(), is(false));
       return true;
     }));
-    assertThat(ThreadLocalContext.get().getCorrelationId(), is(REQUEST_CORRELATION_ID));
   }
 
   @Test
@@ -88,7 +85,6 @@ class LogClientRequestFilterTest extends LoggerTestData {
       assertThat(logObject.isRequestCorrelationIdCreated(), is(true));
       return true;
     }));
-    assertThat(ThreadLocalContext.get().getCorrelationId(), is(notNullValue()));
   }
 
   @Test
@@ -104,7 +100,6 @@ class LogClientRequestFilterTest extends LoggerTestData {
     // THEN
     verify(logger).isInfoEnabled();
     verifyNoMoreInteractions(logger);
-    assertThat(ThreadLocalContext.get().getCorrelationId(), is(notNullValue()));
   }
 
 }
