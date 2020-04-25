@@ -2,7 +2,6 @@ package de.untitledrpgwebapp.user.boundary.common;
 
 import java.time.LocalDate;
 import java.util.Map;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 
@@ -19,5 +18,4 @@ public abstract class CommonUser {
   final String bio;
   final byte[] avatar;
   final Map<String, Object> preferences;
-
 }
