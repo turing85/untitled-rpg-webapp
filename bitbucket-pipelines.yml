@@ -49,7 +49,6 @@ definitions:
         script:
           - cicd/backend/unit-test-with-coverage.sh
         artifacts:
-          - "**/target/surefire-reports/*.xml"
           - "**/jacoco.xml"
     - step: &analyze-with-sonar
         name: Analyze with Sonar
