@@ -1,8 +1,7 @@
 package de.untitledrpgwebapp.common.configuration.logging;
 
-import static de.untitledrpgwebapp.common.configuration.StaticConfig.CORRELATION_ID_HEADER_KEY;
-
 import java.io.IOException;
+import java.util.Optional;
 import javax.ws.rs.client.ClientRequestContext;
 import javax.ws.rs.client.ClientResponseContext;
 import javax.ws.rs.client.ClientResponseFilter;
@@ -37,11 +36,12 @@ public class LogClientResponseFilter extends LogResponseFilter
       ClientResponseContext response,
       String requestCorrelationId,
       boolean responseCorrelationIdCopied) throws IOException {
+    Optional<String> correlationId = addCorrelationIdToThreadLocalContext(response.getHeaders());
     if (getLogger().isInfoEnabled()) {
       getLogger().logResponse(HttpTrafficLogObject.builder()
           .verb("Receiving")
           .responseStatus(response.getStatus())
-          .responseCorrelationId(response.getHeaders().getFirst(CORRELATION_ID_HEADER_KEY))
+          .responseCorrelationId(correlationId.orElse(""))
           .responseCorrelationIdCopied(responseCorrelationIdCopied)
           .requestMethod(request.getMethod())
           .adjective("to")

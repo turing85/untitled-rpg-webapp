@@ -1,4 +1,4 @@
-package de.untitledrpgwebapp.user.beans;
+package de.untitledrpgwebapp.user.bean.proxy;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.instanceOf;
@@ -12,25 +12,22 @@ import de.untitledrpgwebapp.language.domain.FindLanguageByTagViaRestUseCase;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@DisplayName("Tests for FindLanguageByTagUseCaseBean unit.")
-class FindLanguageByTagUseCaseBeanTest {
+@DisplayName("Tests for FindLanguageByTagUseCaseProxy unit.")
+class FindLanguageByTagUseCaseProxyTest {
 
   @Test
-  @DisplayName("Should create a FindLanguageByTagUseCase with the expected DAO.")
+  @DisplayName("Should create a FindLanguageByTagUseCaseProxy with the expected settings.")
   void shouldCreateExpectedFindLanguageByTagUseCase() {
     // GIVEN
     LanguageRestClient restClient = mock(LanguageRestClient.class);
     LanguageRestMapper mapper = mock(LanguageRestMapper.class);
 
     // WHEN
-    FindLanguageByTagUseCase created =
-        new FindLanguageByTagUseCaseBean().findLanguage(restClient, mapper);
+    FindLanguageByTagUseCaseProxy actual =
+        new FindLanguageByTagUseCaseProxy(restClient, mapper);
 
     // THEN
-    assertThat(created, instanceOf(FindLanguageByTagViaRestUseCase.class));
-    FindLanguageByTagViaRestUseCase actual = (FindLanguageByTagViaRestUseCase) created;
     assertThat(actual.getClient(), sameInstance(restClient));
     assertThat(actual.getMapper(), sameInstance(mapper));
   }
-
 }

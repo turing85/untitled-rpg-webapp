@@ -1,6 +1,5 @@
 package de.untitledrpgwebapp.common.configuration.logging;
 
-import de.untitledrpgwebapp.common.configuration.StaticConfig;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Optional;
@@ -31,6 +30,7 @@ public class LogClientRequestFilter extends LogRequestFilter
 
   private void logRequestToBeSent(ClientRequestContext request, boolean correlationIdCreated)
       throws IOException {
+    Optional<String> correlationId = addCorrelationIdToThreadLocalContext(request.getHeaders());
     if (getLogger().isInfoEnabled()) {
       getLogger().logRequest(HttpTrafficLogObject.builder()
           .verb("Sending")
@@ -38,10 +38,7 @@ public class LogClientRequestFilter extends LogRequestFilter
           .requestMethod(request.getMethod())
           .adjective("to")
           .requestUri(request.getUri())
-          .requestCorrelationId(Optional.of(request.getHeaders()
-              .getFirst(StaticConfig.CORRELATION_ID_HEADER_KEY))
-              .map(Object::toString)
-              .orElse(""))
+          .requestCorrelationId(correlationId.orElse(""))
           .headers(convertToMapStringListOfString(request.getHeaders()))
           .requestCookies(request.getCookies().values())
           .entity(Optional.ofNullable(request.getEntity()).orElse(Collections.emptyList()))

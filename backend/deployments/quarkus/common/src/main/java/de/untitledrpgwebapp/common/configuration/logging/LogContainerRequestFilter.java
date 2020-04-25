@@ -1,8 +1,7 @@
 package de.untitledrpgwebapp.common.configuration.logging;
 
-import static de.untitledrpgwebapp.common.configuration.StaticConfig.CORRELATION_ID_HEADER_KEY;
-
 import java.io.IOException;
+import java.util.Optional;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.container.PreMatching;
@@ -33,13 +32,14 @@ public class LogContainerRequestFilter extends LogRequestFilter
   protected void logRequestToBeReceived(
       ContainerRequestContext request,
       boolean isCorrelationIdCreated) throws IOException {
+    Optional<String> correlationId = addCorrelationIdToThreadLocalContext(request.getHeaders());
     if (getLogger().isInfoEnabled()) {
       getLogger().logRequest(HttpTrafficLogObject.builder()
           .verb("Receiving")
           .requestMethod(request.getMethod())
           .adjective("on")
           .requestUri(request.getUriInfo().getRequestUri())
-          .requestCorrelationId(request.getHeaders().get(CORRELATION_ID_HEADER_KEY).get(0))
+          .requestCorrelationId(correlationId.orElse(""))
           .requestCorrelationIdCreated(isCorrelationIdCreated)
           .headers(request.getHeaders())
           .requestCookies(request.getCookies().values())

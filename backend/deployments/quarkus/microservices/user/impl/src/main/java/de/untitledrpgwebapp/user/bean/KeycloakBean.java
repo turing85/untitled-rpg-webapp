@@ -1,40 +1,14 @@
-package de.untitledrpgwebapp.user.beans;
+package de.untitledrpgwebapp.user.bean;
 
-import de.untitledrpgwebapp.oidc.boundary.mapper.AccountMapper;
-import de.untitledrpgwebapp.oidc.domain.CreateAccountUseCase;
-import de.untitledrpgwebapp.oidc.domain.KeycloakCreateAccountUseCase;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.keycloak.OAuth2Constants;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
-import org.mapstruct.factory.Mappers;
 
 @ApplicationScoped
-public class CreateAccountUseCaseBean {
-
-  /**
-   * Produces the CreateUserUseCase bean.
-   *
-   * @param keycloak
-   *     the keycloak used by this bean.
-   * @param realmName
-   *     the realm name used by this bean.
-   *
-   * @return the CreateAccountUseCase bean.
-   *
-   * @see #keycloak(KeycloakBuilder, String, String, String, String)
-   */
-  @Produces
-  CreateAccountUseCase createAccount(
-      Keycloak keycloak,
-      @ConfigProperty(name = "keycloak.realm-name") String realmName) {
-    return new KeycloakCreateAccountUseCase(
-        keycloak,
-        realmName,
-        Mappers.getMapper(AccountMapper.class));
-  }
+public class KeycloakBean {
 
   /**
    * Produces the Keycloak bean.

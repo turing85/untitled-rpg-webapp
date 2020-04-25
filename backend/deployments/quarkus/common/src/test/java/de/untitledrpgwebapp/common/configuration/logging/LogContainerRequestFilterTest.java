@@ -4,12 +4,14 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import de.untitledrpgwebapp.common.configuration.StaticConfig;
+import de.untitledrpgwebapp.common.configuration.ThreadLocalContext;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
@@ -35,6 +37,7 @@ class LogContainerRequestFilterTest extends LoggerTestData {
     when(containerRequest.getCookies()).thenReturn(requestCookies);
     when(containerRequest.getEntityStream()).thenReturn(new ByteArrayInputStream(ENTITY.getBytes()));
     when(logger.isInfoEnabled()).thenReturn(true);
+    ThreadLocalContext.get().setCorrelationId(null);
   }
 
   @Test
@@ -59,6 +62,7 @@ class LogContainerRequestFilterTest extends LoggerTestData {
       assertThat(logObject.isRequestCorrelationIdCreated(), is(false));
       return true;
     }));
+    assertThat(ThreadLocalContext.get().getCorrelationId(), is(REQUEST_CORRELATION_ID));
   }
 
   @Test
@@ -84,6 +88,7 @@ class LogContainerRequestFilterTest extends LoggerTestData {
       assertThat(logObject.isRequestCorrelationIdCreated(), is(true));
       return true;
     }));
+    assertFalse(ThreadLocalContext.get().getCorrelationId().isBlank());
   }
 
   @Test
@@ -99,5 +104,6 @@ class LogContainerRequestFilterTest extends LoggerTestData {
     // THEN
     verify(logger).isInfoEnabled();
     verifyNoMoreInteractions(logger);
+    assertFalse(ThreadLocalContext.get().getCorrelationId().isBlank());
   }
 }

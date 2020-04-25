@@ -1,4 +1,4 @@
-package de.untitledrpgwebapp.user.beans;
+package de.untitledrpgwebapp.user.bean.proxy;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.instanceOf;
@@ -11,22 +11,19 @@ import de.untitledrpgwebapp.user.domain.FindUserByNameUseCase;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@DisplayName("Tests for FindUserByNameUseCaseBean unit.")
-class FindUserByNameUseCaseBeanTest {
+@DisplayName("Tests for FindUserByNameUseCaseProxy unit.")
+class FindUserByNameUseCaseProxyTest {
 
   @Test
-  @DisplayName("Should create a FindUserByNameInDatabaseUseCase with the expected DAO.")
+  @DisplayName("Should create a FindUserByNameUseCaseProxy with the expected DAO.")
   void shouldCreateExpectedFindUserByNameUseCase() {
     // GIVEN
     UserDao dao = mock(UserDao.class);
 
     // WHEN
-    FindUserByNameUseCase created = new FindUserByNameUseCaseBean().findUser(dao);
+    FindUserByNameUseCaseProxy actual = new FindUserByNameUseCaseProxy(dao);
 
     // THEN
-    assertThat(created, instanceOf(FindUserByNameInDatabaseUseCase.class));
-    FindUserByNameInDatabaseUseCase actual = (FindUserByNameInDatabaseUseCase) created;
     assertThat(actual.getDao(), sameInstance(dao));
   }
-
 }

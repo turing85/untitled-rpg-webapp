@@ -1,6 +1,7 @@
 package de.untitledrpgwebapp.common.configuration.logging;
 
 import de.untitledrpgwebapp.common.configuration.StaticConfig;
+import de.untitledrpgwebapp.common.configuration.ThreadLocalContext;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -10,9 +11,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
+import javax.ws.rs.core.MultivaluedMap;
 import lombok.AccessLevel;
 import lombok.Getter;
 
@@ -53,5 +56,16 @@ public abstract class LogFilter {
             entry -> entry.getValue().stream()
                 .map(Object::toString)
                 .collect(Collectors.toList())));
+  }
+
+  protected Optional<String> addCorrelationIdToThreadLocalContext(
+      MultivaluedMap<String, ?> headers) {
+    ThreadLocalContext context = ThreadLocalContext.get();
+    context.setCorrelationId("");
+    final Optional<String> correlationId =
+        Optional.of(headers.getFirst(StaticConfig.CORRELATION_ID_HEADER_KEY))
+            .map(Object::toString);
+    correlationId.ifPresent(context::setCorrelationId);
+    return correlationId;
   }
 }

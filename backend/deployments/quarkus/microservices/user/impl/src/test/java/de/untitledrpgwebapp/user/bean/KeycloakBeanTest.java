@@ -1,11 +1,10 @@
-package de.untitledrpgwebapp.user.beans;
+package de.untitledrpgwebapp.user.bean;
 
 import static de.untitledrpgwebapp.user.testfixture.UserBoundaryFixture.ADMIN_CLI_ID;
 import static de.untitledrpgwebapp.user.testfixture.UserBoundaryFixture.ADMIN_CLI_SECRET;
 import static de.untitledrpgwebapp.user.testfixture.UserBoundaryFixture.REALM_NAME;
 import static de.untitledrpgwebapp.user.testfixture.UserBoundaryFixture.SERVER_URL;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.sameInstance;
@@ -15,8 +14,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import de.untitledrpgwebapp.oidc.domain.CreateAccountUseCase;
-import de.untitledrpgwebapp.oidc.domain.KeycloakCreateAccountUseCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,11 +22,11 @@ import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
 
 @DisplayName("Tests for CreateAccountUseCaseBean unit.")
-class CreateAccountUseCaseBeanTest {
+class KeycloakBeanTest {
 
   KeycloakBuilder builder;
 
-  private final CreateAccountUseCaseBean uut = new CreateAccountUseCaseBean();
+  private final KeycloakBean uut = new KeycloakBean();
 
   private final Keycloak keycloak = KeycloakBuilder.builder()
       .serverUrl(SERVER_URL)
@@ -48,21 +45,6 @@ class CreateAccountUseCaseBeanTest {
     when(builder.clientId(anyString())).thenReturn(builder);
     when(builder.clientSecret(anyString())).thenReturn(builder);
     when(builder.build()).thenReturn(keycloak);
-  }
-
-  @Test
-  @DisplayName("Should create a KeycloakCreateAccountUseCase with the expected settings.")
-  void shouldCreateExpectedCreateAccountUseCase() {
-    // GIVEN: defaults
-
-    // WHEN
-    CreateAccountUseCase created = uut.createAccount(keycloak, REALM_NAME);
-
-    // THEN
-    assertThat(created, instanceOf(KeycloakCreateAccountUseCase.class));
-    KeycloakCreateAccountUseCase actual = (KeycloakCreateAccountUseCase) created;
-    assertThat(actual.getKeycloak(), is(keycloak));
-    assertThat(actual.getRealmName(), is(REALM_NAME));
   }
 
   @Test

@@ -13,7 +13,6 @@ import de.untitledrpgwebapp.user.boundary.request.CreateUserRequest;
 import de.untitledrpgwebapp.user.boundary.response.UserResponse;
 import java.util.Optional;
 import java.util.UUID;
-import javax.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -26,7 +25,6 @@ public class CreateUserInDatabaseUseCase implements CreateUserUseCase {
   private final FindLanguageByTagUseCase findLanguage;
   private final CreateAccountUseCase createAccount;
 
-  @Transactional
   @Override
   public UserResponse execute(CreateUserRequest request) {
     UUID correlationId = request.getCorrelationId();

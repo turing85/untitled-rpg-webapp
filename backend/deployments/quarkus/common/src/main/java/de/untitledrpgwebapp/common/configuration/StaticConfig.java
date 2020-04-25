@@ -5,7 +5,7 @@ import java.util.List;
 public final class StaticConfig {
 
   public static final int CHUNK_SIZE_TO_READ = 1024;
-  public static final String CORRELATION_ID_HEADER_KEY = "X-Correlation-ID";
+  public static final String CORRELATION_ID_HEADER_KEY = "x-correlation-id";
   public static final String CORRELATION_ID_LOG_NAME = "correlationId";
   public static final List<String> COOKIES_TO_OBFUSCATE =
       List.of("access_token", "refresh_token", "id_token");

@@ -1,7 +1,7 @@
 package de.untitledrpgwebapp.common.configuration.logging;
 
-import de.untitledrpgwebapp.common.configuration.StaticConfig;
 import java.io.IOException;
+import java.util.Optional;
 import javax.annotation.Priority;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerResponseContext;
@@ -40,13 +40,12 @@ public class LogContainerResponseFilter extends LogResponseFilter
       boolean isResponseCorrelationIdCopied,
       ContainerRequestContext request,
       String requestCorrelationId) throws IOException {
+    Optional<String> correlationId = addCorrelationIdToThreadLocalContext(response.getHeaders());
     if (getLogger().isInfoEnabled()) {
       getLogger().logResponse(HttpTrafficLogObject.builder()
           .verb("Sending")
           .responseStatus(response.getStatus())
-          .responseCorrelationId(response.getHeaders()
-              .getFirst(StaticConfig.CORRELATION_ID_HEADER_KEY)
-              .toString())
+          .responseCorrelationId(correlationId.orElse(""))
           .responseCorrelationIdCopied(isResponseCorrelationIdCopied)
           .adjective("on")
           .requestMethod(request.getMethod())

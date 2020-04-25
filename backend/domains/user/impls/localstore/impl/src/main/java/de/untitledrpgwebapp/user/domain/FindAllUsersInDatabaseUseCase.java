@@ -5,7 +5,6 @@ import de.untitledrpgwebapp.user.boundary.request.FindAllUsersRequest;
 import de.untitledrpgwebapp.user.boundary.response.UserResponse;
 import java.util.Collection;
 import java.util.stream.Collectors;
-import javax.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -15,7 +14,6 @@ public class FindAllUsersInDatabaseUseCase implements FindAllUsersUseCase {
 
   private final UserDao dao;
 
-  @Transactional
   @Override
   public Collection<UserResponse> execute(FindAllUsersRequest request) {
     return dao.findAll(request.getConfig())

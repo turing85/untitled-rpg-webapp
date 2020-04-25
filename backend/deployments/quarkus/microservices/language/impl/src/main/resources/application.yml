@@ -34,6 +34,8 @@ quarkus:
       principal-claim: preferred_username
     credentials:
       secret: ${OIDC_LANGUAGE_SERVICE_CLIENT_SECRET:53574baa-7a35-4ebd-88e1-3fd258ae89c4}
+  package:
+    uber-jar: true
   smallrye-jwt:
     enabled: false
   log:

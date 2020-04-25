@@ -33,9 +33,11 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import lombok.AllArgsConstructor;
+import org.eclipse.microprofile.opentracing.Traced;
 
 @ApplicationScoped
 @Path(UserEndpoint.PATH)
+@Traced
 @AllArgsConstructor
 public class UserEndpoint {
 
