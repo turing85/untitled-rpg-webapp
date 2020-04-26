@@ -66,3 +66,12 @@ services:
       - dbms-service
       - oidc-service
       - language-service
+  frontend:
+    image: rpg/frontend
+    depends_on:
+      - dbms-service
+      - oidc-service
+      - language-service
+      - user-service
+    ports:
+      - '4200:80'

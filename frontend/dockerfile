@@ -1,0 +1,3 @@
+# base image
+FROM nginx:mainline-alpine@sha256:781d4ec0559e7c679d54078b60efd925f260ef45275dd0155c986fa2c0511791
+COPY /dist/frontend /usr/share/nginx/html

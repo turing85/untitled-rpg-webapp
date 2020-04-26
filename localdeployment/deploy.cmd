@@ -39,6 +39,17 @@ IF "%BUILD_PROJECT%" == "true" (
   CD localdeployment
 )
 
+IF "%BUILD_PROJECT%" == "true" (
+  ECHO ================================================================================
+  ECHO Building frontend
+  ECHO ================================================================================
+  CD ..
+  CD frontend
+  CALL npm run build:docker
+  CD ..
+  CD localdeployment
+)
+
 IF "!MIGRATE_DATABASES!" == "true" (
   ECHO ================================================================================
   ECHO Migrating language database
@@ -82,9 +93,9 @@ IF "!MIGRATE_DATABASES!" == "true" (
 )
 
 ECHO ================================================================================
-ECHO Starting docker deployment: user-service
+ECHO Starting docker deployment: frontend
 ECHO ================================================================================
-CALL docker-compose up -d user-service
+CALL docker-compose up -d frontend
 
 CD /D %FROM_DRIVE%
 CD %FROM_PATH%

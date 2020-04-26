@@ -23,6 +23,15 @@ if [[ ${BUILD_PROJECT} == true ]]; then
   cd localdeployment
 fi
 
+if [[ ${BUILD_PROJECT} == true ]]; then
+  echo "================================================================================"
+  echo "Building frontend"
+  echo "================================================================================"
+  cd ../frontend
+  npm run build:docker
+  cd ../localdeployment
+fi
+
 if [[ ${MIGRATE_DATABASES} == true ]]; then
   echo "================================================================================"
   echo "Migrating language database"
@@ -51,6 +60,6 @@ if [[ ${MIGRATE_DATABASES} == true ]]; then
 fi
 
 echo "================================================================================"
-echo "Starting docker deployment: user-service"
+echo "Starting docker deployment: frontend"
 echo "================================================================================"
-docker-compose up -d user-service
+docker-compose up -d frontend
