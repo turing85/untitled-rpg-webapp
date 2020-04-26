@@ -6,9 +6,9 @@ import { AppComponent } from './app.component';
 import { initializer } from './core/app-init';
 import { HttpClientModule } from '@angular/common/http';
 import { EffectsModule } from '@ngrx/effects';
-import { UserEffects } from './shared/store/user/user.effects';
+import { UserEffects } from './core/store/user/user.effects';
 import { StoreModule } from '@ngrx/store';
-import { userReducer } from './shared/store/user/user.reducer';
+import { userReducer } from './core/store/user/user.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment'; // Angular CLI environment
 

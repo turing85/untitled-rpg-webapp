@@ -2,16 +2,13 @@ import { Injectable } from '@angular/core';
 import { KeycloakService } from 'keycloak-angular';
 import { User } from 'src/app/model/user/user.keycloak.model';
 import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { fromKeycloakProfile } from 'src/app/model/user/user.keycload.mapper';
-import { Router } from '@angular/router';
 import { PlatformLocation } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 
 
 export type LanguageTag = 'en-GB' | 'de-DE';
 
-const USERS_URL = "http://localhost:8081/users"
+const USERS_URL = 'http://localhost:8081/users';
 
 @Injectable({
   providedIn: 'root'
@@ -23,11 +20,6 @@ export class UserService {
     private httpService: HttpClient
   ) { }
 
-  getUserDetails(): Observable<User> {
-    const userDetails = this.keycloakAngular.getKeycloakInstance().profile;
-    return of(userDetails).pipe(map(fromKeycloakProfile));
-  }
-
   /**
    * Logout the user and redirect to landing page
    */
@@ -38,5 +30,19 @@ export class UserService {
 
   register(name: string, email: string, password: string, preferredLanguageTag: LanguageTag): Observable<User> {
     return this.httpService.post<User>(USERS_URL, { name, email, password, preferredLanguageTag });
+  }
+
+  getMe(): Observable<User> {
+    const userDetails = this.keycloakAngular.getKeycloakInstance().profile;
+    return this.httpService.get<User>(`${USERS_URL}/${userDetails.username}`);
+  }
+
+  getUser(name: string): Observable<User> {
+    return this.httpService.get<User>(`${USERS_URL}/${name}`);
+  }
+
+  getUsers(): Observable<User[]> {
+    const headers = {};
+    return this.httpService.get<User[]>(`${USERS_URL}`, {headers});
   }
 }

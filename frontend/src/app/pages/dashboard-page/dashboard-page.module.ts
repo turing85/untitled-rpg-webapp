@@ -7,7 +7,7 @@ import { SidebarMainComponent } from './components/sidebar-main/sidebar-main.com
 import { SidebarSubComponent } from './components/sidebar-sub/sidebar-sub.component';
 import { SidebarFooterComponent } from './components/sidebar-footer/sidebar-footer.component';
 import { SidebarHeaderComponent } from './components/sidebar-header/sidebar-header.component';
-import { SharedModule } from 'src/app/shared/shared.module';
+import { SharedModule } from 'src/app/core/shared.module';
 
 @NgModule({
   declarations: [

@@ -1,28 +1,22 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { User } from 'src/app/model/user/user.keycloak.model';
-import { selectMe } from '../../shared/store/user/user.selector';
-import { userRegister } from 'src/app/shared/store/user/user.action';
+import { userRegister } from 'src/app/core/store/user/user.action';
 import { FormBuilder, FormControl, Validators, AbstractControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'rpg-register-page',
-  templateUrl: './register-page.component.html',
-  styleUrls: ['./register-page.component.scss']
+  templateUrl: './register-page.component.html'
 })
 export class RegisterPageComponent implements OnInit {
 
-  me$: Observable<User>;
 
   step = 0;
   registerForm: FormGroup;
 
   constructor(private store: Store,
-    private formBuilder: FormBuilder) { }
+              private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
-    this.me$ = this.store.pipe(select(selectMe));
 
     this.registerForm = this.formBuilder.group({
       name: new FormControl('', [
@@ -51,13 +45,12 @@ export class RegisterPageComponent implements OnInit {
 
   register() {
     Object.values(this.registerForm.controls).forEach(e => e.markAsTouched());
-    console.log(this.registerForm);
-    if (this.registerForm.status === "VALID") {
+    if (this.registerForm.status === 'VALID') {
 
       console.log(this.registerForm.value);
       const { name, email, password } = (this.registerForm.value);
-      this.store.dispatch(userRegister({ name, email, password, preferredLanguageTag: "de-DE" }));
-    };
+      this.store.dispatch(userRegister({ name, email, password, preferredLanguageTag: 'de-DE' }));
+    }
   }
 
   next() {

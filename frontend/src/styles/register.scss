@@ -1,11 +1,12 @@
+@import 'colors';
 .register-modal {
     width: 400px;
     margin: calc(50vh - 260px) auto;
     text-align: center;
     position: relative;
     fieldset {
-        background-color: #474749;
-        color: #f9f9fa;
+        background-color: $grey-1;
+        color: $text-color;
         border: 0 none;
         border-radius: 3px;
         box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);

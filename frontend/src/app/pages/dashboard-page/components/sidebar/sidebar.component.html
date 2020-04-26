@@ -1,8 +1,31 @@
 <div class="sidebar">
-  <rpg-sidebar-header></rpg-sidebar-header>
-  <div class="sidebar-content">
-    <rpg-sidebar-main></rpg-sidebar-main>
-    <rpg-sidebar-sub></rpg-sidebar-sub>
-  </div>
-  <rpg-sidebar-footer></rpg-sidebar-footer>
+    <rpg-sidebar-header></rpg-sidebar-header>
+    <div class="sidebar-content">
+        <div class="sidebar-main">
+            <rpg-sidebar-main></rpg-sidebar-main>
+        </div>
+        <div class="sidebar-sub">
+            <rpg-sidebar-sub></rpg-sidebar-sub>
+        </div>
+    </div>
+    <rpg-sidebar-footer></rpg-sidebar-footer>
 </div>
+<style>
+    .sidebar-content {
+        display: flex;
+        position: relative;
+        height: 100%;
+        flex-direction: row;
+    }
+    
+    .sidebar-main {
+        background-color: #474749;
+        height: 100%;
+        width: 100px;
+    }
+    
+    .sidebar-sub {
+        height: 100%;
+        width: 300px;
+    }
+</style>

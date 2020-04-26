@@ -13,6 +13,8 @@ export interface KeycloakProfile {
 
 
 export interface User {
-  username: string;
-  profile: KeycloakProfile;
+  email: string;
+  name: string;
+  preferences: any;
+  preferredLanguageTag: string;
 }
