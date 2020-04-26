@@ -11,13 +11,71 @@ main {
         .sidebar-header {
             height: 120px;
             background-color: $primary-color-1;
+            position: relative;
+            .box1 {
+                position: absolute;
+                padding-left: 15px;
+                padding-right: 15px;
+                top: 63px;
+                bottom: 3px;
+                width: 100%;
+                background-color: #2a2a2e;
+                color: #f9f9fa;
+                display: flex;
+            }
+            .name {
+                margin-left: 10px;
+                position: relative;
+                width: 80%;
+            }
+            .name div {
+                width: 100%;
+            }
+            .user-image {
+                height: 64px;
+                width: 64px;
+                margin-top: -32px;
+                border-radius: 50%;
+                background-color: #474749;
+            }
         }
         .sidebar-content {
             flex-grow: 1;
+            display: flex;
+            position: relative;
+            height: 100%;
+            flex-direction: row;
+            .sidebar-main {
+                background-color: #474749;
+                height: 100%;
+                width: 100px;
+            }
+            .sidebar-sub {
+                height: 100%;
+                width: 300px;
+            }
         }
         .sidebar-footer {
             height: 64px;
             background-color: $grey-1;
+            position: relative;
+            display: flex;
+            flex-direction: row;
+            .icon {
+                margin-top: 10px
+            }
+            >a {
+                height: 100%;
+                width: 33%;
+                position: relative;
+                &:hover {
+                    color: lighten($primary-color-1, 20%);
+                    cursor: pointer;
+                }
+                fa-icon {
+                    width: 100%;
+                }
+            }
         }
     }
 }

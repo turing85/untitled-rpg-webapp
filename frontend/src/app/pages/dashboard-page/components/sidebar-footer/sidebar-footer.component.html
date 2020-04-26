@@ -1,3 +1,26 @@
 <div class="sidebar-footer">
-  <a (click)="logout()">Logout</a>
+    <a>
+        <div class="icon center-align">
+            <fa-icon [icon]="icons.message" size="lg"></fa-icon>
+        </div>
+        <div class=" center-align">
+            <label>Messages</label>
+        </div>
+    </a>
+    <a>
+        <div class="icon center-align">
+            <fa-icon [icon]="icons.settings" size="lg"></fa-icon>
+        </div>
+        <div class=" center-align">
+            <label>Settings</label>
+        </div>
+    </a>
+    <a (click)="logout()">
+        <div class="icon center-align">
+            <fa-icon [icon]="icons.signout" size="lg"></fa-icon>
+        </div>
+        <div class=" center-align">
+            <label>Sign out</label>
+        </div>
+    </a>
 </div>

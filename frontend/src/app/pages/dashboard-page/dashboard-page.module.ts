@@ -8,6 +8,7 @@ import { SidebarSubComponent } from './components/sidebar-sub/sidebar-sub.compon
 import { SidebarFooterComponent } from './components/sidebar-footer/sidebar-footer.component';
 import { SidebarHeaderComponent } from './components/sidebar-header/sidebar-header.component';
 import { SharedModule } from 'src/app/core/shared.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { SharedModule } from 'src/app/core/shared.module';
     SidebarFooterComponent,
     SidebarHeaderComponent
   ],
-  imports: [CommonModule, DashboardRoutingModule, SharedModule],
+  imports: [CommonModule, DashboardRoutingModule, SharedModule,
+    FontAwesomeModule],
   exports: [DashboardPageComponent]
 })
 export class DashboardPageModule {}
