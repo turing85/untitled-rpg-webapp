@@ -42,7 +42,6 @@ export class UserService {
   }
 
   getUsers(): Observable<User[]> {
-    const headers = {};
-    return this.httpService.get<User[]>(`${USERS_URL}`, {headers});
+    return this.httpService.get<User[]>(`${USERS_URL}`);
   }
 }
