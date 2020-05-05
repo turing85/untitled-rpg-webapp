@@ -12,12 +12,12 @@ import { userLoadMe } from 'src/app/core/store/user/user.action';
 export class SidebarHeaderComponent implements OnInit {
 
   me$: Observable<User>;
-  constructor(private store: Store) { }
+  constructor(private store$: Store) { }
 
   ngOnInit(): void {
    
-    this.store.dispatch(userLoadMe());
-    this.me$ = this.store.pipe(select(selectCurrentUser));
+    this.store$.dispatch(userLoadMe());
+    this.me$ = this.store$.pipe(select(selectCurrentUser));
   }
 
 }

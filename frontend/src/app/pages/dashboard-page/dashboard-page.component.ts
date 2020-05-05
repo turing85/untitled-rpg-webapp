@@ -6,7 +6,7 @@ import { UserService } from 'src/app/core/services/user.service';
   templateUrl: './dashboard-page.component.html'
 })
 export class DashboardPageComponent implements OnInit {
-  constructor(private userService: UserService) {}
+  constructor() {}
 
   ngOnInit(): void {
   }

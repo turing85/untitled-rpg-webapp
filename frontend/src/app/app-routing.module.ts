@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AppAuthGuard } from './core/guards/app-auth-guard.guard';
+import { AppAuthGuard } from './core/guards/app-auth.guard';
 import { DashboardPageModule } from './pages/dashboard-page/dashboard-page.module';
 import { LandingPageModule } from './pages/landing-page/landing-page.module';
 import { ForbiddenPageModule } from './pages/forbidden-page/forbidden-page.module';

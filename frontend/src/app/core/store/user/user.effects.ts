@@ -58,4 +58,10 @@ export class UserEffects {
         )
     ));
 
+    logout$ = createEffect(() => this.actions$.pipe(
+        ofType(UserActions.userLogout),
+        tap(() => this.userService.logout())
+    ),
+        { dispatch: false }
+    );
 }

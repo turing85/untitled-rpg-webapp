@@ -1,10 +1,6 @@
 <div class="register-modal">
-    <!-- multistep form -->
     <form [(formGroup)]="registerForm" (ngSubmit)="register()" class="col s12">
         <div class="row">
-            <!-- progressbar -->
-
-            <!-- fieldsets -->
             <fieldset *ngIf="step===0">
                 <h5>Create your Account</h5>
                 <div class="input-field col s12">
@@ -30,19 +26,3 @@
         </div>
     </form>
 </div>
-
-<style>
-    /*custom font*/
-    /*basic reset*/
-    /*form styles*/
-    
-    .invalid {
-        border-color: red;
-    }
-    
-    #msform fieldset:not(:first-of-type) {
-        display: none;
-    }
-    /*buttons*/
-    /*headings*/
-</style>

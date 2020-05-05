@@ -9,11 +9,10 @@ import { FormBuilder, FormControl, Validators, AbstractControl, FormGroup } from
 })
 export class RegisterPageComponent implements OnInit {
 
-
   step = 0;
   registerForm: FormGroup;
 
-  constructor(private store: Store,
+  constructor(private store$: Store,
               private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
@@ -49,7 +48,7 @@ export class RegisterPageComponent implements OnInit {
 
       console.log(this.registerForm.value);
       const { name, email, password } = (this.registerForm.value);
-      this.store.dispatch(userRegister({ name, email, password, preferredLanguageTag: 'de-DE' }));
+      this.store$.dispatch(userRegister({ name, email, password, preferredLanguageTag: 'de-DE' }));
     }
   }
 

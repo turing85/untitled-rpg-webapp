@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SidebarFooterComponent } from './sidebar-footer.component';
+import { ngrxTesting } from 'src/app/dev/testing/ngrx-testing';
+import { IconsModule } from 'src/app/dev/testing/icons.module';
 
 describe('SidebarFooterComponent', () => {
   let component: SidebarFooterComponent;
@@ -8,6 +10,10 @@ describe('SidebarFooterComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports:[
+        ...ngrxTesting(),
+        IconsModule
+      ],
       declarations: [ SidebarFooterComponent ]
     })
     .compileComponents();

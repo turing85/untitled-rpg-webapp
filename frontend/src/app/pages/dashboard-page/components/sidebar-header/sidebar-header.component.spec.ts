@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SidebarHeaderComponent } from './sidebar-header.component';
+import { ngrxTesting } from 'src/app/dev/testing/ngrx-testing';
 
 describe('SidebarHeaderComponent', () => {
   let component: SidebarHeaderComponent;
@@ -8,6 +9,9 @@ describe('SidebarHeaderComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports:[
+        ...ngrxTesting()
+      ],
       declarations: [ SidebarHeaderComponent ]
     })
     .compileComponents();

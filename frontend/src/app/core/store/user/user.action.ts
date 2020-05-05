@@ -6,6 +6,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 export const userRegister = createAction('[User] Register',
     props<{ name: string, email: string, password: string, preferredLanguageTag: LanguageTag }>()
 );
+
+export const userLogout = createAction('[User] Logout');
+
 export const userRegisterSuccess = createAction('[User] Register Success', props<{ user: User }>());
 export const userRegisterFail = createAction('[User] Register Fail', props<{ error: HttpErrorResponse }>());
 
