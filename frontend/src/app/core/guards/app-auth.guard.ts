@@ -20,10 +20,10 @@ export class AppAuthGuard extends KeycloakAuthGuard {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Promise<boolean> {
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve) => {
       if (!this.authenticated) {
         this.keycloakAngular.login();
-        return;
+        resolve(false);
       }
       console.log(
         'role restriction given at app-routing.module for this route',
