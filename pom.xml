@@ -13,6 +13,7 @@
   <packaging>pom</packaging>
   <modules>
     <module>backend</module>
+    <module>frontend</module>
   </modules>
 
   <properties>
@@ -29,6 +30,32 @@
     <jacoco.exclusions>
       **/*MapperImpl.class
     </jacoco.exclusions>
+
+    <!-- sonar configuration -->
+    <sonar.sources>
+      src
+    </sonar.sources>
+    <sonar.tests>
+      src
+    </sonar.tests>
+    <sonar.inclusions>
+      **,
+    </sonar.inclusions>
+    <sonar.exclusion>
+      **/resources/**/*.sql
+      **/src/test/**,
+      **/src/**/*.spec.ts
+    </sonar.exclusion>
+    <sonar.test.inclusions>
+      **/src/test/**,
+      **/src/**/*.spec.ts
+    </sonar.test.inclusions>
+    <sonar.coverage.jacoco.xmlReportPaths>
+      ${maven.multiModuleProjectDirectory}/backend/testaggregation/target/site/jacoco-aggregate-ut/jacoco.xml
+    </sonar.coverage.jacoco.xmlReportPaths>
+    <sonar.javascript.lcov.reportPaths>
+      ${maven.multiModuleProjectDirectory}/frontend/test-reports/lcov.info
+    </sonar.javascript.lcov.reportPaths>
   </properties>
 
   <profiles>

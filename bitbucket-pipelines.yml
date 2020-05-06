@@ -38,6 +38,7 @@ definitions:
           - npm run test
         artifacts:
           - frontend/test-reports/lcov-report/**
+          - frontend/test-reports/lcov.info
       
     - step: &build-java
         name: Build Java source code
@@ -77,8 +78,7 @@ definitions:
           - maven
           - sonar
         script:
-          - mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.java.libraries=**/*.jar -Dsonar.sources=src,pom.xml -Dsonar.exclusions=src/test -Dsonar.javascript.lcov.reportPaths=frontend/test-reports/lcov-report
-
+          - mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.java.libraries=**/*.jar -Dsonar.nodejs.executable=frontend/node/node
 pipelines:
   custom:
     populate-caches:
