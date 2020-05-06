@@ -11,5 +11,15 @@ module.exports = {
   coverageDirectory: 'coverage/my-app',
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths || {}, {
     prefix: '<rootDir>/'
-  })
+  }),
+  testResultsProcessor: "./node_modules/jest-junit-reporter",
+  reporters: [
+      "default",
+      [
+          "./node_modules/jest-html-reporter",
+          {
+              "outputPath": "./test-reports/test-report.html"
+          }
+      ]
+  ]
 };

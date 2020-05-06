@@ -6,7 +6,7 @@
         "start": "ng serve",
         "build": "ng build",
         "build:docker": "npm i && ng build && docker build -t rpg/frontend .",
-        "test": "jest --ci",
+        "test": "TEST_REPORT_PATH=test-reports jest",
         "test:watch": "jest --watch",
         "lint": "ng lint --fix",
         "e2e": "ng e2e"
@@ -50,6 +50,8 @@
         "jasmine-spec-reporter": "~4.2.1",
         "jest": "^26.0.0",
         "jest-preset-angular": "^8.1.3",
+        "jest-html-reporter": "^3.1.0",
+        "jest-junit-reporter": "^1.1.0",
         "karma": "~4.3.0",
         "karma-chrome-launcher": "~3.1.0",
         "karma-coverage-istanbul-reporter": "~2.1.0",
