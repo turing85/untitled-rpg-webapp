@@ -7,6 +7,7 @@ variables:
 definitions:
   caches:
     sonar: ~/.sonar/cache  # Caching SonarCloud artifacts will speed up your build
+    frontend-node: frontend/node_modules
   steps:
     - step: &populate-caches
         name: Populate .m2 repository-cache and sonar-cache
@@ -19,6 +20,23 @@ definitions:
           - cicd/backend/install.sh
           - mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.java.libraries=**/*.jar
           - cicd/backend/build-uber-jars.sh
+    - step: &build-frontend
+        name: Build frontend
+        image: node:10.15.0
+        caches:
+          - frontend-node
+        script:
+          - cd frontend
+          - npm install
+    - step: &unit-test-frontend
+        name: unit test frontend
+        image: node:10.15.0
+        caches:
+          - frontend-node
+        script:
+          - cd frontend
+          - npm run test
+      
     - step: &build-java
         name: Build Java source code
         image: adoptopenjdk/maven-openjdk11@sha256:fd7ca81dc66b2d42907d2259ac179058bb26d8ce909116e1a8a3b539292cc988
@@ -65,8 +83,12 @@ pipelines:
       - step: *populate-caches
   branches:
     feature/*:
-      - step: *build-java
-      - step: *unit-test-java
+      - parallel:
+         - step: *build-java 
+         - step: *build-frontend
+      - parallel:
+        - step: *unit-test-java
+        - step: *unit-test-frontend
       - step:
           <<: *unit-test-java-coverage
           trigger: manual
