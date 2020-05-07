@@ -39,6 +39,7 @@ definitions:
         artifacts:
           - frontend/test-reports/lcov-report/**
           - frontend/test-reports/lcov.info
+          - /usr/local/bin/node
       
     - step: &build-java
         name: Build Java source code
@@ -78,7 +79,7 @@ definitions:
           - maven
           - sonar
         script:
-          - mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.java.libraries=**/*.jar -Dsonar.nodejs.executable=frontend/node/node
+          - mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.java.libraries=**/*.jar -Dsonar.nodejs.executable=/usr/local/bin/node
 pipelines:
   custom:
     populate-caches:
