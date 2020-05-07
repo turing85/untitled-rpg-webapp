@@ -14,9 +14,11 @@ export const userRegisterFail = createAction('[User] Register Fail', props<{ err
 
 
 export const userLoadMe = createAction('[User] Load me');
+export const userLoadMeSuccess = createAction('[User] Load me Success', props<{ user: User }>());
+export const userLoadMeFail = createAction('[User] Load me Fail', props<{ error: HttpErrorResponse }>());
+
 export const userLoad = createAction('[User] Load user', props<{ name: string }>());
 export const userLoadSuccess = createAction('[User] Load user Success', props<{ user: User }>());
-export const userLoadMeSuccess = createAction('[User] Load me Success', props<{ user: User }>());
 export const userLoadFail = createAction('[User] Load user Fail', props<{ error: HttpErrorResponse }>());
 
 

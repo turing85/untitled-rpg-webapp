@@ -10,9 +10,6 @@ export const {
   selectTotal,
 } = userAdapter.getSelectors(selectFeature);
 
-export const selectMe = createSelector(selectFeature, (state: UserState) => state.me, (state, name) => null
-);
-
 export const selectCurrentUserId = createSelector(
   selectFeature,
   user => user.me

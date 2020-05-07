@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { User } from 'src/app/model/user/user.keycloak.model';
-import { selectMe, selectCurrentUser, selectCurrentUserId } from '../../../../core/store/user/user.selector';
+import { selectCurrentUser } from 'src/app/core/store/user/user.selectors';
 import { Observable } from 'rxjs';
-import { userLoadMe } from 'src/app/core/store/user/user.action';
+import { userLoadMe } from 'src/app/core/store/user/user.actions';
 
 @Component({
   selector: 'rpg-sidebar-header',
@@ -15,7 +15,7 @@ export class SidebarHeaderComponent implements OnInit {
   constructor(private store$: Store) { }
 
   ngOnInit(): void {
-   
+
     this.store$.dispatch(userLoadMe());
     this.me$ = this.store$.pipe(select(selectCurrentUser));
   }

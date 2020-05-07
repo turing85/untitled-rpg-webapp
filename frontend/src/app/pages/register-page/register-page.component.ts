@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { userRegister } from 'src/app/core/store/user/user.action';
+import { userRegister } from 'src/app/core/store/user/user.actions';
 import { FormBuilder, FormControl, Validators, AbstractControl, FormGroup } from '@angular/forms';
 
 @Component({

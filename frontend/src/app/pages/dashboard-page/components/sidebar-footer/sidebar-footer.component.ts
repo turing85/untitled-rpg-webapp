@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { userLogout } from 'src/app/core/store/user/user.action';
+import { userLogout } from 'src/app/core/store/user/user.actions';
 import { faPowerOff, IconDefinition, faCog, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { Store } from '@ngrx/store';
 
