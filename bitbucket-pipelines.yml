@@ -18,7 +18,7 @@ definitions:
         script:
           - cicd/backend/unit-test-with-coverage.sh
           - cicd/backend/install.sh
-          - mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.java.libraries=**/*.jar
+          - mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           - cicd/backend/build-uber-jars.sh
     - step: &build-frontend
         name: Build frontend
@@ -80,7 +80,7 @@ definitions:
           - sonar
           - frontend-node
         script:
-          - mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.java.libraries=**/*.jar -Dsonar.nodejs.executable=frontend/node/node
+          - mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
 pipelines:
   custom:
     populate-caches:

@@ -47,6 +47,8 @@
       **/src/**/*.spec.ts,
       **/materialize.css
     </sonar.exclusion>
+    <sonar.java.libraries>**/*.jar</sonar.java.libraries>
+    <sonar.nodejs.executable>frontend/node/node</sonar.nodejs.executable>
     <sonar.test.inclusions>
       **/src/test/**,
       **/src/**/*.spec.ts
