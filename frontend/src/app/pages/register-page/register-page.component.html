@@ -2,6 +2,7 @@
     <form [(formGroup)]="registerForm" (ngSubmit)="register()" class="col s12">
         <div class="row">
             <fieldset *ngIf="step===0">
+                <legend class="invisible-text">Register Form</legend>
                 <h5>Create your Account</h5>
                 <div class="input-field col s12">
                     <input class="white-text validate" [ngClass]="{'invalid':nameInvalid}" type="text" formControlName="name" placeholder="Username" id="name" />
