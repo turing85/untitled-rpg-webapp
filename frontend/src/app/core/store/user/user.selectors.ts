@@ -1,7 +1,7 @@
 import { createSelector } from '@ngrx/store';
-import { UserState, userAdapter } from './user.reducer';
+import { userAdapter } from './user.reducer';
 
-export const selectFeature = (state: any) => state.user;
+const selectFeature = (state: any) => state.user;
 
 export const {
   selectIds,

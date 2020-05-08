@@ -1,20 +1,35 @@
 import { TestBed } from '@angular/core/testing';
 
-import { KeycloakAngularModule } from 'keycloak-angular';
+import { KeycloakService } from 'keycloak-angular';
 import { AppAuthGuard } from './app-auth.guard';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Component } from '@angular/core';
-import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { instance, mock } from 'ts-mockito';
 
 describe('AppAuthGuard', () => {
   let guard: AppAuthGuard;
-  const state = {} as RouterStateSnapshot;
-  beforeEach(() => {
 
+  const state = {} as RouterStateSnapshot;
+  const keycloakServiceMock = mock(KeycloakService);
+
+  let router = {
+    navigate: jasmine.createSpy('forbidden')
+  }
+
+
+
+  beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule.withRoutes([]),
-        KeycloakAngularModule,
+      providers: [
+        {
+          provide: Router,
+          useValue: router
+        },
+        {
+          provide: KeycloakService,
+          useValue: instance(keycloakServiceMock)
+        },
       ]
     });
     guard = TestBed.inject(AppAuthGuard);

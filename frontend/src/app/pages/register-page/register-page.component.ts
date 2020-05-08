@@ -37,26 +37,15 @@ export class RegisterPageComponent implements OnInit {
   }
 
   passwordConfirming(c: AbstractControl): { invalid: boolean } {
-    if (c.get('password').value !== c.get('password2').value) {
-      return { invalid: true };
-    }
+    return { invalid: c.get('password').value !== c.get('password2').value };
   }
 
   register() {
     Object.values(this.registerForm.controls).forEach(e => e.markAsTouched());
     if (this.registerForm.status === 'VALID') {
-
-      console.log(this.registerForm.value);
       const { name, email, password } = (this.registerForm.value);
       this.store$.dispatch(userRegister({ name, email, password, preferredLanguageTag: 'de-DE' }));
     }
-  }
-
-  next() {
-    this.step++;
-  }
-  prev() {
-    this.step--;
   }
 
   get nameInvalid(): boolean {
@@ -72,13 +61,14 @@ export class RegisterPageComponent implements OnInit {
     const c2 = this.registerForm.controls.password2;
     return (c.touched || c2.touched) && c.value !== c2.value;
   }
+
   empty(key): boolean {
     const control = this.registerForm.controls[key];
     return control.touched && (control.errors && control.errors.required);
   }
 
   invalid(key): boolean {
-    const f = this.registerForm.controls[key];
-    return !this.empty(key) && f.touched && f.errors !== null;
+    const control = this.registerForm.controls[key];
+    return !this.empty(key) && control.touched && control.errors !== null;
   }
 }
