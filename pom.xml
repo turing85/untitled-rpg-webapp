@@ -45,6 +45,7 @@
       **/resources/**/*.sql
       **/src/test/**,
       **/src/**/*.spec.ts
+      **/materialize.css
     </sonar.exclusion>
     <sonar.test.inclusions>
       **/src/test/**,
