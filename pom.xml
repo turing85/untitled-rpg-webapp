@@ -39,12 +39,12 @@
       src
     </sonar.tests>
     <sonar.inclusions>
-      **,
+      **
     </sonar.inclusions>
     <sonar.exclusion>
-      **/resources/**/*.sql
+      **/resources/**/*.sql,
       **/src/test/**,
-      **/src/**/*.spec.ts
+      **/src/**/*.spec.ts,
       **/materialize.css
     </sonar.exclusion>
     <sonar.test.inclusions>
