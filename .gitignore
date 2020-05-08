@@ -5,3 +5,4 @@ target/
 .angulardoc.json
 
 frontend/test-reports/
+localdeployment/local/
