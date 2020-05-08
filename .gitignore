@@ -1,5 +1,6 @@
 .idea/
 target/
+frontend/node/
 
 *.iml
 .angulardoc.json
