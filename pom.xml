@@ -32,15 +32,9 @@
     </jacoco.exclusions>
 
     <!-- sonar configuration -->
-    <sonar.sources>
-      src
-    </sonar.sources>
-    <sonar.tests>
-      src
-    </sonar.tests>
-    <sonar.inclusions>
-      **
-    </sonar.inclusions>
+    <sonar.sources>src</sonar.sources>
+    <sonar.tests>src</sonar.tests>
+    <sonar.inclusions>**</sonar.inclusions>
     <sonar.exclusions>
       **/resources/**/*.sql,
       **/src/test/**,
