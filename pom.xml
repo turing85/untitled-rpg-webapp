@@ -41,12 +41,12 @@
     <sonar.inclusions>
       **
     </sonar.inclusions>
-    <sonar.exclusion>
+    <sonar.exclusions>
       **/resources/**/*.sql,
       **/src/test/**,
       **/src/**/*.spec.ts,
       **/materialize.css
-    </sonar.exclusion>
+    </sonar.exclusions>
     <sonar.java.libraries>**/*.jar</sonar.java.libraries>
     <sonar.nodejs.executable>frontend/node/node</sonar.nodejs.executable>
     <sonar.test.inclusions>
