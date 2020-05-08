@@ -86,8 +86,8 @@ pipelines:
   branches:
     feature/*:
       - parallel:
-         - step: *build-java 
-         - step: *build-frontend
+        - step: *build-java
+        - step: *build-frontend
       - parallel:
         - step: *unit-test-java
         - step: *unit-test-frontend
@@ -98,15 +98,28 @@ pipelines:
           <<: *analyze-with-sonar
           trigger: manual
     develop:
-      - step: *build-java
-      - step: *unit-test-java-coverage
+      - parallel:
+        - step: *build-java
+        - step: *build-frontend
+      - parallel:
+        - step: *unit-test-frontend
+        - step: *unit-test-java-coverage
       - step: *analyze-with-sonar
     master:
-      - step: *build-java
-      - step: *unit-test-java-coverage
+      - parallel:
+        - step: *build-java
+        - step: *build-frontend
+      - parallel:
+        - step: *unit-test-frontend
+        - step: *unit-test-java-coverage
       - step: *analyze-with-sonar
   pull-requests:
     "**":
-      - step: *build-java
+      - parallel:
+        - step: *build-java
+        - step: *build-frontend
+      - parallel:
+        - step: *unit-test-java
+        - step: *unit-test-frontend
       - step: *unit-test-java-coverage
       - step: *analyze-with-sonar
