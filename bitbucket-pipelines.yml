@@ -78,6 +78,7 @@ definitions:
         caches:
           - maven
           - sonar
+          - frontend-node
         script:
           - mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.java.libraries=**/*.jar -Dsonar.nodejs.executable=frontend/node/node
 pipelines:
