@@ -16,6 +16,7 @@
       "dom"
     ]
   },
+  "noUnusedLocals": true,
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true

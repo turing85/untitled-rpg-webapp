@@ -1,9 +1,4 @@
 import * as UserSelectors from './user.selectors';
-import * as UserActions from './user.actions';
-import { TestBed } from '@angular/core/testing';
-import { userReducer } from './user.reducer';
-import { User } from 'src/app/model/user/user.keycloak.model';
-import { combineReducers, select } from '@ngrx/store';
 
 describe('UserSelectors', () => {
 

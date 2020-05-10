@@ -1,11 +1,9 @@
 import { TestBed } from '@angular/core/testing';
-
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
 import { KeycloakService } from 'keycloak-angular';
-import { AppAuthGuard } from './app-auth.guard';
-import { RouterTestingModule } from '@angular/router/testing';
-import { ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
-import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { instance, mock } from 'ts-mockito';
+import { AppAuthGuard } from './app-auth.guard';
+
 
 describe('AppAuthGuard', () => {
   let guard: AppAuthGuard;
@@ -16,9 +14,6 @@ describe('AppAuthGuard', () => {
   const router = {
     navigate: jasmine.createSpy('forbidden')
   };
-
-
-
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
@@ -41,8 +36,10 @@ describe('AppAuthGuard', () => {
 
   function guardForUserWithRoles(requiredRoles?: string[]): AppAuthGuard {
     if (requiredRoles) {
-      guard.authenticated = true;
-      guard.roles = requiredRoles;
+      /* tslint:disable */
+      guard['authenticated'] = true;
+      guard['roles'] = requiredRoles;
+      /* tslint:enable */
     }
     return guard;
   }

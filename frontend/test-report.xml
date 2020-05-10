@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite id="0" name="D:\git\untitled-rpg-webapp\frontend\src\app\core\services\user.service.spec.ts" errors="0" package="D:\git\untitled-rpg-webapp\frontend\src\app\core\services\user.service.spec.ts" hostname="localhost" tests="6" failures="0" time="1.947" timestamp="2020-05-10T16:41:35">
+    <properties>
+    </properties>
+    <testcase classname="UserService" name="should be created" time="0">
+    </testcase>
+    <testcase classname="UserService" name="should call keycloak when logout" time="0">
+    </testcase>
+    <testcase classname="UserService" name="should post to user service when register" time="0">
+    </testcase>
+    <testcase classname="UserService" name="should get user by name" time="0">
+    </testcase>
+    <testcase classname="UserService" name="should get all user" time="0">
+    </testcase>
+    <testcase classname="UserService" name="should get me" time="0">
+    </testcase>
+    <system-out/>
+    <system-err/>
+  </testsuite>
+  <testsuite id="1" name="D:\git\untitled-rpg-webapp\frontend\src\app\pages\dashboard-page\dashboard-page.component.spec.ts" errors="0" package="D:\git\untitled-rpg-webapp\frontend\src\app\pages\dashboard-page\dashboard-page.component.spec.ts" hostname="localhost" tests="1" failures="0" time="2.067" timestamp="2020-05-10T16:41:35">
+    <properties>
+    </properties>
+    <testcase classname="DashboardPageComponent" name="should create" time="0">
+    </testcase>
+    <system-out/>
+    <system-err/>
+  </testsuite>
+  <testsuite id="2" name="D:\git\untitled-rpg-webapp\frontend\src\app\pages\register-page\register-page.component.spec.ts" errors="0" package="D:\git\untitled-rpg-webapp\frontend\src\app\pages\register-page\register-page.component.spec.ts" hostname="localhost" tests="7" failures="0" time="2.638" timestamp="2020-05-10T16:41:35">
+    <properties>
+    </properties>
+    <testcase classname="RegisterPageComponent" name="should create" time="0">
+    </testcase>
+    <testcase classname="RegisterPageComponent" name="should validate password and return valid if same" time="0">
+    </testcase>
+    <testcase classname="RegisterPageComponent" name="should validate password and return invalid if not same" time="0">
+    </testcase>
+    <testcase classname="empty" name="should return true if field is empty and touched" time="0">
+    </testcase>
+    <testcase classname="empty" name="should return false if field is empty but untouched" time="0">
+    </testcase>
+    <testcase classname="invalid" name="should return false if field is not empty" time="0">
+    </testcase>
+    <testcase classname="invalid" name="should return true if field has errors" time="0">
+    </testcase>
+    <system-out/>
+    <system-err/>
+  </testsuite>
+  <testsuite id="3" name="D:\git\untitled-rpg-webapp\frontend\src\app\pages\dashboard-page\components\sidebar\sidebar.component.spec.ts" errors="0" package="D:\git\untitled-rpg-webapp\frontend\src\app\pages\dashboard-page\components\sidebar\sidebar.component.spec.ts" hostname="localhost" tests="1" failures="0" time="0.854" timestamp="2020-05-10T16:41:37">
+    <properties>
+    </properties>
+    <testcase classname="SidebarComponent" name="should create" time="0">
+    </testcase>
+    <system-out/>
+    <system-err/>
+  </testsuite>
+  <testsuite id="4" name="D:\git\untitled-rpg-webapp\frontend\src\app\pages\dashboard-page\components\sidebar-footer\sidebar-footer.component.spec.ts" errors="0" package="D:\git\untitled-rpg-webapp\frontend\src\app\pages\dashboard-page\components\sidebar-footer\sidebar-footer.component.spec.ts" hostname="localhost" tests="1" failures="0" time="0.818" timestamp="2020-05-10T16:41:37">
+    <properties>
+    </properties>
+    <testcase classname="SidebarFooterComponent" name="should create" time="0">
+    </testcase>
+    <system-out/>
+    <system-err/>
+  </testsuite>
+  <testsuite id="5" name="D:\git\untitled-rpg-webapp\frontend\src\app\core\store\user\user.effects.spec.ts" errors="0" package="D:\git\untitled-rpg-webapp\frontend\src\app\core\store\user\user.effects.spec.ts" hostname="localhost" tests="9" failures="0" time="0.666" timestamp="2020-05-10T16:41:38">
+    <properties>
+    </properties>
+    <testcase classname="registerUser$" name="should call userService on register and fail with wrong parameters" time="0">
+    </testcase>
+    <testcase classname="registerUser$" name="should call userService on register and succeed with correct parameters" time="0">
+    </testcase>
+    <testcase classname="loadMe$" name="should call userService on userloadMe" time="0">
+    </testcase>
+    <testcase classname="loadMe$" name="should call userService on userloadMe and can fail" time="0">
+    </testcase>
+    <testcase classname="loadUser$" name="should call userService on userLoad" time="0">
+    </testcase>
+    <testcase classname="loadUser$" name="should call userService on userLoad and can fail" time="0">
+    </testcase>
+    <testcase classname="loadUsers$" name="should call userService on userLoadAll" time="0">
+    </testcase>
+    <testcase classname="loadUsers$" name="should call userService on userLoadAll and can fail" time="0">
+    </testcase>
+    <testcase classname="logout$" name="should call userService on userLoadAll" time="0">
+    </testcase>
+    <system-out/>
+    <system-err/>
+  </testsuite>
+  <testsuite id="6" name="D:\git\untitled-rpg-webapp\frontend\src\app\app.component.spec.ts" errors="0" package="D:\git\untitled-rpg-webapp\frontend\src\app\app.component.spec.ts" hostname="localhost" tests="2" failures="0" time="0.6" timestamp="2020-05-10T16:41:38">
+    <properties>
+    </properties>
+    <testcase classname="AppComponent" name="should create the app" time="0">
+    </testcase>
+    <testcase classname="AppComponent" name="should have as title &apos;frontend&apos;" time="0">
+    </testcase>
+    <system-out/>
+    <system-err/>
+  </testsuite>
+  <testsuite id="7" name="D:\git\untitled-rpg-webapp\frontend\src\app\pages\dashboard-page\components\sidebar-main\sidebar-main.component.spec.ts" errors="0" package="D:\git\untitled-rpg-webapp\frontend\src\app\pages\dashboard-page\components\sidebar-main\sidebar-main.component.spec.ts" hostname="localhost" tests="1" failures="0" time="0.535" timestamp="2020-05-10T16:41:38">
+    <properties>
+    </properties>
+    <testcase classname="SidebarMainComponent" name="should create" time="0">
+    </testcase>
+    <system-out/>
+    <system-err/>
+  </testsuite>
+  <testsuite id="8" name="D:\git\untitled-rpg-webapp\frontend\src\app\pages\landing-page\landing-page.component.spec.ts" errors="0" package="D:\git\untitled-rpg-webapp\frontend\src\app\pages\landing-page\landing-page.component.spec.ts" hostname="localhost" tests="1" failures="0" time="0.559" timestamp="2020-05-10T16:41:39">
+    <properties>
+    </properties>
+    <testcase classname="LandingPageComponent" name="should create" time="0">
+    </testcase>
+    <system-out/>
+    <system-err/>
+  </testsuite>
+  <testsuite id="9" name="D:\git\untitled-rpg-webapp\frontend\src\app\pages\forbidden-page\forbidden-page.component.spec.ts" errors="0" package="D:\git\untitled-rpg-webapp\frontend\src\app\pages\forbidden-page\forbidden-page.component.spec.ts" hostname="localhost" tests="1" failures="0" time="0.544" timestamp="2020-05-10T16:41:39">
+    <properties>
+    </properties>
+    <testcase classname="ForbiddenPageComponent" name="should create" time="0">
+    </testcase>
+    <system-out/>
+    <system-err/>
+  </testsuite>
+  <testsuite id="10" name="D:\git\untitled-rpg-webapp\frontend\src\app\core\components\breadcrumb\breadcrumb.component.spec.ts" errors="0" package="D:\git\untitled-rpg-webapp\frontend\src\app\core\components\breadcrumb\breadcrumb.component.spec.ts" hostname="localhost" tests="1" failures="0" time="0.604" timestamp="2020-05-10T16:41:39">
+    <properties>
+    </properties>
+    <testcase classname="BreadcrumbComponent" name="should create" time="0">
+    </testcase>
+    <system-out/>
+    <system-err/>
+  </testsuite>
+  <testsuite id="11" name="D:\git\untitled-rpg-webapp\frontend\src\app\core\store\user\user.reducer.spec.ts" errors="0" package="D:\git\untitled-rpg-webapp\frontend\src\app\core\store\user\user.reducer.spec.ts" hostname="localhost" tests="12" failures="0" time="0.52" timestamp="2020-05-10T16:41:39">
+    <properties>
+    </properties>
+    <testcase classname="UserReducer" name="should stay in initial state with unknown Action" time="0">
+    </testcase>
+    <testcase classname="UserReducer" name="should change into loading state with userRegister action" time="0">
+    </testcase>
+    <testcase classname="UserReducer" name="should end loading with userRegisterFail action" time="0">
+    </testcase>
+    <testcase classname="UserReducer" name="should store user withuserRegisterSuccess action" time="0">
+    </testcase>
+    <testcase classname="UserReducer" name="should change into loading state with userLoad action" time="0">
+    </testcase>
+    <testcase classname="UserReducer" name="should end loading with userLoadFail action" time="0">
+    </testcase>
+    <testcase classname="UserReducer" name="should store user with userLoadSuccess action" time="0">
+    </testcase>
+    <testcase classname="UserReducer" name="should change into loading state with userLoadMe action" time="0">
+    </testcase>
+    <testcase classname="UserReducer" name="should store user with userLoadMeSuccess action" time="0">
+    </testcase>
+    <testcase classname="UserReducer" name="should change into loading state with userLoadAll action" time="0">
+    </testcase>
+    <testcase classname="UserReducer" name="should end loading with userLoadAllFail action" time="0">
+    </testcase>
+    <testcase classname="UserReducer" name="should store user with userLoadSuccess action" time="0">
+    </testcase>
+    <system-out/>
+    <system-err/>
+  </testsuite>
+  <testsuite id="12" name="D:\git\untitled-rpg-webapp\frontend\src\app\core\store\user\user.selectors.spec.ts" errors="0" package="D:\git\untitled-rpg-webapp\frontend\src\app\core\store\user\user.selectors.spec.ts" hostname="localhost" tests="2" failures="0" time="0.486" timestamp="2020-05-10T16:41:39">
+    <properties>
+    </properties>
+    <testcase classname="UserSelectors" name="should selectMe from store" time="0">
+    </testcase>
+    <testcase classname="UserSelectors" name="should selectMe from store" time="0">
+    </testcase>
+    <system-out/>
+    <system-err/>
+  </testsuite>
+  <testsuite id="13" name="D:\git\untitled-rpg-webapp\frontend\src\app\pages\dashboard-page\components\sidebar-header\sidebar-header.component.spec.ts" errors="0" package="D:\git\untitled-rpg-webapp\frontend\src\app\pages\dashboard-page\components\sidebar-header\sidebar-header.component.spec.ts" hostname="localhost" tests="1" failures="0" time="0.61" timestamp="2020-05-10T16:41:39">
+    <properties>
+    </properties>
+    <testcase classname="SidebarHeaderComponent" name="should create" time="0">
+    </testcase>
+    <system-out/>
+    <system-err/>
+  </testsuite>
+  <testsuite id="14" name="D:\git\untitled-rpg-webapp\frontend\src\app\core\components\searchfield\searchfield.component.spec.ts" errors="0" package="D:\git\untitled-rpg-webapp\frontend\src\app\core\components\searchfield\searchfield.component.spec.ts" hostname="localhost" tests="1" failures="0" time="0.55" timestamp="2020-05-10T16:41:40">
+    <properties>
+    </properties>
+    <testcase classname="SearchfieldComponent" name="should create" time="0">
+    </testcase>
+    <system-out/>
+    <system-err/>
+  </testsuite>
+  <testsuite id="15" name="D:\git\untitled-rpg-webapp\frontend\src\app\pages\dashboard-page\components\sidebar-sub\sidebar-sub.component.spec.ts" errors="0" package="D:\git\untitled-rpg-webapp\frontend\src\app\pages\dashboard-page\components\sidebar-sub\sidebar-sub.component.spec.ts" hostname="localhost" tests="1" failures="0" time="0.521" timestamp="2020-05-10T16:41:40">
+    <properties>
+    </properties>
+    <testcase classname="SidebarSubComponent" name="should create" time="0">
+    </testcase>
+    <system-out/>
+    <system-err/>
+  </testsuite>
+  <testsuite id="16" name="D:\git\untitled-rpg-webapp\frontend\src\app\core\guards\app-auth.guard.spec.ts" errors="0" package="D:\git\untitled-rpg-webapp\frontend\src\app\core\guards\app-auth.guard.spec.ts" hostname="localhost" tests="6" failures="0" time="4.236" timestamp="2020-05-10T16:41:40">
+    <properties>
+    </properties>
+    <testcase classname="AppAuthGuard" name="should be created" time="0">
+    </testcase>
+    <testcase classname="isAccessAllowed" name="should return false when no token provided" time="0">
+    </testcase>
+    <testcase classname="isAccessAllowed" name="should return true when no roles are required" time="0">
+    </testcase>
+    <testcase classname="isAccessAllowed" name="should return false when no roles are provided" time="0">
+    </testcase>
+    <testcase classname="isAccessAllowed" name="should return true when roles are provided" time="0">
+    </testcase>
+    <testcase classname="isAccessAllowed" name="should return true when not all roles are provided" time="0">
+    </testcase>
+    <system-out/>
+    <system-err/>
+  </testsuite>
+</testsuites>

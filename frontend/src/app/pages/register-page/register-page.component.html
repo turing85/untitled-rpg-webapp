@@ -7,12 +7,14 @@
                 <div class="input-field col s12">
                     <input class="white-text validate" [ngClass]="{'invalid':nameInvalid}" type="text" formControlName="name" placeholder="Username" id="name" />
                     <span *ngIf="empty('name')" class="helper-text alert-text left">Field can not be empty</span>
-                    <span *ngIf="invalid('name')" class="helper-text alert-text left">Name must contain 3 characters </span>
+                    <span *ngIf="invalid('name')" class="helper-text alert-text left">Name must contain 3 characters
+                    </span>
                 </div>
                 <div class="input-field col s12">
                     <input class="white-text validate" [ngClass]="{'invalid':emailInvalid}" type="text" formControlName="email" placeholder="Email" />
                     <span *ngIf="empty('email')" class="helper-text alert-text left">Field can not be empty</span>
-                    <span *ngIf="invalid('email')" class="helper-text alert-text left">Email must have a valid format</span>
+                    <span *ngIf="invalid('email')" class="helper-text alert-text left">Email must have a valid
+                        format</span>
                 </div>
                 <div class="input-field col s12">
                     <input class="white-text validate" [ngClass]="{'invalid':pwInvalid()}" type="password" formControlName="password" placeholder="Password" />

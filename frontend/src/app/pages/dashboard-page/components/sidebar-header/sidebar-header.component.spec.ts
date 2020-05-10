@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { SidebarHeaderComponent } from './sidebar-header.component';
 import { ngrxTesting } from 'src/app/dev/testing/ngrx-testing';
+import { SidebarHeaderComponent } from './sidebar-header.component';
+
 
 describe('SidebarHeaderComponent', () => {
   let component: SidebarHeaderComponent;
@@ -12,9 +12,9 @@ describe('SidebarHeaderComponent', () => {
       imports: [
         ...ngrxTesting()
       ],
-      declarations: [ SidebarHeaderComponent ]
+      declarations: [SidebarHeaderComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

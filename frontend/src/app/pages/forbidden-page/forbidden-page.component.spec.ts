@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ForbiddenPageComponent } from './forbidden-page.component';
+
 
 describe('ForbiddenPageComponent', () => {
   let component: ForbiddenPageComponent;
@@ -8,9 +8,9 @@ describe('ForbiddenPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ForbiddenPageComponent ]
+      declarations: [ForbiddenPageComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

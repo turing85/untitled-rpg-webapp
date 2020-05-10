@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 interface PathSegment {
   name: string;
@@ -11,7 +11,7 @@ interface PathSegment {
 export class BreadcrumbComponent implements OnInit {
   @Input()
   path: PathSegment[];
-  constructor() {}
+  constructor() { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 }

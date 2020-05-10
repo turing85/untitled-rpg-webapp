@@ -1,7 +1,7 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { createAction, props } from '@ngrx/store';
 import { User } from 'src/app/model/user/user.keycloak.model';
 import { LanguageTag } from '../../services/user.service';
-import { HttpErrorResponse } from '@angular/common/http';
 
 export const userLogout = createAction('[User] Logout');
 

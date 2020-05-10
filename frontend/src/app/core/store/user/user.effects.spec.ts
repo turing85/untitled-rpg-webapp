@@ -1,14 +1,13 @@
-import { UserEffects } from './user.effects';
-import { Subject, of, throwError } from 'rxjs';
-import { Action } from '@ngrx/store';
-import { mock, instance, when, verify } from 'ts-mockito';
-import { Router } from '@angular/router';
-import { UserService } from '../../services/user.service';
-import { ofType } from '@ngrx/effects';
-import * as UserActions from './user.actions';
-import { tap } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { ofType } from '@ngrx/effects';
+import { Action } from '@ngrx/store';
+import { of, Subject, throwError } from 'rxjs';
 import { User } from 'src/app/model/user/user.keycloak.model';
+import { instance, mock, verify, when } from 'ts-mockito';
+import { UserService } from '../../services/user.service';
+import * as UserActions from './user.actions';
+import { UserEffects } from './user.effects';
 
 describe('UserEffects', () => {
     const routerMock = mock(Router);

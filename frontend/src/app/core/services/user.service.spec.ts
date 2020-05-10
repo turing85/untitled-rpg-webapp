@@ -2,8 +2,8 @@ import { TestBed } from '@angular/core/testing';
 
 import { instance, mock, verify, when, anything } from 'ts-mockito';
 import { UserService } from './user.service';
-import { KeycloakService, KeycloakAngularModule } from 'keycloak-angular';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { KeycloakService } from 'keycloak-angular';
+import { HttpClient } from '@angular/common/http';
 import { PlatformLocation } from '@angular/common';
 import { User } from 'src/app/model/user/user.keycloak.model';
 import { of } from 'rxjs';
@@ -36,7 +36,9 @@ describe('UserService', () => {
 
     });
     service = TestBed.inject(UserService);
-    service.platformLocation = { location: { origin: 'foo' } } as unknown as PlatformLocation;
+    /* tslint:disable */
+    service['platformLocation'] = { location: { origin: 'foo' } } as unknown as PlatformLocation;
+      /* tslint:enable */
   });
 
   it('should be created', () => {

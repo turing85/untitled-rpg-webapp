@@ -1,10 +1,10 @@
 <ul class="breadcrumb">
-  <li *ngFor="let segment of path">
-    <a *ngIf="segment.link; else noLink" [routerLink]="segment.link">{{
+    <li *ngFor="let segment of path">
+        <a *ngIf="segment.link; else noLink" [routerLink]="segment.link">{{
       segment.name
     }}</a>
-    <ng-template #noLink>
-      {{ segment.name }}
-    </ng-template>
-  </li>
+        <ng-template #noLink>
+            {{ segment.name }}
+        </ng-template>
+    </li>
 </ul>

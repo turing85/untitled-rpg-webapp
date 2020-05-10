@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import * as icons from '@fortawesome/free-solid-svg-icons';
 
 @NgModule({
@@ -11,7 +11,7 @@ export class IconsModule {
         // add icons to the library for convenient access in other components
         library.addIcons(
             icons.faPowerOff,
-             icons.faCog,
-             icons.faEnvelope);
+            icons.faCog,
+            icons.faEnvelope);
     }
 }

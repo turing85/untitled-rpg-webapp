@@ -45,7 +45,7 @@ export class TestStore {
   private actions: Action[] = [];
   state: any;
 
-  constructor(private actions$: Actions, private store$: Store<{}>) {}
+  constructor(private actions$: Actions, private store$: Store<{}>) { }
 
   @Effect({ dispatch: false })
   logActions$ = this.actions$.pipe(tap(action => this.actions.push(action)));

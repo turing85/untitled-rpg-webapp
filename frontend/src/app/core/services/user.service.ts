@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { KeycloakService } from 'keycloak-angular';
-import { User } from 'src/app/model/user/user.keycloak.model';
-import { Observable, of } from 'rxjs';
 import { PlatformLocation } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { KeycloakService } from 'keycloak-angular';
+import { Observable } from 'rxjs';
+import { User } from 'src/app/model/user/user.keycloak.model';
 
 
 export type LanguageTag = 'en-GB' | 'de-DE';

@@ -1,17 +1,17 @@
+import { HttpClientModule } from '@angular/common/http';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, APP_INITIALIZER } from '@angular/core';
-import { KeycloakService, KeycloakAngularModule } from 'keycloak-angular';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
+import { environment } from '../environments/environment'; // Angular CLI environment
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { initializer } from './core/app-init';
-import { HttpClientModule } from '@angular/common/http';
-import { EffectsModule } from '@ngrx/effects';
 import { UserEffects } from './core/store/user/user.effects';
-import { StoreModule } from '@ngrx/store';
 import { userReducer } from './core/store/user/user.reducer';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { environment } from '../environments/environment'; // Angular CLI environment
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [AppComponent],

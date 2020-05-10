@@ -1,7 +1,7 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
-import { Store, select } from '@ngrx/store';
+import { Component, OnInit } from '@angular/core';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { userRegister } from 'src/app/core/store/user/user.actions';
-import { FormBuilder, FormControl, Validators, AbstractControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'rpg-register-page',
@@ -13,7 +13,7 @@ export class RegisterPageComponent implements OnInit {
   registerForm: FormGroup;
 
   constructor(private store$: Store,
-              private formBuilder: FormBuilder) { }
+    private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
 

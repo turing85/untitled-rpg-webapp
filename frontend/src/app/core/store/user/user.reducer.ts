@@ -1,7 +1,7 @@
+import { createEntityAdapter, EntityState } from '@ngrx/entity';
 import { createReducer, on } from '@ngrx/store';
-import { EntityState, createEntityAdapter } from '@ngrx/entity';
-import * as UserActions from './user.actions';
 import { User } from 'src/app/model/user/user.keycloak.model';
+import * as UserActions from './user.actions';
 
 export interface UserState extends EntityState<User> {
     me: string;

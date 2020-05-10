@@ -1,6 +1,6 @@
-import { userReducer } from './user.reducer';
-import * as UserActions from './user.actions';
 import { User } from 'src/app/model/user/user.keycloak.model';
+import * as UserActions from './user.actions';
+import { userReducer } from './user.reducer';
 
 describe('UserReducer', () => {
 

@@ -6,7 +6,7 @@
         "start": "ng serve",
         "build": "ng build",
         "build:docker": "npm i && ng build && docker build -t rpg/frontend .",
-        "test": "TEST_REPORT_PATH=test-reports jest",
+        "test": "jest",
         "test:watch": "jest --watch",
         "lint": "ng lint --fix",
         "e2e": "ng e2e"

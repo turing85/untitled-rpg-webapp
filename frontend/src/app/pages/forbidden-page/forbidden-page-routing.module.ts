@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { ForbiddenPageComponent } from './forbidden-page.component';
 
 const routes: Routes = [{ path: '', component: ForbiddenPageComponent }];
@@ -8,4 +8,4 @@ const routes: Routes = [{ path: '', component: ForbiddenPageComponent }];
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ForbiddenRoutingModule {}
+export class ForbiddenRoutingModule { }

@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ForbiddenPageComponent } from './forbidden-page.component';
+import { NgModule } from '@angular/core';
 import { ForbiddenRoutingModule } from './forbidden-page-routing.module';
+import { ForbiddenPageComponent } from './forbidden-page.component';
 
 
 

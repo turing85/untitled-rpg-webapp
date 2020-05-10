@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Store, select } from '@ngrx/store';
-import { User } from 'src/app/model/user/user.keycloak.model';
-import { selectCurrentUser } from 'src/app/core/store/user/user.selectors';
+import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { userLoadMe } from 'src/app/core/store/user/user.actions';
+import { selectCurrentUser } from 'src/app/core/store/user/user.selectors';
+import { User } from 'src/app/model/user/user.keycloak.model';
 
 @Component({
   selector: 'rpg-sidebar-header',

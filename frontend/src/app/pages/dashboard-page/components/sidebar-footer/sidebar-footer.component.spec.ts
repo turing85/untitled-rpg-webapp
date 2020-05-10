@@ -1,8 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { SidebarFooterComponent } from './sidebar-footer.component';
-import { ngrxTesting } from 'src/app/dev/testing/ngrx-testing';
 import { IconsModule } from 'src/app/dev/testing/icons.module';
+import { ngrxTesting } from 'src/app/dev/testing/ngrx-testing';
+import { SidebarFooterComponent } from './sidebar-footer.component';
+
 
 describe('SidebarFooterComponent', () => {
   let component: SidebarFooterComponent;
@@ -14,9 +14,9 @@ describe('SidebarFooterComponent', () => {
         ...ngrxTesting(),
         IconsModule
       ],
-      declarations: [ SidebarFooterComponent ]
+      declarations: [SidebarFooterComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

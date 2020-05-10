@@ -1,11 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { SidebarComponent } from './sidebar.component';
 import { MockComponent } from 'ng-mocks';
-import { SidebarHeaderComponent } from '../sidebar-header/sidebar-header.component';
 import { SidebarFooterComponent } from '../sidebar-footer/sidebar-footer.component';
+import { SidebarHeaderComponent } from '../sidebar-header/sidebar-header.component';
 import { SidebarMainComponent } from '../sidebar-main/sidebar-main.component';
 import { SidebarSubComponent } from '../sidebar-sub/sidebar-sub.component';
+import { SidebarComponent } from './sidebar.component';
+
 
 describe('SidebarComponent', () => {
   let component: SidebarComponent;
