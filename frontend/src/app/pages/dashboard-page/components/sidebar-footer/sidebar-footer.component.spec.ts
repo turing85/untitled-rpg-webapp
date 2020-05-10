@@ -10,7 +10,7 @@ describe('SidebarFooterComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports:[
+      imports: [
         ...ngrxTesting(),
         IconsModule
       ],

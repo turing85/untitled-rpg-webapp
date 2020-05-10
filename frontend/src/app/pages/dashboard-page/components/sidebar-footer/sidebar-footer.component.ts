@@ -11,9 +11,9 @@ export class SidebarFooterComponent implements OnInit {
 
 
   icons: { [key: string]: IconDefinition } = {
-    'signout': faPowerOff,
-    'settings': faCog,
-    'message': faEnvelope
+    signout: faPowerOff,
+    settings: faCog,
+    message: faEnvelope
   };
 
   constructor(private store$: Store) { }

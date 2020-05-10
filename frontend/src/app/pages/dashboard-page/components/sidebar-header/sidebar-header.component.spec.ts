@@ -9,7 +9,7 @@ describe('SidebarHeaderComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports:[
+      imports: [
         ...ngrxTesting()
       ],
       declarations: [ SidebarHeaderComponent ]

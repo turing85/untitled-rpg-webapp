@@ -1,4 +1,4 @@
-import { UserEffects } from "./user.effects";
+import { UserEffects } from './user.effects';
 import { Subject, of, throwError } from 'rxjs';
 import { Action } from '@ngrx/store';
 import { mock, instance, when, verify } from 'ts-mockito';
@@ -13,7 +13,7 @@ import { User } from 'src/app/model/user/user.keycloak.model';
 describe('UserEffects', () => {
     const routerMock = mock(Router);
     const userServiceMock = mock(UserService);
-    let actions$ = new Subject<Action>();
+    const actions$ = new Subject<Action>();
 
 
     let effects: UserEffects;
@@ -131,4 +131,4 @@ describe('UserEffects', () => {
 
 
     });
-})
+});

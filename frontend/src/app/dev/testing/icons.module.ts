@@ -11,7 +11,7 @@ export class IconsModule {
         // add icons to the library for convenient access in other components
         library.addIcons(
             icons.faPowerOff,
-             icons.faCog, 
+             icons.faCog,
              icons.faEnvelope);
     }
 }

@@ -1,4 +1,4 @@
-import { userReducer } from "./user.reducer";
+import { userReducer } from './user.reducer';
 import * as UserActions from './user.actions';
 import { User } from 'src/app/model/user/user.keycloak.model';
 
@@ -10,7 +10,7 @@ describe('UserReducer', () => {
         expect(userReducer(undefined, action)).toEqual(initialState);
     });
 
-    //RegisterUser
+    // RegisterUser
     it('should change into loading state with userRegister action', () => {
         expect(userReducer(undefined, UserActions.userRegister)).toEqual({ ...initialState, loading: true });
     });
@@ -23,12 +23,12 @@ describe('UserReducer', () => {
         const action = UserActions.userRegisterSuccess({ user: { name: 'a' } as User });
         expect(userReducer({ ...initialState, loading: true }, action)).toEqual({
             ...initialState,
-            entities: { 'a': { name: 'a' } },
+            entities: { a: { name: 'a' } },
             ids: ['a'],
             me: 'a'
         });
     });
-    //LoadUser
+    // LoadUser
     it('should change into loading state with userLoad action', () => {
         expect(userReducer(undefined, UserActions.userLoad)).toEqual({ ...initialState, loading: true });
     });
@@ -41,13 +41,13 @@ describe('UserReducer', () => {
         const action = UserActions.userLoadSuccess({ user: { name: 'a' } as User });
         expect(userReducer({ ...initialState, loading: true }, action)).toEqual({
             ...initialState,
-            entities: { 'a': { name: 'a' } },
+            entities: { a: { name: 'a' } },
             ids: ['a']
         });
     });
 
 
-    //LoadMe
+    // LoadMe
     it('should change into loading state with userLoadMe action', () => {
         expect(userReducer(undefined, UserActions.userLoadMe)).toEqual({ ...initialState, loading: true });
     });
@@ -56,13 +56,13 @@ describe('UserReducer', () => {
         const action = UserActions.userLoadMeSuccess({ user: { name: 'a' } as User });
         expect(userReducer({ ...initialState, loading: true }, action)).toEqual({
             ...initialState,
-            entities: { 'a': { name: 'a' } },
+            entities: { a: { name: 'a' } },
             ids: ['a'],
             me: 'a'
         });
     });
 
-    //LoadAll
+    // LoadAll
     it('should change into loading state with userLoadAll action', () => {
         expect(userReducer(undefined, UserActions.userLoadAll)).toEqual({ ...initialState, loading: true });
     });
@@ -80,11 +80,11 @@ describe('UserReducer', () => {
         });
         expect(userReducer({ ...initialState, loading: true }, action)).toEqual({
             ...initialState,
-            entities: { 
-                'a': { name: 'a' },
-                'b': { name: 'b' }
+            entities: {
+                a: { name: 'a' },
+                b: { name: 'b' }
             },
-            ids: ['a','b']
+            ids: ['a', 'b']
         });
     });
 

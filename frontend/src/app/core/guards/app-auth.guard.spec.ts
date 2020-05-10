@@ -13,9 +13,9 @@ describe('AppAuthGuard', () => {
   const state = {} as RouterStateSnapshot;
   const keycloakServiceMock = mock(KeycloakService);
 
-  let router = {
+  const router = {
     navigate: jasmine.createSpy('forbidden')
-  }
+  };
 
 
 
@@ -41,8 +41,8 @@ describe('AppAuthGuard', () => {
 
   function guardForUserWithRoles(requiredRoles?: string[]): AppAuthGuard {
     if (requiredRoles) {
-      guard['authenticated'] = true;
-      guard['roles'] = requiredRoles;
+      guard.authenticated = true;
+      guard.roles = requiredRoles;
     }
     return guard;
   }
