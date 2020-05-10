@@ -39,7 +39,8 @@
       **/resources/**/*.sql,
       **/src/test/**,
       **/src/**/*.spec.ts,
-      **/materialize.css
+      **/materialize.css,
+      **/src/app/dev/**
     </sonar.exclusions>
     <sonar.java.libraries>**/*.jar</sonar.java.libraries>
     <sonar.nodejs.executable>frontend/node/node</sonar.nodejs.executable>
