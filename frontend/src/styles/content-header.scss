@@ -11,12 +11,6 @@
     .spacer {
         flex-grow: 1;
     }
-}
-
-
-/* Change the color of links on hover */
-
-.content-header {
     a {
         color: $text-color;
         &:hover {
